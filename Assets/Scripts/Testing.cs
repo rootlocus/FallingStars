@@ -11,16 +11,17 @@ public class Testing : MonoBehaviour
 
     void Start()
     {
-
     }
 
     private void Update() {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse position" + MouseWorld.GetPosition());
-            Debug.Log("end position" +  LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()).ToString() );
+            // Debug.Log("Mouse position" + MouseWorld.GetPosition());
+            // Debug.Log("end position" +  LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()).ToString() );
             GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-            Instantiate(orbPrefab, LevelGrid.Instance.GetWorldPositionCenter(gridPosition) , Quaternion.identity);
+            Debug.Log(LevelGrid.Instance.GetGridSystem().GetOrbSO(gridPosition).orbName);
+            
+            // Instantiate(orbPrefab, LevelGrid.Instance.GetWorldPositionCenter(gridPosition) , Quaternion.identity);
         }
     }
 

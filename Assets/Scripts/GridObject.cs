@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridObject
 {
     private GridPosition gridPosition;
+    private Orb orb;
 
 
     public GridObject (GridPosition gridPosition)
@@ -12,8 +13,25 @@ public class GridObject
         this.gridPosition = gridPosition;
     }
 
-    public override string ToString()
+    public void AddOrb(Orb orb, OrbTypeSO typeSO)
     {
-        return gridPosition.ToString();
+        this.orb = orb;
+        orb.Setup(typeSO);
+    }
+
+    public void RemoveOrb()
+    {
+        this.orb = null;
+    }
+
+    public OrbTypeSO GetOrbSO() => orb.GetOrbTypeSO();
+
+    public override string ToString()
+    {   string isActivated = "null";
+
+        if (orb) {
+            isActivated = orb.isActivated.ToString();
+        }
+        return gridPosition.ToString() + "\n" + isActivated;
     }
 }

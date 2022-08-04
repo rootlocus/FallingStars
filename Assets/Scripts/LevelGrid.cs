@@ -8,6 +8,7 @@ public class LevelGrid : MonoBehaviour
 
     [SerializeField] private Transform debugPrefab;
     [SerializeField] private Transform orbPrefab;
+    [SerializeField] private List<OrbTypeSO> orbTypes;
 
     private GridSystem gridSystem;
     private int width = 10;
@@ -28,12 +29,18 @@ public class LevelGrid : MonoBehaviour
         gridSystem = new GridSystem(width, height, cellSize);
         
         gridSystem.CreateDebugObject(debugPrefab);
+
+        gridSystem.PopulateOrbObjects(orbPrefab, 3);
     }
+
+    public GridSystem GetGridSystem() => gridSystem;
 
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
     
     public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition);
 
+    public List<OrbTypeSO> GetOrbTypes() => orbTypes;
+    
     private void OnDrawGizmos() {
         if (!Application.isPlaying || gridSystem == null) return;
         Gizmos.color = Color.yellow;

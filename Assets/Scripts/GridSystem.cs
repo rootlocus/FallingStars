@@ -10,6 +10,7 @@ public class GridSystem
     private float cellSize;
     private float offSetSecondRow = 0.5f;
 
+
     public GridSystem(int width, int height, float cellSize)
     {
         this.width = width;
@@ -30,7 +31,6 @@ public class GridSystem
         }
                 // Debug.DrawLine(GetWorldPosition(new GridPosition(0, height)), GetWorldPosition(new GridPosition(width, height)), Color.white, 100f);
                 // Debug.DrawLine(GetWorldPosition(new GridPosition(width, 0)), GetWorldPosition(new GridPosition(width, height)), Color.white, 100f);
-
     }
 
     public void CreateDebugObject(Transform debugPrefab)
@@ -44,6 +44,27 @@ public class GridSystem
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
                 gridDebugObject.SetGridObject(GetGridObject(gridPosition));
+            }
+        }
+    }
+
+    //TEMP
+    public void PopulateOrbObjects(Transform orbPrefab, int size)
+    {
+        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = height - 1; y >= height - size; y--)
+            {
+                GridPosition gridPosition = new GridPosition(x, y);
+                Transform debugTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+
+                //initialize orb
+                Orb orb = debugTransform.GetComponent<Orb>();
+                OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
+                GetGridObject(gridPosition).AddOrb(orb, typeSO);
+                // gridObjectArray[x, y].AddOrb(orb, typeSO);
             }
         }
     }
@@ -69,6 +90,8 @@ public class GridSystem
         return GetWorldPosition(gridPosition) + new Vector3(cellSize, cellSize) * 0.5f;
     }
 
+    public OrbTypeSO GetOrbSO(GridPosition gridPosition) => GetGridObject(gridPosition).GetOrbSO();
+
     public GridPosition GetGridPosition(Vector2 worldPosition)
     {
         int posX = 0;
@@ -85,6 +108,15 @@ public class GridSystem
             posX,
             posY
         );
+    }
+
+    public void HasMatch3Link(GridPosition gridPosition)
+    {
+        OrbTypeSO orbTypeSo = GetOrbSO(gridPosition);
+
+        //Get Valid orbPositions
+        //Check all valid orbPositions
+
     }
 
 }
