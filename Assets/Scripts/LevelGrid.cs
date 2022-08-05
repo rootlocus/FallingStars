@@ -39,6 +39,10 @@ public class LevelGrid : MonoBehaviour
     
     public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition);
 
+    public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition) => gridSystem.GetAdjacentGridObjects(gridPosition);
+
+    public bool HasMatch3Link(GridPosition gridPosition, ref List<GridObject> matchedGridObjects) => gridSystem.HasMatch3Link(gridPosition, ref matchedGridObjects);
+
     public List<OrbTypeSO> GetOrbTypes() => orbTypes;
     
     private void OnDrawGizmos() {

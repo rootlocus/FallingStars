@@ -9,37 +9,46 @@ public class GridSystem
     private GridObject[,] gridObjectArray;
     private float cellSize;
     private float offSetSecondRow = 0.5f;
+    private List<GridPosition> doubleWidthDirection = new List<GridPosition> {
+        new GridPosition(2, 0),
+        new GridPosition(1, -1),
+        new GridPosition(-1, - 1),
+        new GridPosition(-2, 0),
+        new GridPosition(-1, +1),
+        new GridPosition(1, 1)
+    };
 
 
+    // using the double coordinate system, https://www.redblobgames.com/grids/hexagons/
     public GridSystem(int width, int height, float cellSize)
     {
-        this.width = width;
+        this.width = width * 2;
         this.height = height;
         this.cellSize = cellSize;
 
-        gridObjectArray = new GridObject[width, height];
+        gridObjectArray = new GridObject[this.width, this.height];
 
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < this.width; x+=2)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < this.height; y++)
             {
-                GridPosition gridPosition = new GridPosition(x, y);
-                gridObjectArray[x, y] = new GridObject(gridPosition);
-                // Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(new GridPosition(gridPosition.x, gridPosition.y + 1)), Color.white, 100f);
-                // Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(new GridPosition(gridPosition.x + 1, gridPosition.y)), Color.white, 100f);
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
+                gridObjectArray[x + offSetX, y] = new GridObject(gridPosition);
             }
         }
-                // Debug.DrawLine(GetWorldPosition(new GridPosition(0, height)), GetWorldPosition(new GridPosition(width, height)), Color.white, 100f);
-                // Debug.DrawLine(GetWorldPosition(new GridPosition(width, 0)), GetWorldPosition(new GridPosition(width, height)), Color.white, 100f);
     }
 
     public void CreateDebugObject(Transform debugPrefab)
     {
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < width; x+=2)
         {
             for (int y = 0; y < height; y++)
             {
-                GridPosition gridPosition = new GridPosition(x, y);
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
 
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
@@ -53,18 +62,19 @@ public class GridSystem
     {
         List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < width; x+=2)
         {
             for (int y = height - 1; y >= height - size; y--)
             {
-                GridPosition gridPosition = new GridPosition(x, y);
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
                 Transform debugTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
 
                 //initialize orb
                 Orb orb = debugTransform.GetComponent<Orb>();
                 OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
                 GetGridObject(gridPosition).AddOrb(orb, typeSO);
-                // gridObjectArray[x, y].AddOrb(orb, typeSO);
             }
         }
     }
@@ -80,7 +90,7 @@ public class GridSystem
         if (gridPosition.y % 2 == 0) {
             offset = offSetSecondRow;
         }
-        float x = gridPosition.x + offset;
+        float x = (gridPosition.x / 2) + offset;
 
         return (new Vector3(x, gridPosition.y) * cellSize);
     }
@@ -94,14 +104,15 @@ public class GridSystem
 
     public GridPosition GetGridPosition(Vector2 worldPosition)
     {
+        int doubleWidth = 2;
         int posX = 0;
         int posY = Mathf.FloorToInt(worldPosition.y / cellSize);
 
         if (posY % 2 == 0) {
             float originX = (worldPosition.x / cellSize) - offSetSecondRow;
-            posX = Mathf.FloorToInt(originX);
+            posX = Mathf.FloorToInt(originX) * doubleWidth + 1;
         } else {
-            posX = Mathf.FloorToInt(worldPosition.x / cellSize);
+            posX = Mathf.FloorToInt(worldPosition.x / cellSize) * doubleWidth;
         }
 
         return new GridPosition(
@@ -110,13 +121,94 @@ public class GridSystem
         );
     }
 
-    public void HasMatch3Link(GridPosition gridPosition)
+    public bool IsValidPosition(GridPosition gridPosition)
     {
-        OrbTypeSO orbTypeSo = GetOrbSO(gridPosition);
+        int x = gridPosition.x;
+        int y = gridPosition.y;
+        
+        if (y >= 0 && y < height) {
+            if (y % 2 == 0) {
+                if (x > 0 && x < width) {
+                    return true;
+                }
+            } else {
+                if (x >= 0 && x < width) 
+                {
+                    return true;
+                }
+            }
+        }
 
-        //Get Valid orbPositions
-        //Check all valid orbPositions
-
+        return false;
     }
+
+    public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition)
+    {
+        List<GridObject> adjacentGridObjects = new List<GridObject>();
+
+        foreach (GridPosition direction in doubleWidthDirection)
+        {
+            GridPosition adjacentPosition = gridPosition + direction;
+
+            if (!IsValidPosition(adjacentPosition)) {
+                continue;
+            }
+
+            GridObject adjacentGridObject = GetGridObject(adjacentPosition);
+            adjacentGridObjects.Add(adjacentGridObject);
+        }
+        return adjacentGridObjects;
+    }
+
+    /*
+    *    Get all matching colours of selected object
+    *    check their adjacent neighbour not including the previous object or coordionate or position
+    *    Add the matching colour GO to a list
+    *    if size is > 3 its a match and return true and output the list
+    *    else return false
+    */
+    public bool HasMatch3Link(GridPosition gridPosition, ref List<GridObject> matchedGridObjects)
+    {
+        OrbTypeSO selectedOrbType = GetOrbSO(gridPosition);
+        List<GridObject> adjacentGridObjects = GetAdjacentGridObjects(gridPosition);
+
+        matchedGridObjects.Add(GetGridObject(gridPosition));//first one
+
+        GetMatchingGridObjectsByType(gridPosition, ref matchedGridObjects);
+
+        int matchSize = 2;
+        if (matchedGridObjects.Count > matchSize) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void GetMatchingGridObjectsByType(GridPosition gridPosition, ref List<GridObject> matchedGridObjects)
+    {
+        OrbTypeSO selectedOrbType = GetOrbSO(gridPosition);
+        List<GridObject> adjacentGridObjects = new List<GridObject>();
+        adjacentGridObjects = GetAdjacentGridObjects(gridPosition);
+
+        foreach (GridObject gridObject in adjacentGridObjects)
+        {
+            if (!gridObject.HasOrb()) {
+                continue;
+            }
+
+            if (gridObject.GetOrbSO() == selectedOrbType)
+            {
+                if (matchedGridObjects.Contains(gridObject)) // avoid selecting same object
+                {
+                    continue;
+                }
+
+                matchedGridObjects.Add(gridObject);
+
+                GetMatchingGridObjectsByType(gridObject.GetGridPosition(), ref matchedGridObjects);
+            }
+        }
+    }
+
 
 }

@@ -26,6 +26,10 @@ public class GridObject
 
     public OrbTypeSO GetOrbSO() => orb.GetOrbTypeSO();
 
+    public GridPosition GetGridPosition() => gridPosition;
+    
+    public bool HasOrb() => orb != null;
+
     public override string ToString()
     {   string isActivated = "null";
 
