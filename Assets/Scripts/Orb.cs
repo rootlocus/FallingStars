@@ -17,4 +17,8 @@ public class Orb : MonoBehaviour
 
     public OrbTypeSO GetOrbTypeSO() => myOrbType;
 
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

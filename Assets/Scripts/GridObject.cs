@@ -21,6 +21,7 @@ public class GridObject
 
     public void RemoveOrb()
     {
+        this.orb.Destroy();
         this.orb = null;
     }
 

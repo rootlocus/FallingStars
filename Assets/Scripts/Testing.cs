@@ -9,25 +9,43 @@ public class Testing : MonoBehaviour
     [SerializeField] private Transform orbPrefab;
     private List<GridObject> matchingLists;
 
+    [SerializeField] private Transform launchPosition;
+    private bool isLaunch;
+    private Vector3 aimDir;
+
+
+
     private void Start() {
         matchingLists = new List<GridObject>();
     }
-    
-    private void Update() {
-        if (Input.GetMouseButtonDown(0))
-        {
-            GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-            matchingLists.Clear();
-            bool isMatched = LevelGrid.Instance.HasMatch3Link(gridPosition, ref matchingLists);
 
-            Debug.Log(isMatched);
+    private void Update() {
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     aimDir = (MouseWorld.GetPosition() - launchPosition.position).normalized;
+        //     aimDir.z = 0f;
+
+        //     isLaunch = true;
+        // }
+
+    }
+
+    private void DebugMatch3()
+    {
+        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+
+        matchingLists.Clear();
+        bool isMatched = LevelGrid.Instance.HasMatch3Link(gridPosition, ref matchingLists);
+
+        Debug.Log(isMatched);
+        if (isMatched) {
             foreach (GridObject gridObject in matchingLists)
             {
                 Debug.Log(gridObject.ToString());
+                gridObject.RemoveOrb();
             }
         }
     }
-
 
     private void DebugMousePosition()
     {

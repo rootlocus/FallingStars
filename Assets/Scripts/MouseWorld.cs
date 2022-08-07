@@ -11,10 +11,10 @@ public class MouseWorld : MonoBehaviour
         Instance = this;    
     }
 
-    public static Vector2 GetPosition()
+    public static Vector3 GetPosition()
     {
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        return (Vector2) worldPosition;
+        return worldPosition;
     }
 }

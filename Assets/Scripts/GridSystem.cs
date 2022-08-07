@@ -121,7 +121,8 @@ public class GridSystem
         );
     }
 
-    public bool IsValidPosition(GridPosition gridPosition)
+    // Valid double coordinate system
+    public bool IsValidGridPosition(GridPosition gridPosition)
     {
         int x = gridPosition.x;
         int y = gridPosition.y;
@@ -150,7 +151,7 @@ public class GridSystem
         {
             GridPosition adjacentPosition = gridPosition + direction;
 
-            if (!IsValidPosition(adjacentPosition)) {
+            if (!IsValidGridPosition(adjacentPosition)) {
                 continue;
             }
 
