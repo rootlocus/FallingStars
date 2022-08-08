@@ -20,14 +20,19 @@ public class Testing : MonoBehaviour
     }
 
     private void Update() {
-        // if (Input.GetMouseButtonDown(0))
+        // if (Input.GetMouseButtonDown(1))
         // {
         //     aimDir = (MouseWorld.GetPosition() - launchPosition.position).normalized;
         //     aimDir.z = 0f;
 
         //     isLaunch = true;
-        // }
 
+            // List<GridObject> allObjects = LevelGrid.Instance.GetGridSystem().GetAllGridObjectWithOrbs();
+            // foreach (GridObject gridO in allObjects)
+            // {
+            //     Debug.Log(gridO);
+            // }
+        // }
     }
 
     private void DebugMatch3()

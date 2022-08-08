@@ -51,7 +51,7 @@ public class LevelGrid : MonoBehaviour
     
     public LayerMask GetOrbMask() => orbLayer;
 
-    public void SpawnOrbObjectOnGridPosition(GridPosition gridPosition, OrbTypeSO orbType)
+    public void SpawnOrbOnGridPosition(GridPosition gridPosition, OrbTypeSO orbType)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
 
@@ -75,7 +75,47 @@ public class LevelGrid : MonoBehaviour
                 gridObject.RemoveOrb();
             }
         }
+        HandleIslandGrids();
     }
+
+    //TODO: able to be more efficient
+    public void HandleIslandGrids()
+    {
+        List<GridObject> gridObjectWithOrbs = new List<GridObject>();
+        gridObjectWithOrbs = gridSystem.GetAllGridObjectWithOrbs();
+
+        List<GridObject> removedGridObjects = new List<GridObject>();
+
+        foreach (GridObject gridObjectWithOrb in gridObjectWithOrbs) 
+        {
+            List<GridObject> attachedGridObject = new List<GridObject>();
+            bool isAttached = gridSystem.IsGridPositionAttached(gridObjectWithOrb.GetGridPosition(), out attachedGridObject);
+
+            foreach(GridObject gridObject in attachedGridObject)
+            {
+                if (removedGridObjects.Contains(gridObject)) {
+                    continue;
+                }
+                if (isAttached) {
+                    continue;
+                }
+
+                gridObject.RemoveOrb();
+                removedGridObjects.Add(gridObject);
+            }
+        }
+    }
+
+    // public void GetAllGridObjects(GridPosition gridPosition)
+    // {
+    //     List<GridObject> gridObjectLists = new List<GridObject>();
+    //     gridSystem.GetAllAttachedGridObjects(gridPosition, ref gridObjectLists);
+
+    //     foreach(GridObject gridObject in gridObjectLists)
+    //     {
+    //         Debug.Log(gridObject.GetGridPosition());
+    //     }
+    // }
 
     private void OnDrawGizmos() {
         if (!Application.isPlaying || gridSystem == null) return;

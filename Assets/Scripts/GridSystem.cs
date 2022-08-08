@@ -143,7 +143,7 @@ public class GridSystem
         return false;
     }
 
-    public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition)
+    public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition, bool hasOrbsOnly=true)
     {
         List<GridObject> adjacentGridObjects = new List<GridObject>();
 
@@ -156,8 +156,51 @@ public class GridSystem
             }
 
             GridObject adjacentGridObject = GetGridObject(adjacentPosition);
+            if (hasOrbsOnly && !adjacentGridObject.HasOrb()) {
+                continue;
+            }
+            
             adjacentGridObjects.Add(adjacentGridObject);
         }
+        return adjacentGridObjects;
+    }
+
+    
+    public bool IsGridPositionAttached(GridPosition gridPosition, out List<GridObject> attachedGridObjects)
+    {
+        attachedGridObjects = new List<GridObject>();
+        
+        FindAttachedGridObjects(gridPosition, ref attachedGridObjects);
+
+        foreach (GridObject attachedGridObject in attachedGridObjects)
+        {
+            GridPosition attachedGridPosition = attachedGridObject.GetGridPosition();
+            if (attachedGridPosition.y + 1 >= height) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public List<GridObject> FindAttachedGridObjects(GridPosition gridPosition, ref List<GridObject> mainList)
+    {
+        mainList.Add(GetGridObject(gridPosition));
+
+        List<GridObject> adjacentGridObjects = new List<GridObject>();
+        adjacentGridObjects = GetAdjacentGridObjects(gridPosition);
+
+        foreach (GridObject adjacentGridObject in adjacentGridObjects)
+        {
+            if (!adjacentGridObject.HasOrb()) {
+                continue;
+            }
+            if (mainList.Contains(adjacentGridObject)) {
+                continue;
+            }
+            FindAttachedGridObjects(adjacentGridObject.GetGridPosition(), ref mainList);
+        }
+
         return adjacentGridObjects;
     }
 
@@ -209,6 +252,35 @@ public class GridSystem
                 GetMatchingGridObjectsByType(gridObject.GetGridPosition(), ref matchedGridObjects);
             }
         }
+    }
+
+    public List<GridObject> GetAllGridObjectWithOrbs()
+    {
+        List<GridObject> gridObjectsWithOrbs = new List<GridObject>();
+        // foreach(GridObject gridObject in gridObjectArray)
+        // {
+        //     Debug.Log(gridObject);
+        //     if (gridObject.HasOrb())
+        //     {
+        //         gridObjectsWithOrbs.Add(gridObject);
+        //     }
+        // }
+
+        for (int x = 0; x < this.width; x+=2)
+        {
+            for (int y = 0; y < this.height; y++)
+            {
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridObject gridObject = gridObjectArray[x + offSetX, y];
+                if (gridObject.HasOrb())
+                {
+                    gridObjectsWithOrbs.Add(gridObject);
+                }
+            }
+        }
+
+        return gridObjectsWithOrbs;
     }
 
 
