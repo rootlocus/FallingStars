@@ -7,6 +7,7 @@ public class GridSystem
     private int width;
     private int height;
     private GridObject[,] gridObjectArray;
+    // private List< List<GridObject>> gridObjectss;
     private float cellSize;
     private float offSetSecondRow = 0.5f;
     private List<GridPosition> doubleWidthDirection = new List<GridPosition> {
@@ -39,6 +40,10 @@ public class GridSystem
             }
         }
     }
+
+    public int GetWidth() => width;
+    
+    public int GetHeight() => height;
 
     public void CreateDebugObject(Transform debugPrefab)
     {
@@ -162,6 +167,7 @@ public class GridSystem
             
             adjacentGridObjects.Add(adjacentGridObject);
         }
+
         return adjacentGridObjects;
     }
 
@@ -284,4 +290,9 @@ public class GridSystem
     }
 
 
+    public void AddNewRow()
+    {
+        this.height += 1;
+
+    }
 }

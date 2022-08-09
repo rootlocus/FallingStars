@@ -10,12 +10,14 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private Transform orbPrefab;
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private LayerMask orbLayer;
+    [SerializeField] private Transform orbContainer;
+    [SerializeField] private float speed = 0.5f;
 
     private GridSystem gridSystem;
     private int width = 10;
     private int height = 20;
     private float cellSize = 2f;
-    private List<GridObject> matchingLists;
+    private bool isMoving = false;
 
 
     private void Start()
@@ -28,18 +30,28 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        matchingLists = new List<GridObject>();
-
         gridSystem = new GridSystem(width, height, cellSize);
         
         gridSystem.CreateDebugObject(debugPrefab);
 
-        gridSystem.PopulateOrbObjects(orbPrefab, 3);
+        SpawnLevelOrbs(orbPrefab, 3);
+    }
+
+    private void Update() {
+        if (isMoving)
+        {
+            orbContainer.position += Vector3.down * Time.deltaTime * speed;
+        }
+    }
+
+    public void StartMoving()
+    {
+        isMoving = true;
     }
 
     public GridSystem GetGridSystem() => gridSystem;
 
-    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
+    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition - orbContainer.position);
     
     public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition);
 
@@ -55,16 +67,18 @@ public class LevelGrid : MonoBehaviour
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
 
-        Transform orb = Instantiate(orbPrefab, LevelGrid.Instance.GetWorldPositionCenter(gridPosition), Quaternion.identity);
+        Transform orb = Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition) + orbContainer.position, Quaternion.identity);
+        orb.parent = orbContainer;
 
         Orb attachedOrb = orb.GetComponent<Orb>();
         attachedOrb.Setup(orbType);
         gridObject.AddOrb(attachedOrb, orbType);
 
-        MatchGridPosition(gridPosition);
+        List<GridObject> matchingLists = new List<GridObject>();
+        MatchGridPosition(gridPosition, ref matchingLists);
     }
 
-    private void MatchGridPosition(GridPosition gridPosition)
+    private void MatchGridPosition(GridPosition gridPosition, ref List<GridObject> matchingLists)
     {
         matchingLists.Clear();
         bool isMatched = LevelGrid.Instance.HasMatch3Link(gridPosition, ref matchingLists);
@@ -106,30 +120,42 @@ public class LevelGrid : MonoBehaviour
         }
     }
 
-    // public void GetAllGridObjects(GridPosition gridPosition)
-    // {
-    //     List<GridObject> gridObjectLists = new List<GridObject>();
-    //     gridSystem.GetAllAttachedGridObjects(gridPosition, ref gridObjectLists);
 
-    //     foreach(GridObject gridObject in gridObjectLists)
-    //     {
-    //         Debug.Log(gridObject.GetGridPosition());
-    //     }
-    // }
+    public void SpawnLevelOrbs(Transform orbPrefab, int size)
+    {
+        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
-    private void OnDrawGizmos() {
-        if (!Application.isPlaying || gridSystem == null) return;
-        Gizmos.color = Color.yellow;
-
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < gridSystem.GetWidth(); x+=2)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = gridSystem.GetHeight() - 1; y >= height - size; y--)
             {
-                GridPosition gridPosition = new GridPosition(x, y);
-                Vector2 center = gridSystem.GetWorldPosition(gridPosition);
-                Gizmos.matrix = transform.localToWorldMatrix;
-                Gizmos.DrawWireCube(center + new Vector2(cellSize / 2, cellSize / 2), new Vector2(cellSize, cellSize) );
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
+                Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+
+                orbTransform.parent = orbContainer;
+                //initialize orb
+                Orb orb = orbTransform.GetComponent<Orb>();
+                OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
+                gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
             }
         }
     }
+
+    // private void OnDrawGizmos() {
+    //     if (!Application.isPlaying || gridSystem == null) return;
+    //     Gizmos.color = Color.yellow;
+
+    //     for (int x = 0; x < width; x++)
+    //     {
+    //         for (int y = 0; y < height; y++)
+    //         {
+    //             GridPosition gridPosition = new GridPosition(x, y);
+    //             Vector2 center = gridSystem.GetWorldPosition(gridPosition);
+    //             Gizmos.matrix = transform.localToWorldMatrix;
+    //             Gizmos.DrawWireCube(center + new Vector2(cellSize / 2, cellSize / 2), new Vector2(cellSize, cellSize) );
+    //         }
+    //     }
+    // }
 }
