@@ -25,11 +25,20 @@ public class GridObject
         this.orb = null;
     }
 
+    public void UnsetOrb() => this.orb = null;
+    
+    public void SetOrb(Orb orb) => this.orb = orb;
+
+    public bool HasOrb() => orb != null;
+
+    public Orb GetOrb() => orb;
+
     public OrbTypeSO GetOrbSO() => orb.GetOrbTypeSO();
+
+    public void SetPosition(GridPosition gridPosition) => this.gridPosition = gridPosition;
 
     public GridPosition GetGridPosition() => gridPosition;
     
-    public bool HasOrb() => orb != null;
 
     public override string ToString()
     {   string isActivated = "null";

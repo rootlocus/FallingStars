@@ -295,4 +295,63 @@ public class GridSystem
         this.height += 1;
 
     }
+
+            // modify bottom row to be shifted to top
+        // loop last row to move down
+        // spawn new orbs
+        // put new orbs in last position 
+    public void SpawnGridRow(Transform orbPrefab)
+    {
+        PushBubblesDown();
+
+        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
+
+        int heightOnGrid = height - 1;
+
+        for (int x = 0; x < this.width; x+=2)
+        {
+            int offSetX = (heightOnGrid % 2 == 0) ? 1 : 0;
+
+            GridPosition gridPosition = new GridPosition(x + offSetX, heightOnGrid);
+            Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+
+            Orb orb = orbTransform.GetComponent<Orb>();
+            OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
+            GetGridObject(gridPosition).AddOrb(orb, typeSO);
+        }
+        
+    }
+
+    private void PushBubblesDown()
+    {
+        for (int x = 0; x < this.width; x+=2)
+        {
+            GridObject previousGridObject = null;
+            GridObject currentGridObject = null;
+            for (int y = 0; y < this.height; y++)
+            {
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                previousGridObject = currentGridObject;
+                currentGridObject = GetGridObject(new GridPosition(x + offSetX, y));
+
+                if (!currentGridObject.HasOrb())
+                {
+                    continue;
+                }
+
+                if (y != 0)
+                {
+                    Orb orb = currentGridObject.GetOrb();
+                    currentGridObject.UnsetOrb();
+                    previousGridObject.SetOrb(orb);
+
+                    orb.transform.position = GetWorldPositionCenter(previousGridObject.GetGridPosition());
+                } else if (y == 0) //TODO if reached a line position maybe kill player instead
+                {
+                    currentGridObject.RemoveOrb();
+                }
+            }
+        }
+    }
 }

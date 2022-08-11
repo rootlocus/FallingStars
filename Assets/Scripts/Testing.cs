@@ -22,8 +22,22 @@ public class Testing : MonoBehaviour
     private void Update() {
         if (Input.GetMouseButtonDown(1))
         {
-            LevelGrid.Instance.StartMoving();
+            LevelGrid.Instance.SpawnAndShiftOrbRow(orbPrefab);
+
+            // LevelGrid.Instance.StartMoving();
+            // GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            // Debug.Log(gridPosition);
+
+            // List< List<GridObject>> gridObjectList = LevelGrid.Instance.GetGridSystem().gridObjectList;
+
+            // foreach(List<GridObject> gObs in gridObjectList){
+            //     foreach(GridObject go in gObs) {
+            //         Debug.Log(go);
+            //     }
+            // }
+            // DebugAdjacentGridObjects();
         }
+
     }
 
     private void DebugMatch3()
@@ -53,6 +67,7 @@ public class Testing : MonoBehaviour
     {
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
+        Debug.Log("CLICK " + gridPosition.ToString()); 
         List<GridObject> gridObjects = LevelGrid.Instance.GetAdjacentGridObjects(gridPosition);
         foreach (GridObject gridObject in gridObjects)
         {

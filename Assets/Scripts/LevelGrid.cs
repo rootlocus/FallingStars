@@ -15,7 +15,7 @@ public class LevelGrid : MonoBehaviour
 
     private GridSystem gridSystem;
     private int width = 10;
-    private int height = 20;
+    private int height = 15;
     private float cellSize = 2f;
     private bool isMoving = false;
 
@@ -34,7 +34,7 @@ public class LevelGrid : MonoBehaviour
         
         gridSystem.CreateDebugObject(debugPrefab);
 
-        SpawnLevelOrbs(orbPrefab, 3);
+        // SpawnLevelOrbs(orbPrefab, 3);
     }
 
     private void Update() {
@@ -142,6 +142,8 @@ public class LevelGrid : MonoBehaviour
             }
         }
     }
+
+    public void SpawnAndShiftOrbRow(Transform orbPrefab) => gridSystem.SpawnGridRow(orbPrefab);
 
     // private void OnDrawGizmos() {
     //     if (!Application.isPlaying || gridSystem == null) return;
