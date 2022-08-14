@@ -5,18 +5,33 @@ using UnityEngine;
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance;
-
+    private enum State
+    {
+        PreStart,
+        Start,
+        Running,
+        Win,
+        Lose,
+        Pause,
+    }
+    
     [SerializeField] private Transform debugPrefab;
     [SerializeField] private Transform orbPrefab;
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private LayerMask orbLayer;
-    [SerializeField] private Transform orbContainer;
-    [SerializeField] private float speed = 0.5f;
+
+    private State state;
+    private State nextState;
+    private float stateTimer;
 
     private GridSystem gridSystem;
     private int width = 10;
     private int height = 15;
     private float cellSize = 2f;
+
+    // for moving entire grid orbs
+    [SerializeField] private float speed = 0.5f;
+    [SerializeField] private Transform orbContainer;
     private bool isMoving = false;
 
 
@@ -34,14 +49,66 @@ public class LevelGrid : MonoBehaviour
         
         gridSystem.CreateDebugObject(debugPrefab);
 
+        state = State.PreStart;
         // SpawnLevelOrbs(orbPrefab, 3);
     }
 
-    private void Update() {
-        if (isMoving)
-        {
-            orbContainer.position += Vector3.down * Time.deltaTime * speed;
+    private void Update() 
+    {
+        stateTimer -= Time.deltaTime;
+        if (stateTimer > 0f) {
+            return;
         }
+        switch (state)
+        {
+            case State.PreStart:
+                NextState();
+                break;
+            case State.Start:
+                //1) game start sign
+                //2) spawn orbs
+                //3 spawn launcher move in
+                SpawnLevelOrbs(orbPrefab, 3);
+                NextState();
+                break;
+            case State.Running:
+                SpawnAndShiftOrbRow(orbPrefab);
+                stateTimer = 4f;
+                break;
+            case State.Win:
+                break;
+            case State.Lose:
+                break;
+            case State.Pause:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void NextState()
+    {
+        switch (state)
+        {
+            case State.PreStart:
+                state = State.Start;
+                break;
+            case State.Start:
+                state = State.Running;
+                stateTimer = 2f;
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void MoveOrbRows()
+    {
+        if (!isMoving)
+        {
+            return;
+        }
+        orbContainer.position += Vector3.down * Time.deltaTime * speed;
     }
 
     public void StartMoving()
@@ -119,7 +186,6 @@ public class LevelGrid : MonoBehaviour
             }
         }
     }
-
 
     public void SpawnLevelOrbs(Transform orbPrefab, int size)
     {

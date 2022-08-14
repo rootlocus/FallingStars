@@ -7,7 +7,8 @@ public class GridSystem
     private int width;
     private int height;
     private GridObject[,] gridObjectArray;
-    // private List< List<GridObject>> gridObjectss;
+    // private List< List<GridObject>> gridObjectArray2;
+    
     private float cellSize;
     private float offSetSecondRow = 0.5f;
     private List<GridPosition> doubleWidthDirection = new List<GridPosition> {
@@ -263,14 +264,6 @@ public class GridSystem
     public List<GridObject> GetAllGridObjectWithOrbs()
     {
         List<GridObject> gridObjectsWithOrbs = new List<GridObject>();
-        // foreach(GridObject gridObject in gridObjectArray)
-        // {
-        //     Debug.Log(gridObject);
-        //     if (gridObject.HasOrb())
-        //     {
-        //         gridObjectsWithOrbs.Add(gridObject);
-        //     }
-        // }
 
         for (int x = 0; x < this.width; x+=2)
         {
@@ -293,13 +286,10 @@ public class GridSystem
     public void AddNewRow()
     {
         this.height += 1;
-
     }
 
-            // modify bottom row to be shifted to top
-        // loop last row to move down
-        // spawn new orbs
-        // put new orbs in last position 
+
+//spawn functions
     public void SpawnGridRow(Transform orbPrefab)
     {
         PushBubblesDown();
