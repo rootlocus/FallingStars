@@ -35,7 +35,7 @@ public class Testing : MonoBehaviour
             //         Debug.Log(go);
             //     }
             // }
-            DebugMatch3();
+            DebugAdjacentGridObjects();
         }
 
     }

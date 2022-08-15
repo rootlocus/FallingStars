@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridSystem2
+public class GridSystemOld
 {
     private int width;
     private int height;
+    private GridObject[,] gridObjectArray;
+    private List< List<GridObject>> gridObjectRows;
+    
     private float cellSize;
-    private List<List<GridObject>> gridObjectRows;
     private float offSetSecondRow = 0.5f;
     private List<GridPosition> doubleWidthDirection = new List<GridPosition> {
         new GridPosition(2, 0),
@@ -20,28 +22,25 @@ public class GridSystem2
 
 
     // using the double coordinate system, https://www.redblobgames.com/grids/hexagons/
-    public GridSystem2(int width, int height, float cellSize)
+    public GridSystemOld(int width, int height, float cellSize)
     {
-        this.width = width;
+        this.width = width * 2;
         this.height = height;
         this.cellSize = cellSize;
 
-        gridObjectRows = new List<List<GridObject>>();
-        for (int y = 0; y < this.height; y++)
+        gridObjectArray = new GridObject[this.width, this.height];
+
+        for (int x = 0; x < this.width; x+=2)
         {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
-            List<GridObject> row = new List<GridObject>();
-
-            for (int x = 0; x < this.width; x++)
+            for (int y = 0; y < this.height; y++)
             {
-                int doubleWidth = x * 2 + offSetX;
-                GridPosition gridPosition = new GridPosition(doubleWidth, y);
-                GridObject gridObject = new GridObject(gridPosition);
-                row.Add(gridObject);
-            }
+                int offSetX = (y % 2 == 0) ? 1 : 0;
 
-            gridObjectRows.Add(row);
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
+                gridObjectArray[x + offSetX, y] = new GridObject(gridPosition);
+            }
         }
+
     }
 
     public int GetWidth() => width;
@@ -50,39 +49,34 @@ public class GridSystem2
 
     public void CreateDebugObject(Transform debugPrefab)
     {
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x+=2)
         {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
-
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
             {
-                int doubleWidthX = x * 2 + offSetX;
-                GridPosition gridPosition = new GridPosition(doubleWidthX, y);
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
 
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
                 GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
-
                 gridDebugObject.SetGridObject(GetGridObject(gridPosition));
             }
         }
     }
 
     //TEMP
-    public void PopulateOrbObjects(Transform orbPrefab, Transform parent, int size)
+    public void PopulateOrbObjects(Transform orbPrefab, int size)
     {
         List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
-        for (int y = height - 1; y >= height - size; y--)
+        for (int x = 0; x < width; x+=2)
         {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
-
-            for (int x = 0; x < width; x++)
+            for (int y = height - 1; y >= height - size; y--)
             {
-                int doubleWidthX = x * 2 + offSetX;
+                int offSetX = (y % 2 == 0) ? 1 : 0;
 
-                GridPosition gridPosition = new GridPosition(doubleWidthX, y);
+                GridPosition gridPosition = new GridPosition(x + offSetX, y);
                 Transform debugTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-                debugTransform.parent = parent;
 
                 //initialize orb
                 Orb orb = debugTransform.GetComponent<Orb>();
@@ -94,9 +88,7 @@ public class GridSystem2
 
     public GridObject GetGridObject(GridPosition gridPosition)
     {
-        int offSetX = (gridPosition.y % 2 == 0) ? 1 : 0;
-
-        return gridObjectRows[gridPosition.y][(gridPosition.x - offSetX) / 2];
+        return gridObjectArray[gridPosition.x, gridPosition.y];
     }
 
     public Vector3 GetWorldPosition(GridPosition gridPosition)
@@ -144,13 +136,10 @@ public class GridSystem2
         
         if (y >= 0 && y < height) {
             if (y % 2 == 0) {
-                x = (x - 1) / 2;
                 if (x > 0 && x < width) {
                     return true;
                 }
             } else {
-                x = x / 2;
-
                 if (x >= 0 && x < width) 
                 {
                     return true;
@@ -277,15 +266,13 @@ public class GridSystem2
     {
         List<GridObject> gridObjectsWithOrbs = new List<GridObject>();
 
-        for (int y = 0; y < this.height; y++)
+        for (int x = 0; x < this.width; x+=2)
         {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
-
-            for (int x = 0; x < this.width; x++)
+            for (int y = 0; y < this.height; y++)
             {
-                int doubleWidthX = x * 2 + offSetX;
-                GridObject gridObject = GetGridObject(new GridPosition(doubleWidthX, y));
-                
+                int offSetX = (y % 2 == 0) ? 1 : 0;
+
+                GridObject gridObject = gridObjectArray[x + offSetX, y];
                 if (gridObject.HasOrb())
                 {
                     gridObjectsWithOrbs.Add(gridObject);
@@ -296,86 +283,65 @@ public class GridSystem2
         return gridObjectsWithOrbs;
     }
 
-    public void SpawnOrbRow(Transform orbPrefab, Transform orbContainer)
+
+    public void AddNewRow()
     {
-        height += 1;
-        int y = height - 1;
-        int offSetX = (y % 2 == 0) ? 1 : 0;
-        List<GridObject> row = new List<GridObject>();
+        this.height += 1;
+    }
+
+
+//spawn functions
+    public void SpawnGridRow(Transform orbPrefab)
+    {
+        PushBubblesDown();
+
         List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
-        for (int x = 0; x < this.width; x++)
-        {
-            //create new grid object
-            int doubleWidth = x * 2 + offSetX;
-            GridPosition gridPosition = new GridPosition(doubleWidth, y);
-            GridObject gridObject = new GridObject(gridPosition);
-            row.Add(gridObject);
+        int heightOnGrid = height - 1;
 
-            //Add orbs
-            Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition) + orbContainer.position, Quaternion.identity);
-            orbTransform.parent = orbContainer;
+        for (int x = 0; x < this.width; x+=2)
+        {
+            int offSetX = (heightOnGrid % 2 == 0) ? 1 : 0;
+
+            GridPosition gridPosition = new GridPosition(x + offSetX, heightOnGrid);
+            Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
 
             Orb orb = orbTransform.GetComponent<Orb>();
             OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-            gridObject.AddOrb(orb, typeSO);
+            GetGridObject(gridPosition).AddOrb(orb, typeSO);
         }
-
-        gridObjectRows.Add(row);
     }
 
-    // public void SpawnGridRow(Transform orbPrefab)
-    // {
-    //     PushBubblesDown();
+    private void PushBubblesDown()
+    {
+        for (int x = 0; x < this.width; x+=2)
+        {
+            GridObject previousGridObject = null;
+            GridObject currentGridObject = null;
+            for (int y = 0; y < this.height; y++)
+            {
+                int offSetX = (y % 2 == 0) ? 1 : 0;
 
-    //     List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
+                previousGridObject = currentGridObject;
+                currentGridObject = GetGridObject(new GridPosition(x + offSetX, y));
 
-    //     int heightOnGrid = height - 1;
+                if (!currentGridObject.HasOrb())
+                {
+                    continue;
+                }
 
-    //     for (int x = 0; x < this.width; x+=2)
-    //     {
-    //         int offSetX = (heightOnGrid % 2 == 0) ? 1 : 0;
+                if (y != 0)
+                {
+                    Orb orb = currentGridObject.GetOrb();
+                    currentGridObject.UnsetOrb();
+                    previousGridObject.SetOrb(orb);
 
-    //         GridPosition gridPosition = new GridPosition(x + offSetX, heightOnGrid);
-    //         Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-
-    //         Orb orb = orbTransform.GetComponent<Orb>();
-    //         OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-    //         GetGridObject(gridPosition).AddOrb(orb, typeSO);
-    //     }
-        
-    // }
-
-    // private void PushBubblesDown()
-    // {
-    //     for (int x = 0; x < this.width; x+=2)
-    //     {
-    //         GridObject previousGridObject = null;
-    //         GridObject currentGridObject = null;
-    //         for (int y = 0; y < this.height; y++)
-    //         {
-    //             int offSetX = (y % 2 == 0) ? 1 : 0;
-
-    //             previousGridObject = currentGridObject;
-    //             currentGridObject = GetGridObject(new GridPosition(x + offSetX, y));
-
-    //             if (!currentGridObject.HasOrb())
-    //             {
-    //                 continue;
-    //             }
-
-    //             if (y != 0)
-    //             {
-    //                 Orb orb = currentGridObject.GetOrb();
-    //                 currentGridObject.UnsetOrb();
-    //                 previousGridObject.SetOrb(orb);
-
-    //                 orb.transform.position = GetWorldPositionCenter(previousGridObject.GetGridPosition());
-    //             } else if (y == 0) //TODO if reached a line position maybe kill player instead
-    //             {
-    //                 currentGridObject.RemoveOrb();
-    //             }
-    //         }
-    //     }
-    // }
+                    orb.transform.position = GetWorldPositionCenter(previousGridObject.GetGridPosition());
+                } else if (y == 0) //TODO if reached a line position maybe kill player instead
+                {
+                    currentGridObject.RemoveOrb();
+                }
+            }
+        }
+    }
 }

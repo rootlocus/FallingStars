@@ -38,6 +38,8 @@ public class Launcher : MonoBehaviour
             currentProjectile.Setup(direction, currentOrbType);
 
             IterateNextOrb();
+
+            LevelGrid.Instance.StartMoving();
         }
     }
 
