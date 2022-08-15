@@ -22,7 +22,7 @@ public class Testing : MonoBehaviour
     private void Update() {
         if (Input.GetMouseButtonDown(1))
         {
-            LevelGrid.Instance.SpawnAndShiftOrbRow(orbPrefab);
+            // LevelGrid.Instance.SpawnAndShiftOrbRow(orbPrefab);
 
             // LevelGrid.Instance.StartMoving();
             // GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
@@ -35,7 +35,7 @@ public class Testing : MonoBehaviour
             //         Debug.Log(go);
             //     }
             // }
-            // DebugAdjacentGridObjects();
+            DebugMatch3();
         }
 
     }

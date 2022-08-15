@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
             if (predictionHit.collider != null) {
                 isMove = false;
                 GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-                LevelGrid.Instance.SpawnOrbOnGridPosition(gridPosition, orbType);
+                LevelGrid.Instance.TryMatchOrb(gridPosition, orbType);
 
                 Destroy(gameObject);
             } else {

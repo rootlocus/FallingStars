@@ -24,7 +24,7 @@ public class LevelGrid : MonoBehaviour
     private State nextState;
     private float stateTimer;
 
-    private GridSystem gridSystem;
+    private GridSystem2 gridSystem;
     private int width = 10;
     private int height = 15;
     private float cellSize = 2f;
@@ -33,6 +33,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private float speed = 0.5f;
     [SerializeField] private Transform orbContainer;
     private bool isMoving = false;
+    private float nextLineSpawn;
 
 
     private void Start()
@@ -45,45 +46,50 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        gridSystem = new GridSystem(width, height, cellSize);
+        gridSystem = new GridSystem2(width, height, cellSize);
         
         gridSystem.CreateDebugObject(debugPrefab);
-
-        state = State.PreStart;
+        gridSystem.PopulateOrbObjects(orbPrefab, orbContainer, 3);
+        isMoving = true;
+        nextLineSpawn = -1f;
+        // state = State.PreStart;
         // SpawnLevelOrbs(orbPrefab, 3);
     }
 
     private void Update() 
     {
-        stateTimer -= Time.deltaTime;
-        if (stateTimer > 0f) {
-            return;
-        }
-        switch (state)
-        {
-            case State.PreStart:
-                NextState();
-                break;
-            case State.Start:
-                //1) game start sign
-                //2) spawn orbs
-                //3 spawn launcher move in
-                SpawnLevelOrbs(orbPrefab, 3);
-                NextState();
-                break;
-            case State.Running:
-                SpawnAndShiftOrbRow(orbPrefab);
-                stateTimer = 4f;
-                break;
-            case State.Win:
-                break;
-            case State.Lose:
-                break;
-            case State.Pause:
-                break;
-            default:
-                break;
-        }
+        MoveOrbRows();
+        
+
+        // stateTimer -= Time.deltaTime;
+        // if (stateTimer > 0f) {
+        //     return;
+        // }
+        // switch (state)
+        // {
+        //     case State.PreStart:
+        //         NextState();
+        //         break;
+        //     case State.Start:
+        //         //1) game start sign
+        //         //2) spawn orbs
+        //         //3 spawn launcher move in
+        //         SpawnLevelOrbs(orbPrefab, 3);
+        //         NextState();
+        //         break;
+        //     case State.Running:
+        //         SpawnAndShiftOrbRow(orbPrefab);
+        //         stateTimer = 4f;
+        //         break;
+        //     case State.Win:
+        //         break;
+        //     case State.Lose:
+        //         break;
+        //     case State.Pause:
+        //         break;
+        //     default:
+        //         break;
+        // }
     }
 
     private void NextState()
@@ -109,6 +115,12 @@ public class LevelGrid : MonoBehaviour
             return;
         }
         orbContainer.position += Vector3.down * Time.deltaTime * speed;
+
+        if (orbContainer.position.y <= nextLineSpawn)
+        {
+            SpawnOrbRow();
+            nextLineSpawn = nextLineSpawn - 2f;
+        }
     }
 
     public void StartMoving()
@@ -116,7 +128,7 @@ public class LevelGrid : MonoBehaviour
         isMoving = true;
     }
 
-    public GridSystem GetGridSystem() => gridSystem;
+    public GridSystem2 GetGridSystem() => gridSystem;
 
     public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition - orbContainer.position);
     
@@ -130,7 +142,7 @@ public class LevelGrid : MonoBehaviour
     
     public LayerMask GetOrbMask() => orbLayer;
 
-    public void SpawnOrbOnGridPosition(GridPosition gridPosition, OrbTypeSO orbType)
+    public void TryMatchOrb(GridPosition gridPosition, OrbTypeSO orbType)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
 
@@ -187,29 +199,35 @@ public class LevelGrid : MonoBehaviour
         }
     }
 
-    public void SpawnLevelOrbs(Transform orbPrefab, int size)
+    private void SpawnOrbRow()
     {
-        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
-
-        for (int x = 0; x < gridSystem.GetWidth(); x+=2)
-        {
-            for (int y = gridSystem.GetHeight() - 1; y >= height - size; y--)
-            {
-                int offSetX = (y % 2 == 0) ? 1 : 0;
-
-                GridPosition gridPosition = new GridPosition(x + offSetX, y);
-                Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-
-                orbTransform.parent = orbContainer;
-                //initialize orb
-                Orb orb = orbTransform.GetComponent<Orb>();
-                OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-                gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
-            }
-        }
+        gridSystem.SpawnOrbRow(orbPrefab, orbContainer);
     }
 
-    public void SpawnAndShiftOrbRow(Transform orbPrefab) => gridSystem.SpawnGridRow(orbPrefab);
+    //Not in use
+    // public void SpawnLevelOrbs(Transform orbPrefab, int size)
+    // {
+    //     List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
+
+    //     for (int x = 0; x < gridSystem.GetWidth(); x+=2)
+    //     {
+    //         for (int y = gridSystem.GetHeight() - 1; y >= height - size; y--)
+    //         {
+    //             int offSetX = (y % 2 == 0) ? 1 : 0;
+
+    //             GridPosition gridPosition = new GridPosition(x + offSetX, y);
+    //             Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+
+    //             orbTransform.parent = orbContainer;
+    //             //initialize orb
+    //             Orb orb = orbTransform.GetComponent<Orb>();
+    //             OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
+    //             gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
+    //         }
+    //     }
+    // }
+
+    // public void SpawnAndShiftOrbRow(Transform orbPrefab) => gridSystem.SpawnGridRow(orbPrefab);
 
     // private void OnDrawGizmos() {
     //     if (!Application.isPlaying || gridSystem == null) return;
