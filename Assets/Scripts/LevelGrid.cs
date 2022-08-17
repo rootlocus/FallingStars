@@ -19,9 +19,9 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private Transform orbPrefab;
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private LayerMask orbLayer;
+    [SerializeField] private AudioClip matchSoundClip;
 
     private State state;
-    private State nextState;
     private float stateTimer;
 
     private GridSystem gridSystem;
@@ -36,7 +36,7 @@ public class LevelGrid : MonoBehaviour
     private float nextLineSpawn;
 
 
-    private void Start()
+    private void Awake() 
     {
         if (Instance != null)
         {
@@ -45,11 +45,13 @@ public class LevelGrid : MonoBehaviour
             return;
         }
         Instance = this;
+    }
 
+    private void Start()
+    {
         gridSystem = new GridSystem(width, height, cellSize);
         
         gridSystem.CreateDebugObject(debugPrefab);
-        // gridSystem.PopulateOrbObjects(orbPrefab, orbContainer, 3);
 
         nextLineSpawn = -1f;
         state = State.PreStart;
@@ -160,16 +162,12 @@ public class LevelGrid : MonoBehaviour
         matchingLists.Clear();
         bool isMatched = HasMatch3Link(gridPosition, ref matchingLists);
 
-        foreach (GridObject go in matchingLists)
-        {
-            Debug.Log(go);
-        }
-
         if (isMatched) {
             foreach (GridObject gridObject in matchingLists)
             {
                 gridObject.RemoveOrb();
             }
+            AudioManager.Instance.PlaySFX(matchSoundClip);
             HandleIslandGrids();
         }
     }

@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public static event EventHandler OnProjectileStop;
     [SerializeField] private Transform orbPrefab;
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private AudioClip reflectSoundClip;
 
     private float moveSpeed = 50f;
     private bool isMove;
@@ -34,6 +37,8 @@ public class Projectile : MonoBehaviour
                 GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
                 LevelGrid.Instance.TryMatchOrb(gridPosition, orbType);
 
+                OnProjectileStop?.Invoke(this, EventArgs.Empty);
+
                 Destroy(gameObject);
             } else {
                 transform.position += distanceTravel;
@@ -50,6 +55,7 @@ public class Projectile : MonoBehaviour
     {
         string collidedTag = other.gameObject.tag;
         if (collidedTag == "Wall") {
+            AudioManager.Instance.PlaySFX(reflectSoundClip);
             direction = Vector3.Reflect(direction, Vector3.right);
         }
 
