@@ -51,7 +51,7 @@ public class LevelGrid : MonoBehaviour
     {
         gridSystem = new GridSystem(width, height, cellSize);
         
-        gridSystem.CreateDebugObject(debugPrefab);
+        gridSystem.CreateDebugObject(debugPrefab, orbContainer);
 
         nextLineSpawn = -1f;
         state = State.PreStart;
@@ -166,6 +166,8 @@ public class LevelGrid : MonoBehaviour
             foreach (GridObject gridObject in matchingLists)
             {
                 gridObject.RemoveOrb();
+                Vector2 gridObjectPosition = gridSystem.GetWorldPositionCenter(gridObject.GetGridPosition()) + orbContainer.position;
+                PointManager.Instance.Create(gridObjectPosition, 150);
             }
             AudioManager.Instance.PlaySFX(matchSoundClip);
             HandleIslandGrids();

@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 378795421832133411}
   - component: {fileID: 4394111056604976148}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ Transform:
   m_GameObject: {fileID: 9012896221867812532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.03}
-  m_LocalScale: {x: 2, y: 2.3, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4843731035010008672}
@@ -145,10 +145,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 862767979
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 03a0f4f58e112ee42ab9125a098f5bbf, type: 3}
+  m_Sprite: {fileID: 541844279, guid: 02c2d3c2c2b1f7b4d93fb28bcc506102, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

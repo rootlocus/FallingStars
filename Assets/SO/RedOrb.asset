@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
   orbName: Red
+  sprite: {fileID: 1982614379, guid: 7f2f66bf7825abe4aa5be296132af753, type: 3}
+  orbAnimation: {fileID: 0}

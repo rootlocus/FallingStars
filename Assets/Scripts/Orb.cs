@@ -12,7 +12,7 @@ public class Orb : MonoBehaviour
     public void Setup(OrbTypeSO orbSO)
     {
         myOrbType = orbSO;
-        sprite.color = orbSO.color;
+        sprite.sprite = orbSO.sprite;
     }
 
     public OrbTypeSO GetOrbTypeSO() => myOrbType;

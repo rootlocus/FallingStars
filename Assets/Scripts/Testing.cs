@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class Testing : MonoBehaviour
 {
-    private GridSystem gridSystem;
     [SerializeField] private Transform debugPrefab;
     [SerializeField] private Transform orbPrefab;
-    private List<GridObject> matchingLists;
-
     [SerializeField] private Transform launchPosition;
+    private GridSystem gridSystem;
+    private List<GridObject> matchingLists;
     private bool isLaunch;
     private Vector3 aimDir;
 
@@ -22,20 +21,7 @@ public class Testing : MonoBehaviour
     private void Update() {
         if (Input.GetMouseButtonDown(1))
         {
-            // LevelGrid.Instance.SpawnAndShiftOrbRow(orbPrefab);
-
-            // LevelGrid.Instance.StartMoving();
-            // GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
-            // Debug.Log(gridPosition);
-
-            // List< List<GridObject>> gridObjectList = LevelGrid.Instance.GetGridSystem().gridObjectList;
-
-            // foreach(List<GridObject> gObs in gridObjectList){
-            //     foreach(GridObject go in gObs) {
-            //         Debug.Log(go);
-            //     }
-            // }
-            DebugAdjacentGridObjects();
+            PointManager.Instance.Create((Vector2) MouseWorld.GetPosition(), 150);
         }
 
     }

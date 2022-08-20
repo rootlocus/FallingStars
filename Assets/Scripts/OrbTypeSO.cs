@@ -12,4 +12,6 @@ public class OrbTypeSO : ScriptableObject
     // public OrbType type;
     public Color color;
     public string orbName;
+    public Sprite sprite;
+    public Animator orbAnimation;
 }

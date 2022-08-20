@@ -14,13 +14,14 @@ public class Projectile : MonoBehaviour
     private bool isMove;
     private Vector3 direction;
     private OrbTypeSO orbType;
+    private float projectileExitHeight = 28.5f;
     
 
     public void Setup(Vector3 direction, OrbTypeSO orbType)
     {
         this.direction = direction;
         this.orbType = orbType;
-        sprite.color = orbType.color;
+        sprite.sprite = orbType.sprite;
 
         isMove = true;
     }
@@ -42,6 +43,12 @@ public class Projectile : MonoBehaviour
                 Destroy(gameObject);
             } else {
                 transform.position += distanceTravel;
+
+                if (transform.position.y > projectileExitHeight)
+                {
+                    OnProjectileStop?.Invoke(this, EventArgs.Empty);
+                    Destroy(gameObject);
+                }
             }
         }
     }

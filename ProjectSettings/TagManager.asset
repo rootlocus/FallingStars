@@ -43,6 +43,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 985129297
+    locked: 0
+  - name: Orb
+    uniqueID: 862767979
+    locked: 0
+  - name: Launcher
+    uniqueID: 1169063927
+    locked: 0
   - name: Top
     uniqueID: 4251815667
     locked: 0

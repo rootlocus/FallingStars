@@ -37,8 +37,8 @@ public class Launcher : MonoBehaviour
 
         nextOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
         currentOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
-        currentOrbSprite.color = currentOrbType.color;
-        nextOrbSprite.color = nextOrbType.color;
+        currentOrbSprite.sprite = currentOrbType.sprite;
+        nextOrbSprite.sprite = nextOrbType.sprite;
     }
 
     private void Update() 
@@ -108,8 +108,8 @@ public class Launcher : MonoBehaviour
         currentOrbType = nextOrbType;
         nextOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
 
-        currentOrbSprite.color = currentOrbType.color;
-        nextOrbSprite.color = nextOrbType.color;
+        currentOrbSprite.sprite = currentOrbType.sprite;
+        nextOrbSprite.sprite = nextOrbType.sprite;
     }
 
     private void Projectile_OnProjectileStop(object sender, EventArgs e)
