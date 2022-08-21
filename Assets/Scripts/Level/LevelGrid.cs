@@ -1,37 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random=UnityEngine.Random;
 
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance;
-    private enum State
-    {
-        PreStart,
-        Start,
-        Running,
-        Win,
-        Lose,
-        Pause,
-    }
-    
+    public event EventHandler OnStartLevel;
+
+    [Header("Prefabs Transform")]
     [SerializeField] private Transform debugPrefab;
     [SerializeField] private Transform orbPrefab;
+    [SerializeField] private Transform orbContainer;
+
+    [Header("Configurations")]
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private LayerMask orbLayer;
+    [SerializeField] private float speed = 0.5f;
     [SerializeField] private AudioClip matchSoundClip;
-
-    private State state;
-    private float stateTimer;
 
     private GridSystem gridSystem;
     private int width = 10;
     private int height = 15;
     private float cellSize = 2f;
 
-    // for moving entire grid orbs
-    [SerializeField] private float speed = 0.5f;
-    [SerializeField] private Transform orbContainer;
     private bool isMoving = false;
     private float nextLineSpawn;
 
@@ -52,68 +45,23 @@ public class LevelGrid : MonoBehaviour
         gridSystem = new GridSystem(width, height, cellSize);
         
         gridSystem.CreateDebugObject(debugPrefab, orbContainer);
+        //TODO: spawn the rope sprite
 
         nextLineSpawn = -1f;
-        state = State.PreStart;
+        OnStartLevel?.Invoke(this, EventArgs.Empty);
     }
 
-    private void Update() 
-    {
-        stateTimer -= Time.deltaTime;
-        if (stateTimer > 0f) {
-            return;
-        }
-
-        switch (state)
-        {
-            case State.PreStart:
-                NextState();
-                break;
-            case State.Start:
-                //1) game start sign
-                //2) spawn orbs
-                //3 spawn launcher move in
-                SpawnLevelOrbs(orbPrefab, 3);
-                NextState();
-                break;
-            case State.Running:
-                MoveOrbRows();
-                break;
-            case State.Win:
-                break;
-            case State.Lose:
-                break;
-            case State.Pause:
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void NextState()
-    {
-        switch (state)
-        {
-            case State.PreStart:
-                state = State.Start;
-                break;
-            case State.Start:
-                state = State.Running;
-                stateTimer = 2f;
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void MoveOrbRows()
+    public void MoveOrbRows()
     {
         if (!isMoving)
         {
             return;
         }
         orbContainer.position += Vector3.down * Time.deltaTime * speed;
+    }
 
+    public void CheckSpawnOrbRow()
+    {
         if (orbContainer.position.y <= nextLineSpawn)
         {
             SpawnOrbRow();
@@ -124,6 +72,11 @@ public class LevelGrid : MonoBehaviour
     public void StartMoving()
     {
         isMoving = true;
+    }
+
+    public void StopMoving()
+    {
+        isMoving = false;
     }
 
     public GridSystem GetGridSystem() => gridSystem;
@@ -142,7 +95,7 @@ public class LevelGrid : MonoBehaviour
 
     public void TryMatchOrb(GridPosition gridPosition, OrbTypeSO orbType)
     {
-        isMoving = false;
+        StopMoving();
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
 
         Transform orb = Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition) + orbContainer.position, Quaternion.identity);
@@ -154,7 +107,7 @@ public class LevelGrid : MonoBehaviour
 
         List<GridObject> matchingLists = new List<GridObject>();
         MatchGridPosition(gridPosition, ref matchingLists);
-        isMoving = true;
+        StartMoving();
     }
 
     private void MatchGridPosition(GridPosition gridPosition, ref List<GridObject> matchingLists)
@@ -207,8 +160,7 @@ public class LevelGrid : MonoBehaviour
         gridSystem.SpawnOrbRow(orbPrefab, orbContainer);
     }
 
-    //Not in use
-    public void SpawnLevelOrbs(Transform orbPrefab, int size)
+    public void SpawnLevelOrbs(int size)
     {
         List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
