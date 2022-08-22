@@ -8,6 +8,7 @@ public class LevelState : MonoBehaviour
     public static LevelState Instance;
     public event EventHandler OnStatePreStart;
     public event EventHandler OnStateStart;
+    public event EventHandler OnStateLose;
 
     private enum State
     {
@@ -21,6 +22,7 @@ public class LevelState : MonoBehaviour
     }
     private State currentState;
     private float stateTimer;
+    private bool isRunning;
     [SerializeField] private DeathLine deathline;
     
 
@@ -40,10 +42,14 @@ public class LevelState : MonoBehaviour
         deathline.OnOrbEnter += DeathLine_OnOrbEnter;
         deathline.OnOrbExit += DeathLine_OnOrbExit;
         LevelGrid.Instance.OnStartLevel += LevelGrid_OnStartLevel;
+
+        isRunning = true;
     }
 
     private void Update() 
     {
+        if (!isRunning) return;
+
         stateTimer -= Time.deltaTime;
         if (stateTimer > 0f) {
             return;
@@ -52,7 +58,6 @@ public class LevelState : MonoBehaviour
         switch (currentState)
         {
             case State.PreStart:
-                //1) game start sign
                 OnStatePreStart?.Invoke(this, EventArgs.Empty);
                 NextState();
                 break;
@@ -60,7 +65,7 @@ public class LevelState : MonoBehaviour
                 //2) spawn orbs
                 //3 spawn launcher move in
                 OnStateStart?.Invoke(this, EventArgs.Empty);
-                LevelGrid.Instance.SpawnLevelOrbs(3);
+                LevelGrid.Instance.SpawnLevelOrbs(3); //TODO: spawn at x position then tween it to it's position
                 NextState();
                 break;
             case State.Running:
@@ -68,7 +73,9 @@ public class LevelState : MonoBehaviour
                 LevelGrid.Instance.CheckSpawnOrbRow();
                 break;
             case State.Lose:
-                Debug.Log("LOSE");
+                Debug.Log("LOSE state");
+                OnStateLose?.Invoke(this, EventArgs.Empty); // maybe pass score and time here ?
+                isRunning = false;
                 break;
             case State.Pause:
                 break;

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class LauncherVisualGuide : MonoBehaviour
 {
-
     [SerializeField] private LineRenderer lineRenderer;
-    // [SerializeField] private Transform arrow;
     [SerializeField] private LayerMask hitLayer;
     private Vector2 endLine;
 
@@ -20,7 +18,7 @@ public class LauncherVisualGuide : MonoBehaviour
         
         if (!hit) return;
         
-        if (hit.transform.tag == "Wall") 
+        if (hit.transform.tag == "Wall")
         {
             // lineRenderer.positionCount = 3;
 

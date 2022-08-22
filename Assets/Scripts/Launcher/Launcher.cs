@@ -34,7 +34,8 @@ public class Launcher : MonoBehaviour
     private void Start() 
     {
         Projectile.OnProjectileStop += Projectile_OnProjectileStop;
-
+        LevelState.Instance.OnStateLose += LevelState_OnStateLose;
+        
         nextOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
         currentOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
         currentOrbSprite.sprite = currentOrbType.sprite;
@@ -117,5 +118,8 @@ public class Launcher : MonoBehaviour
         state = State.Reload;
     }
 
-
+    private void LevelState_OnStateLose(object sender, EventArgs e)
+    {
+        state = State.Pause;
+    }
 }
