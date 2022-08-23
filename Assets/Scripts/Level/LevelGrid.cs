@@ -8,14 +8,8 @@ public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance;
     public event EventHandler OnStartLevel;
-    public event EventHandler<OnSuccessfulMatchArgs> OnSuccessfulMatch;
+    public event EventHandler<int> OnSuccessfulMatch;
     public event EventHandler OnUnsuccessfulMatch;
-
-    public class OnSuccessfulMatchArgs : EventArgs
-    {
-        public int matchCount;
-        public int dropCount;
-    }
 
     [Header("Prefabs Transform")]
     [SerializeField] private Transform debugPrefab;
@@ -52,7 +46,7 @@ public class LevelGrid : MonoBehaviour
     {
         gridSystem = new GridSystem(width, height, cellSize);
         
-        gridSystem.CreateDebugObject(debugPrefab, orbContainer);
+        // gridSystem.CreateDebugObject(debugPrefab, orbContainer);
         //TODO: spawn the rope sprite
 
         nextLineSpawn = -1f;
@@ -125,21 +119,21 @@ public class LevelGrid : MonoBehaviour
 
         if (isMatched) {
             int matchCount = matchingLists.Count;
-            
+            int totalScore = 0;
+
             foreach (GridObject gridObject in matchingLists)
             {
                 gridObject.RemoveOrb();
                 Vector2 gridObjectPosition = gridSystem.GetWorldPositionCenter(gridObject.GetGridPosition()) + orbContainer.position;
-                PointManager.Instance.Create(gridObjectPosition, 150);
+                ScoreManager.Instance.Create(gridObjectPosition, 100);
+
+                totalScore += 100;
             }
             AudioManager.Instance.PlaySFX(matchSoundClip);
             HandleIslandGrids();
 
             //match orb here
-            OnSuccessfulMatch?.Invoke(this, new OnSuccessfulMatchArgs {
-                matchCount = matchCount,
-                dropCount = 0,
-            });
+            OnSuccessfulMatch?.Invoke(this, totalScore);
         } else 
         {
             OnUnsuccessfulMatch?.Invoke(this, EventArgs.Empty);

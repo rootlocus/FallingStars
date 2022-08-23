@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointPrefab: {fileID: 5399662413615256802, guid: badb3677940f75740942a2d4fbad4aaa, type: 3}
+  scoreUI: {fileID: 0}

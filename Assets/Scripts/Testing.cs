@@ -21,7 +21,7 @@ public class Testing : MonoBehaviour
     private void Update() {
         if (Input.GetMouseButtonDown(1))
         {
-            PointManager.Instance.Create((Vector2) MouseWorld.GetPosition(), 150);
+            ScoreManager.Instance.Create((Vector2) MouseWorld.GetPosition(), 150);
         }
 
     }

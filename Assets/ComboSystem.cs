@@ -33,7 +33,7 @@ public class ComboSystem : MonoBehaviour
         ResetComboCount();
     }
 
-    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
+    private void LevelGrid_OnSuccessfulMatch(object sender, int e)
     {
         AddCurrentCombo();
 
