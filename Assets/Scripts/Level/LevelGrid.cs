@@ -8,6 +8,14 @@ public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance;
     public event EventHandler OnStartLevel;
+    public event EventHandler<OnSuccessfulMatchArgs> OnSuccessfulMatch;
+    public event EventHandler OnUnsuccessfulMatch;
+
+    public class OnSuccessfulMatchArgs : EventArgs
+    {
+        public int matchCount;
+        public int dropCount;
+    }
 
     [Header("Prefabs Transform")]
     [SerializeField] private Transform debugPrefab;
@@ -93,7 +101,7 @@ public class LevelGrid : MonoBehaviour
     
     public LayerMask GetOrbMask() => orbLayer;
 
-    public void TryMatchOrb(GridPosition gridPosition, OrbTypeSO orbType)
+    public void AttachOrbToGrid(GridPosition gridPosition, OrbTypeSO orbType)
     {
         StopMoving();
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
@@ -106,16 +114,18 @@ public class LevelGrid : MonoBehaviour
         gridObject.AddOrb(attachedOrb, orbType);
 
         List<GridObject> matchingLists = new List<GridObject>();
-        MatchGridPosition(gridPosition, ref matchingLists);
+        TryMatchGridPosition(gridPosition, ref matchingLists);
         StartMoving();
     }
 
-    private void MatchGridPosition(GridPosition gridPosition, ref List<GridObject> matchingLists)
+    private void TryMatchGridPosition(GridPosition gridPosition, ref List<GridObject> matchingLists)
     {
         matchingLists.Clear();
         bool isMatched = HasMatch3Link(gridPosition, ref matchingLists);
 
         if (isMatched) {
+            int matchCount = matchingLists.Count;
+            
             foreach (GridObject gridObject in matchingLists)
             {
                 gridObject.RemoveOrb();
@@ -124,6 +134,15 @@ public class LevelGrid : MonoBehaviour
             }
             AudioManager.Instance.PlaySFX(matchSoundClip);
             HandleIslandGrids();
+
+            //match orb here
+            OnSuccessfulMatch?.Invoke(this, new OnSuccessfulMatchArgs {
+                matchCount = matchCount,
+                dropCount = 0,
+            });
+        } else 
+        {
+            OnUnsuccessfulMatch?.Invoke(this, EventArgs.Empty);
         }
     }
 

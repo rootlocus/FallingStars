@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
             if (predictionHit.collider != null) {
                 isMove = false;
                 GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-                LevelGrid.Instance.TryMatchOrb(gridPosition, orbType);
+                LevelGrid.Instance.AttachOrbToGrid(gridPosition, orbType);
 
                 OnProjectileStop?.Invoke(this, EventArgs.Empty);
 

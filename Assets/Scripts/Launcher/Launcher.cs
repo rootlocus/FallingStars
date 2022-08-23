@@ -6,6 +6,8 @@ using Random=UnityEngine.Random;
 
 public class Launcher : MonoBehaviour
 {
+    public static event EventHandler OnFireCombo;
+
     [SerializeField] private Transform launchPosition;
     [SerializeField] private Transform projectilePrefab;
     [SerializeField] private SpriteRenderer currentOrbSprite;
@@ -13,7 +15,6 @@ public class Launcher : MonoBehaviour
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private AudioClip launchSoundClip;
     [SerializeField] private AudioClip reloadSoundClip;
-
 
     private OrbTypeSO currentOrbType;
     private OrbTypeSO nextOrbType;
@@ -26,7 +27,7 @@ public class Launcher : MonoBehaviour
         Pause,
         Reload,
     }
-    private State state;
+    private State currentState;
     private State nextState;
     private float stateTimer;
     
@@ -35,16 +36,24 @@ public class Launcher : MonoBehaviour
     {
         Projectile.OnProjectileStop += Projectile_OnProjectileStop;
         LevelState.Instance.OnStateLose += LevelState_OnStateLose;
+        ComboSystem.OnMaxComboTriggered += ComboSystem_OnMaxComboTriggered;
         
-        nextOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
-        currentOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
+        nextOrbType = GetRandomOrb();
+        currentOrbType = GetRandomOrb();
         currentOrbSprite.sprite = currentOrbType.sprite;
         nextOrbSprite.sprite = nextOrbType.sprite;
     }
 
+    private void ComboSystem_OnMaxComboTriggered(object sender, EventArgs e)
+    {
+        //TODO swap single bullet type
+        // eventually move this into special projectile
+        OnFireCombo?.Invoke(this, EventArgs.Empty);
+    }
+
     private void Update() 
     {
-        switch (state)
+        switch (currentState)
         {
             case State.Initialize:
                 NextState();
@@ -83,21 +92,20 @@ public class Launcher : MonoBehaviour
             default:
                 break;
         }
-
     }
 
     private void NextState()
     {
-        switch (state)
+        switch (currentState)
         {
             case State.Initialize:
-                state = State.Ready;
+                currentState = State.Ready;
                 break;
             case State.Ready:
-                state = State.Wait;
+                currentState = State.Wait;
                 break;
             case State.Reload:
-                state = State.Ready;
+                currentState = State.Ready;
                 break;
             default:
                 break;
@@ -107,19 +115,24 @@ public class Launcher : MonoBehaviour
     private void IterateNextOrb()
     {
         currentOrbType = nextOrbType;
-        nextOrbType = orbTypes[Random.Range(0, orbTypes.Count)];
+        nextOrbType = GetRandomOrb();
 
         currentOrbSprite.sprite = currentOrbType.sprite;
         nextOrbSprite.sprite = nextOrbType.sprite;
     }
 
+    private OrbTypeSO GetRandomOrb()
+    {
+        return orbTypes[Random.Range(0, orbTypes.Count)];
+    }
+
     private void Projectile_OnProjectileStop(object sender, EventArgs e)
     {
-        state = State.Reload;
+        currentState = State.Reload;
     }
 
     private void LevelState_OnStateLose(object sender, EventArgs e)
     {
-        state = State.Pause;
+        currentState = State.Pause;
     }
 }
