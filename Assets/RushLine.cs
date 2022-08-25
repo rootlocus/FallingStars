@@ -1,17 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class DeathLine : MonoBehaviour
+public class RushLine : MonoBehaviour
 {
     public event EventHandler OnOrbEnter;
-    public event EventHandler OnOrbExit;
+    // public event EventHandler OnOrbExit;
 
     [SerializeField] private Vector2 startPosition;
     [SerializeField] private Vector2 endPosition;
     [SerializeField] private LayerMask orbLayer;
-    private bool isHitPrevious = false;
+    // private bool isHitPrevious = false;
+
 
     private void Update()
     {
@@ -19,22 +20,22 @@ public class DeathLine : MonoBehaviour
 
         if (orbHit) 
         {
-            isHitPrevious = true;
+            // isHitPrevious = true;
             OnOrbEnter?.Invoke(this, EventArgs.Empty);
         }
 
-        if (isHitPrevious == true && orbHit == false)
-        {
-            isHitPrevious = false;
-            OnOrbExit?.Invoke(this, EventArgs.Empty);
-        }
+        // if (isHitPrevious == true && orbHit == false)
+        // {
+        //     isHitPrevious = false;
+        //     OnOrbExit?.Invoke(this, EventArgs.Empty);
+        // }
     }
 
     private void OnDrawGizmos()
     {
         if (Application.isPlaying) return;
-
-        Gizmos.color = Color.blue;
+        
+        Gizmos.color = Color.green;
         Gizmos.DrawLine(startPosition, endPosition);
     }
 }

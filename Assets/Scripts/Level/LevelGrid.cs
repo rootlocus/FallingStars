@@ -2,14 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using Random=UnityEngine.Random;
+
 
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance;
     public event EventHandler OnStartLevel;
-    public event EventHandler<int> OnSuccessfulMatch;
+    public class OnSuccessfulMatchArgs : EventArgs
+    {
+        public int orbDestroyed;
+        public int orbFallen;
+        public int score;
+    }
+    public event EventHandler<OnSuccessfulMatchArgs> OnSuccessfulMatch;
     public event EventHandler OnUnsuccessfulMatch;
+    
 
     [Header("Prefabs Transform")]
     [SerializeField] private Transform debugPrefab;
@@ -19,8 +28,8 @@ public class LevelGrid : MonoBehaviour
     [Header("Configurations")]
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private LayerMask orbLayer;
-    [SerializeField] private float speed = 0.5f;
     [SerializeField] private AudioClip matchSoundClip;
+    [SerializeField] private float defaultGridSpeed = 0.25f;
 
     private GridSystem gridSystem;
     private int width = 10;
@@ -28,7 +37,8 @@ public class LevelGrid : MonoBehaviour
     private float cellSize = 2f;
 
     private bool isMoving = false;
-    private float nextLineSpawn;
+    private float nextLineSpawn; // spawn row of orb on this y position
+    private float currentGridSpeed;
 
 
     private void Awake() 
@@ -50,7 +60,13 @@ public class LevelGrid : MonoBehaviour
         //TODO: spawn the rope sprite
 
         nextLineSpawn = -1f;
+        currentGridSpeed = defaultGridSpeed;
+
         OnStartLevel?.Invoke(this, EventArgs.Empty);
+    }
+
+    internal void PushGridBack(GridPosition gridPosition, OrbTypeSO orbType)
+    {
     }
 
     public void MoveOrbRows()
@@ -59,7 +75,8 @@ public class LevelGrid : MonoBehaviour
         {
             return;
         }
-        orbContainer.position += Vector3.down * Time.deltaTime * speed;
+        
+        orbContainer.position += Vector3.down * Time.deltaTime * currentGridSpeed;
     }
 
     public void CheckSpawnOrbRow()
@@ -130,10 +147,14 @@ public class LevelGrid : MonoBehaviour
                 totalScore += 100;
             }
             AudioManager.Instance.PlaySFX(matchSoundClip);
-            HandleIslandGrids();
+            int fallenCount = HandleIslandGrids();
 
             //match orb here
-            OnSuccessfulMatch?.Invoke(this, totalScore);
+            OnSuccessfulMatch?.Invoke(this, new OnSuccessfulMatchArgs {
+                orbDestroyed = matchCount,
+                orbFallen = fallenCount,
+                score = totalScore,
+            });
         } else 
         {
             OnUnsuccessfulMatch?.Invoke(this, EventArgs.Empty);
@@ -141,8 +162,9 @@ public class LevelGrid : MonoBehaviour
     }
 
     //TODO: able to be more efficient
-    public void HandleIslandGrids()
+    public int HandleIslandGrids()
     {
+        int fallenCount = 0;
         List<GridObject> gridObjectWithOrbs = new List<GridObject>();
         gridObjectWithOrbs = gridSystem.GetAllGridObjectWithOrbs();
 
@@ -162,10 +184,13 @@ public class LevelGrid : MonoBehaviour
                     continue;
                 }
                 
+                fallenCount++;
                 gridObject.RemoveOrb();
                 removedGridObjects.Add(gridObject);
             }
         }
+
+        return fallenCount;
     }
 
     private void SpawnOrbRow()
@@ -194,6 +219,20 @@ public class LevelGrid : MonoBehaviour
                 gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
             }
         }
+    }
+
+    public void GridChaseMode()
+    {
+        float maxSpeed = 1.5f;
+        float timeToHitMaxSpeed = 5f;
+        DOVirtual.Float(currentGridSpeed, maxSpeed, timeToHitMaxSpeed, v => {
+            currentGridSpeed = v;
+        });
+    }
+
+    public void SetGridSpeedNormal()
+    {
+        currentGridSpeed = defaultGridSpeed;
     }
 
     // public void SpawnAndShiftOrbRow(Transform orbPrefab) => gridSystem.SpawnGridRow(orbPrefab);

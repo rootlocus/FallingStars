@@ -31,9 +31,9 @@ public class ScoreManager : MonoBehaviour
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
     }
 
-    private void LevelGrid_OnSuccessfulMatch(object sender, int score)
+    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
     {
-        currentScore += score;
+        currentScore += e.score;
         scoreUI.SetScore(currentScore);
     }
 

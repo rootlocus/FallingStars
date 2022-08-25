@@ -83,3 +83,5 @@ crashlytics-build.properties
 
 # Ignore the auto-generated AOT compatibility dll.
 /Assets/Plugins/Demigiant/DOTween*
+
+/Assets/AllIn1SpriteShader/*

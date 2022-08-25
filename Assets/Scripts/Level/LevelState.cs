@@ -10,6 +10,10 @@ public class LevelState : MonoBehaviour
     public event EventHandler OnStateStart;
     public event EventHandler OnStateLose;
 
+    [SerializeField] private DeathLine deathline;
+    [SerializeField] private RushLine rushLine;
+    [SerializeField] private int chaseKillCount;
+
     private enum State
     {
         PreStart,
@@ -23,7 +27,7 @@ public class LevelState : MonoBehaviour
     private State currentState;
     private float stateTimer;
     private bool isRunning;
-    [SerializeField] private DeathLine deathline;
+    private int currentKillCount;
     
 
     private void Awake() 
@@ -41,9 +45,12 @@ public class LevelState : MonoBehaviour
     {
         deathline.OnOrbEnter += DeathLine_OnOrbEnter;
         deathline.OnOrbExit += DeathLine_OnOrbExit;
+        rushLine.OnOrbEnter += RushLine_OnOrbEnter;
         LevelGrid.Instance.OnStartLevel += LevelGrid_OnStartLevel;
-
+        LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
+        
         isRunning = true;
+        currentKillCount = 0;
     }
 
     private void Update() 
@@ -73,14 +80,12 @@ public class LevelState : MonoBehaviour
                 LevelGrid.Instance.CheckSpawnOrbRow();
                 break;
             case State.Lose:
-                Debug.Log("LOSE state");
                 OnStateLose?.Invoke(this, EventArgs.Empty); // maybe pass score and time here ?
                 isRunning = false;
                 break;
             case State.Pause:
                 break;
             case State.Countdown:
-                Debug.Log("countdown start");
                 NextState();
                 //start countdown
                 //change audio
@@ -116,6 +121,18 @@ public class LevelState : MonoBehaviour
         currentState = State.PreStart;
     }
 
+    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
+    {
+        int previousCount = currentKillCount;
+        currentKillCount += e.orbDestroyed;
+        currentKillCount += e.orbFallen;
+
+        if (previousCount < chaseKillCount && currentKillCount >= chaseKillCount)
+        {
+            LevelGrid.Instance.GridChaseMode();
+        }
+    }
+    
     private void DeathLine_OnOrbEnter(object sender, EventArgs e)
     {
         if (currentState != State.Lose && currentState != State.Countdown)
@@ -129,4 +146,11 @@ public class LevelState : MonoBehaviour
         currentState = State.Running;
         stateTimer = 0f;
     }
+
+    private void RushLine_OnOrbEnter(object sender, EventArgs e)
+    {
+        currentKillCount = 0;
+        LevelGrid.Instance.SetGridSpeedNormal();
+    }
+
 }

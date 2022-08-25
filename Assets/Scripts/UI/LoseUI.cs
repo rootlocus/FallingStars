@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Sirenix.OdinInspector;
 
 public class LoseUI : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class LoseUI : MonoBehaviour
     [SerializeField] private Button restartButton;
     [SerializeField] private TextMeshProUGUI pointsText;
     [SerializeField] private TextMeshProUGUI timeText;
-
+    [SerializeField] private AudioClip loseSound;
+    
 
     private void Awake()
     {
@@ -31,10 +33,14 @@ public class LoseUI : MonoBehaviour
         loseUI.SetActive(false);
     }
 
+    [Button("Lose Window Test")]
     private void LevelState_OnStateLose(object sender, EventArgs e)
     {
         SetPoints(999);
         SetTime(5, 32);
+
+        AudioManager.Instance.PauseBGM();
+        AudioManager.Instance.PlayMenuSFX(loseSound);
 
         loseUI.SetActive(true);
     }

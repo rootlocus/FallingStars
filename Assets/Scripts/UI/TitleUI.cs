@@ -10,7 +10,10 @@ public class TitleUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI startLabel;
     [SerializeField] private Ease easeType;
+    [SerializeField] private AudioClip enterTitleClip;
+
     private CanvasGroup ui;
+
 
     private void Awake() 
     {
@@ -30,15 +33,17 @@ public class TitleUI : MonoBehaviour
     [Button("Display Start Label")]
     private void DisplayStartLabel()
     {
+        // Initialize
         ui.alpha = 1;
         startLabel.fontSize = 300f;
         RectTransform labelTransform = startLabel.rectTransform;
         labelTransform.rect.Set(0,0,0,0);
 
-        Sequence shrinkAndExit = DOTween.Sequence();
-
+        // Animate
         labelTransform.DOShakeAnchorPos(5f, 10f, 10, 90);
+        AudioManager.Instance.PlayMenuSFXWithDelay(enterTitleClip, 1f);
 
+        Sequence shrinkAndExit = DOTween.Sequence();
         shrinkAndExit
             .Append( DOTween.To(() => startLabel.fontSize, newFontSize => startLabel.fontSize = newFontSize, 84f, 1f).SetEase(easeType) )
             .AppendInterval(1f)

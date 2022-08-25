@@ -64,6 +64,8 @@ public class Launcher : MonoBehaviour
                     AudioManager.Instance.PlaySFX(launchSoundClip);
 
                     Vector3 pointPosition = (Vector2) MouseWorld.GetPosition();
+                    pointPosition.y = Mathf.Clamp(pointPosition.y, 4f, 27.25f);
+
                     Vector3 direction = (pointPosition - transform.position).normalized;
                     //TODO clamp direction on left and right
                     

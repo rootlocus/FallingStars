@@ -36,7 +36,13 @@ public class Projectile : MonoBehaviour
             if (predictionHit.collider != null) {
                 isMove = false;
                 GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
-                LevelGrid.Instance.AttachOrbToGrid(gridPosition, orbType);
+                if (orbType.type == OrbTypeSO.OrbType.Normal) // in future can put this in execute and scriptable object
+                {
+                    LevelGrid.Instance.AttachOrbToGrid(gridPosition, orbType);
+                } else 
+                {
+                    LevelGrid.Instance.PushGridBack(gridPosition, orbType);
+                }
 
                 OnProjectileStop?.Invoke(this, EventArgs.Empty);
 

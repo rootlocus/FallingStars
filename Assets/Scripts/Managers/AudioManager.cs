@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance;
     public AudioSource bgm;
     public AudioSource sfx;
+    public AudioSource menuSfx;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
 
@@ -23,18 +24,42 @@ public class AudioManager : MonoBehaviour
 
         bgm = transform.Find("BGM").GetComponent<AudioSource>();
         sfx = transform.Find("SFX").GetComponent<AudioSource>();
+        menuSfx = transform.Find("MenuSFX").GetComponent<AudioSource>();
         // bgmSlider.value = bgm.volume;
         // sfxSlider.value = sfx.volume;
     }
 
-    public void PlaySFX(AudioClip _clip)
+    public void PlaySFX(AudioClip clip)
     {
-        sfx.PlayOneShot(_clip);
+        sfx.PlayOneShot(clip);
     }
 
-    public void PlayBGM(AudioClip _clip)
+    public void PlayBGM(AudioClip clip)
     {
-        bgm.PlayOneShot(_clip);
+        bgm.clip = clip;
+        bgm.Play();
+    }
+
+    public void PlayMenuSFX(AudioClip clip)
+    {
+        menuSfx.PlayOneShot(clip);
+    }
+
+    
+    public void PlayMenuSFXWithDelay(AudioClip clip, float delay)
+    {
+        menuSfx.clip = clip;
+        menuSfx.PlayDelayed(delay);
+    }
+
+    public void StopBGM()
+    {
+        bgm.Stop();
+    }
+
+    public void PauseBGM()
+    {
+        bgm.Pause();
     }
 
     public void ChangeBGMVolume()
