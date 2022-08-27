@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random=UnityEngine.Random;
 using Sirenix.OdinInspector;
+using DG.Tweening;
 
 public class Launcher : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class Launcher : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private Transform launchPosition;
     [SerializeField] private Transform projectilePrefab;
-    [SerializeField] private SpriteRenderer currentOrbSprite;
-    [SerializeField] private SpriteRenderer nextOrbSprite;
+    [SerializeField] private Transform currentOrbTransform;
+    [SerializeField] private Transform nextOrbTransform;
 
     [Header("Configurations")]
     [SerializeField] private List<OrbTypeSO> orbTypes;
@@ -21,6 +22,8 @@ public class Launcher : MonoBehaviour
     [SerializeField] private AudioClip reloadSoundClip;
     [SerializeField] private OrbTypeSO bombOrbType;
 
+    private SpriteRenderer currentOrbSprite;
+    private SpriteRenderer nextOrbSprite;
     private OrbTypeSO currentOrbType;
     private OrbTypeSO nextOrbType;
     private Projectile currentProjectile;
@@ -36,20 +39,23 @@ public class Launcher : MonoBehaviour
     private State nextState;
     private float stateTimer;
     private bool onSpecialMode;
+    private bool isReloaded;
     
+
+    private void Awake()
+    {
+        currentOrbSprite = currentOrbTransform.GetComponent<SpriteRenderer>();
+        nextOrbSprite = nextOrbTransform.GetComponent<SpriteRenderer>();
+    }
 
     private void Start() 
     {
         onSpecialMode = false;
+        isReloaded = false;
 
         Projectile.OnProjectileStop += Projectile_OnProjectileStop;
         LevelState.Instance.OnStateLose += LevelState_OnStateLose;
         ComboSystem.OnMaxComboTriggered += ComboSystem_OnMaxComboTriggered;
-        
-        nextOrbType = GetRandomOrb();
-        currentOrbType = GetRandomOrb();
-        currentOrbSprite.sprite = currentOrbType.sprite;
-        nextOrbSprite.sprite = nextOrbType.sprite;
     }
 
     private void Update() 
@@ -57,6 +63,12 @@ public class Launcher : MonoBehaviour
         switch (currentState)
         {
             case State.Initialize:
+                nextOrbType = GetRandomOrb();
+                currentOrbType = GetRandomOrb();
+                currentOrbSprite.sprite = currentOrbType.sprite;
+                nextOrbSprite.sprite = nextOrbType.sprite;
+
+                SpawnLauncherAnimation();
                 NextState();
                 break;
             case State.Ready:
@@ -65,8 +77,8 @@ public class Launcher : MonoBehaviour
                     PlayLauncherSound();
 
                     ThrowProjectile();
-
                     currentOrbSprite.enabled = false;
+                    
                     NextState();
                     LevelGrid.Instance.StartMoving();
                 }
@@ -75,6 +87,8 @@ public class Launcher : MonoBehaviour
                 //  // maybe only iterate after shot ?
                 break;
             case State.Reload:
+                if (isReloaded) return;
+
                 AudioManager.Instance.PlaySFX(reloadSoundClip);
 
                 if (onSpecialMode) 
@@ -83,9 +97,8 @@ public class Launcher : MonoBehaviour
                     SwapToSpecial();
                     NextState();
                 } else {
+                    isReloaded = true;
                     IterateNextOrb();
-                    currentOrbSprite.enabled = true;
-                    NextState();
                 }
                 break;
             case State.Pause:
@@ -132,11 +145,24 @@ public class Launcher : MonoBehaviour
 
     private void IterateNextOrb()
     {
-        currentOrbType = nextOrbType;
-        nextOrbType = GetRandomOrb();
+        Vector3 previousPosition = nextOrbTransform.position;
 
-        currentOrbSprite.sprite = currentOrbType.sprite;
-        nextOrbSprite.sprite = nextOrbType.sprite;
+        nextOrbTransform.DOMove(currentOrbTransform.position, 0.25f)
+        .OnComplete(() => {
+            //Shuffle orb and get new orb
+            currentOrbType = nextOrbType;
+            nextOrbType = GetRandomOrb();
+            currentOrbSprite.sprite = currentOrbType.sprite;
+            nextOrbSprite.sprite = nextOrbType.sprite;
+
+            //Reset Position
+            nextOrbTransform.position = previousPosition;
+            currentOrbSprite.enabled = true;
+            NextState();
+
+            isReloaded = false;
+        })
+        .SetEase(Ease.Flash);
     }
 
     private OrbTypeSO GetRandomOrb()
@@ -164,16 +190,16 @@ public class Launcher : MonoBehaviour
     
     private void ComboSystem_OnMaxComboTriggered(object sender, EventArgs e)
     {
-        Debug.Log("TRIGGERED");
         onSpecialMode = true;
-
-        //trigger a bool
-        // pause game 
-        // replace current pellet
-        
-        // SwapToSpecial();
-
         // OnFireSpecial?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void SpawnLauncherAnimation()
+    {
+        Vector2 newPosition = transform.position;
+        transform.position = transform.position + new Vector3(0, -5f);
+
+        transform.DOMove(newPosition, 1f).SetEase(Ease.InExpo);
     }
 
 }

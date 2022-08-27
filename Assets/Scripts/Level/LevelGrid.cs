@@ -217,6 +217,7 @@ public class LevelGrid : MonoBehaviour
         {
             int offSetX = (y % 2 == 0) ? 1 : 0;
             timeToMove -= 0.5f;
+
             for (int x = 0; x < gridSystem.GetWidth() - offSetX; x++)
             {
                 int doubleWidth = x * 2 + offSetX;
@@ -233,6 +234,7 @@ public class LevelGrid : MonoBehaviour
                 //initialize orb
                 OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
                 Orb orb = orbTransform.GetComponent<Orb>();
+
                 gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
             }
         }
@@ -242,6 +244,7 @@ public class LevelGrid : MonoBehaviour
     {
         float maxSpeed = 1.5f;
         float timeToHitMaxSpeed = 5f;
+        
         DOVirtual.Float(currentGridSpeed, maxSpeed, timeToHitMaxSpeed, v => {
             currentGridSpeed = v;
         });

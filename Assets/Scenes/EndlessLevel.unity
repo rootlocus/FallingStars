@@ -1361,6 +1361,16 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &1190691106 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3146635537061458075, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
+  m_PrefabInstance: {fileID: 3146635536245478904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1353577273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3146635535775749220, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
+  m_PrefabInstance: {fileID: 3146635536245478904}
+  m_PrefabAsset: {fileID: 0}
 --- !u!21 &1367095735
 Material:
   serializedVersion: 8
@@ -2926,14 +2936,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2106265082, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
-      propertyPath: m_Positions.Array.data[0].x
-      value: 10.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2106265082, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
-      propertyPath: m_Positions.Array.data[1].x
-      value: 10.25
-      objectReference: {fileID: 0}
     - target: {fileID: 3146635535775749221, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2987,13 +2989,13 @@ PrefabInstance:
       value: Launcher
       objectReference: {fileID: 0}
     - target: {fileID: 3146635536503780775, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
-      propertyPath: bombOrbType
+      propertyPath: nextOrbTransform
       value: 
-      objectReference: {fileID: 11400000, guid: f5872494aa8fd3f42b944bb64c758697, type: 2}
+      objectReference: {fileID: 1190691106}
     - target: {fileID: 3146635536503780775, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
-      propertyPath: reloadSpecialClip
+      propertyPath: currentOrbTransform
       value: 
-      objectReference: {fileID: 8300000, guid: 2625186a3ce818d44b3ba99327150004, type: 3}
+      objectReference: {fileID: 1353577273}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
 --- !u!1001 &3837173897697876235
@@ -3233,14 +3235,6 @@ PrefabInstance:
       propertyPath: orbContainer
       value: 
       objectReference: {fileID: 945749825}
-    - target: {fileID: 5436835447915688784, guid: e649c2d79e991b84c927358e2cdf8927, type: 3}
-      propertyPath: defaultGridSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5436835447915688784, guid: e649c2d79e991b84c927358e2cdf8927, type: 3}
-      propertyPath: pushbackSoundClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 77822b7b686d1574788826804340f1d2, type: 3}
     - target: {fileID: 5436835447915688785, guid: e649c2d79e991b84c927358e2cdf8927, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -3594,10 +3588,6 @@ PrefabInstance:
       propertyPath: deathline
       value: 
       objectReference: {fileID: 827935070}
-    - target: {fileID: 8774696167237401310, guid: 43e1259b82d59ea42b6a4564c70cac11, type: 3}
-      propertyPath: chaseKillCount
-      value: 40
-      objectReference: {fileID: 0}
     - target: {fileID: 8774696167237401311, guid: 43e1259b82d59ea42b6a4564c70cac11, type: 3}
       propertyPath: m_Name
       value: LevelState

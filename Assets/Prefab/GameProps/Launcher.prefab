@@ -74,8 +74,8 @@ LineRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Positions:
-  - {x: 10.5, y: 1.8, z: 0}
-  - {x: 10.5, y: 10, z: 1}
+  - {x: 10.25, y: 1.8, z: 0}
+  - {x: 10.25, y: 10, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 2
@@ -299,6 +299,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e848dac5be4e394ea7cd05ea4863623, type: 2}
   launchSoundClip: {fileID: 8300000, guid: ad85055d9f1acaa489c38efb6d94ef8b, type: 3}
   reloadSoundClip: {fileID: 8300000, guid: 2625186a3ce818d44b3ba99327150004, type: 3}
+  bombOrbType: {fileID: 11400000, guid: f5872494aa8fd3f42b944bb64c758697, type: 2}
 --- !u!114 &3146635536245478906
 MonoBehaviour:
   m_ObjectHideFlags: 0

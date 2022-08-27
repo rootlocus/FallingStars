@@ -54,5 +54,6 @@ MonoBehaviour:
   orbLayer:
     serializedVersion: 2
     m_Bits: 256
-  speed: 0.5
   matchSoundClip: {fileID: 8300000, guid: c4ce4d787e1a6eb4b971beb8b17145d9, type: 3}
+  pushbackSoundClip: {fileID: 8300000, guid: 77822b7b686d1574788826804340f1d2, type: 3}
+  defaultGridSpeed: 0.5
