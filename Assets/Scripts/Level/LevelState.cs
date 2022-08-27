@@ -72,7 +72,7 @@ public class LevelState : MonoBehaviour
                 //2) spawn orbs
                 //3 spawn launcher move in
                 OnStateStart?.Invoke(this, EventArgs.Empty);
-                LevelGrid.Instance.SpawnLevelOrbs(3); //TODO: spawn at x position then tween it to it's position
+                LevelGrid.Instance.SpawnLevelOrbs(5); //TODO: spawn at x position then tween it to it's position
                 NextState();
                 break;
             case State.Running:

@@ -29,6 +29,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private LayerMask orbLayer;
     [SerializeField] private AudioClip matchSoundClip;
+    [SerializeField] private AudioClip pushbackSoundClip;
     [SerializeField] private float defaultGridSpeed = 0.25f;
 
     private GridSystem gridSystem;
@@ -65,8 +66,17 @@ public class LevelGrid : MonoBehaviour
         OnStartLevel?.Invoke(this, EventArgs.Empty);
     }
 
-    internal void PushGridBack(GridPosition gridPosition, OrbTypeSO orbType)
+    public void PushGridBack(GridPosition gridPosition, OrbTypeSO orbType)
     {
+        float reverseSpeed = -10f;
+        float timeToHitMaxSpeed = 0.5f;
+        DOVirtual.Float(currentGridSpeed, reverseSpeed, timeToHitMaxSpeed, v => {
+            currentGridSpeed = v;
+        }).OnComplete(() => {
+            currentGridSpeed = defaultGridSpeed;
+        });
+
+        AudioManager.Instance.PlaySFX(pushbackSoundClip);
     }
 
     public void MoveOrbRows()
@@ -201,21 +211,28 @@ public class LevelGrid : MonoBehaviour
     public void SpawnLevelOrbs(int size)
     {
         List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
+        float timeToMove = 2.5f;
 
         for (int y = gridSystem.GetHeight() - 1; y >= height - size; y--)
         {
-            for (int x = 0; x < gridSystem.GetWidth(); x++)
+            int offSetX = (y % 2 == 0) ? 1 : 0;
+            timeToMove -= 0.5f;
+            for (int x = 0; x < gridSystem.GetWidth() - offSetX; x++)
             {
-                int offSetX = (y % 2 == 0) ? 1 : 0;
-
                 int doubleWidth = x * 2 + offSetX;
                 GridPosition gridPosition = new GridPosition(doubleWidth, y);
-                Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+
+                Vector2 endOrbPosition = GetWorldPositionCenter(gridPosition);
+                Vector2 startOrbPosition = endOrbPosition;
+                startOrbPosition.y = 30f;
+                
+                Transform orbTransform = GameObject.Instantiate(orbPrefab, startOrbPosition, Quaternion.identity);
                 orbTransform.parent = orbContainer;
+                orbTransform.DOMove(endOrbPosition, timeToMove).SetEase(Ease.InOutQuad);
 
                 //initialize orb
-                Orb orb = orbTransform.GetComponent<Orb>();
                 OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
+                Orb orb = orbTransform.GetComponent<Orb>();
                 gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
             }
         }

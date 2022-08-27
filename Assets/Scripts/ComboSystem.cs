@@ -20,7 +20,7 @@ public class ComboSystem : MonoBehaviour
 
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
         LevelGrid.Instance.OnUnsuccessfulMatch += LevelGrid_OnUnsuccessfulMatch;
-        Launcher.OnFireCombo += Launcher_OnFireCombo;
+        Launcher.OnFireSpecial += Launcher_OnFireSpecial;
     }
 
     private void LevelGrid_OnUnsuccessfulMatch(object sender, EventArgs e)
@@ -28,7 +28,7 @@ public class ComboSystem : MonoBehaviour
         ResetComboCount();
     }
 
-    private void Launcher_OnFireCombo(object sender, EventArgs e)
+    private void Launcher_OnFireSpecial(object sender, EventArgs e)
     {
         ResetComboCount();
     }
@@ -36,9 +36,9 @@ public class ComboSystem : MonoBehaviour
     private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
     {
         AddCurrentCombo();
-
         if (maxComboTrigger == currentCombo)
         {
+            ResetComboCount();
             OnMaxComboTriggered?.Invoke(this, EventArgs.Empty);
         }
     }

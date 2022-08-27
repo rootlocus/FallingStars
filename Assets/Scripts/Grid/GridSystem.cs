@@ -54,7 +54,7 @@ public class GridSystem
         {
             int offSetX = (y % 2 == 0) ? 1 : 0;
 
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < width - offSetX; x++)
             {
                 int doubleWidthX = x * 2 + offSetX;
                 GridPosition gridPosition = new GridPosition(doubleWidthX, y);
@@ -69,29 +69,29 @@ public class GridSystem
     }
 
     //TEMP
-    public void PopulateOrbObjects(Transform orbPrefab, Transform parent, int size)
-    {
-        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
+    // public void PopulateOrbObjects(Transform orbPrefab, Transform parent, int size)
+    // {
+    //     List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
-        for (int y = height - 1; y >= height - size; y--)
-        {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
+    //     for (int y = height - 1; y >= height - size; y--)
+    //     {
+    //         int offSetX = (y % 2 == 0) ? 1 : 0;
 
-            for (int x = 0; x < width; x++)
-            {
-                int doubleWidthX = x * 2 + offSetX;
+    //         for (int x = 0; x < width; x++)
+    //         {
+    //             int doubleWidthX = x * 2 + offSetX;
 
-                GridPosition gridPosition = new GridPosition(doubleWidthX, y);
-                Transform debugTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-                debugTransform.parent = parent;
+    //             GridPosition gridPosition = new GridPosition(doubleWidthX, y);
+    //             Transform debugTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+    //             debugTransform.parent = parent;
 
-                //initialize orb
-                Orb orb = debugTransform.GetComponent<Orb>();
-                OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-                GetGridObject(gridPosition).AddOrb(orb, typeSO);
-            }
-        }
-    }
+    //             //initialize orb
+    //             Orb orb = debugTransform.GetComponent<Orb>();
+    //             OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
+    //             GetGridObject(gridPosition).AddOrb(orb, typeSO);
+    //         }
+    //     }
+    // }
 
     public GridObject GetGridObject(GridPosition gridPosition)
     {
@@ -146,7 +146,7 @@ public class GridSystem
         if (y >= 0 && y < height) {
             if (y % 2 == 0) {
 
-                if (x > 0 && x < width * 2) {
+                if (x > 0 && x < (width - 1) * 2) {
                     return true;
                 }
             } else {
@@ -280,7 +280,7 @@ public class GridSystem
         {
             int offSetX = (y % 2 == 0) ? 1 : 0;
 
-            for (int x = 0; x < this.width; x++)
+            for (int x = 0; x < this.width - offSetX; x++)
             {
                 int doubleWidthX = x * 2 + offSetX;
                 GridObject gridObject = GetGridObject(new GridPosition(doubleWidthX, y));
@@ -303,7 +303,7 @@ public class GridSystem
         List<GridObject> row = new List<GridObject>();
         List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
 
-        for (int x = 0; x < this.width; x++)
+        for (int x = 0; x < this.width - offSetX; x++)
         {
             //create new grid object
             int doubleWidth = x * 2 + offSetX;
