@@ -14,8 +14,6 @@ public class LevelState : MonoBehaviour
     [SerializeField] private RushLine rushLine;
     [SerializeField] private int chaseKillCount;
 
-
-
     private enum State
     {
         PreStart,

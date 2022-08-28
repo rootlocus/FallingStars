@@ -187,8 +187,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startLabel: {fileID: 2931436990094956516}
-  easeType: 17
+  easeEnter: 17
+  easeExit: 6
   enterTitleClip: {fileID: 8300000, guid: 424e044d90f9e494da08082999f10989, type: 3}
+  durationToEnter: 1
+  durationToStay: 3
+  durationToExit: 1
 --- !u!225 &2931436990593525847
 CanvasGroup:
   m_ObjectHideFlags: 0

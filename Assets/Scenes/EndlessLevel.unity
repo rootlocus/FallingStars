@@ -2890,6 +2890,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Launcher
       objectReference: {fileID: 0}
+    - target: {fileID: 3146635536503780775, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
+      propertyPath: durationToEnter
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
 --- !u!1001 &3837173897697876235

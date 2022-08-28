@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fromPosition: {x: 0, y: -3}
-  easeType: 0
+  easeType: 5
   duration: 1
   timeToActivate: 0
 --- !u!114 &6654652345599284625

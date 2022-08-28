@@ -16,11 +16,16 @@ public class Launcher : MonoBehaviour
     [SerializeField] private Transform currentOrbTransform;
     [SerializeField] private Transform nextOrbTransform;
 
-    [Header("Configurations")]
+    [Header("Mandatory Configurations")]
     [SerializeField] private List<OrbTypeSO> orbTypes;
+    [SerializeField] private OrbTypeSO bombOrbType;
+
+    [Header("Audio Configuration")]
     [SerializeField] private AudioClip launchSoundClip;
     [SerializeField] private AudioClip reloadSoundClip;
-    [SerializeField] private OrbTypeSO bombOrbType;
+
+    [Header("Animation Configuration")]
+    [SerializeField] private EntranceAnimation ropeAnimation;
 
     private SpriteRenderer currentOrbSprite;
     private SpriteRenderer nextOrbSprite;
@@ -52,9 +57,11 @@ public class Launcher : MonoBehaviour
     {
         onSpecialMode = false;
         isReloaded = false;
+        currentState = State.Pause;
 
         Projectile.OnProjectileStop += Projectile_OnProjectileStop;
         LevelState.Instance.OnStateLose += LevelState_OnStateLose;
+        LevelState.Instance.OnStateStart += LevelState_OnStateStart;
         ComboSystem.OnMaxComboTriggered += ComboSystem_OnMaxComboTriggered;
     }
 
@@ -68,7 +75,7 @@ public class Launcher : MonoBehaviour
                 currentOrbSprite.sprite = currentOrbType.sprite;
                 nextOrbSprite.sprite = nextOrbType.sprite;
 
-                SpawnLauncherAnimation();
+                ropeAnimation.MoveTransform();
                 NextState();
                 break;
             case State.Ready:
@@ -194,12 +201,9 @@ public class Launcher : MonoBehaviour
         // OnFireSpecial?.Invoke(this, EventArgs.Empty);
     }
 
-    private void SpawnLauncherAnimation()
+    private void LevelState_OnStateStart(object sender, EventArgs e)
     {
-        Vector2 newPosition = transform.position;
-        transform.position = transform.position + new Vector3(0, -5f);
-
-        transform.DOMove(newPosition, 1f).SetEase(Ease.InExpo);
+        currentState = State.Initialize;
     }
 
 }

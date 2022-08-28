@@ -9,8 +9,14 @@ using Sirenix.OdinInspector;
 public class TitleUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI startLabel;
-    [SerializeField] private Ease easeType;
     [SerializeField] private AudioClip enterTitleClip;
+
+    [Header("Animation config")]
+    [SerializeField] private Ease easeEnter;
+    [SerializeField] private Ease easeExit;
+    [SerializeField] private float durationToEnter;
+    [SerializeField] private float durationToStay;
+    [SerializeField] private float durationToExit;
 
     private CanvasGroup ui;
 
@@ -40,15 +46,15 @@ public class TitleUI : MonoBehaviour
         labelTransform.rect.Set(0,0,0,0);
 
         // Animate
-        labelTransform.DOShakeAnchorPos(5f, 10f, 10, 90);
+        labelTransform.DOShakeAnchorPos(8f, 10f, 10, 90);
         AudioManager.Instance.PlayMenuSFXWithDelay(enterTitleClip, 1f);
 
         Sequence shrinkAndExit = DOTween.Sequence();
         shrinkAndExit
-            .Append( DOTween.To(() => startLabel.fontSize, newFontSize => startLabel.fontSize = newFontSize, 84f, 1f).SetEase(easeType) )
-            .AppendInterval(1f)
+            .Append( DOTween.To(() => startLabel.fontSize, newFontSize => startLabel.fontSize = newFontSize, 84f, durationToEnter).SetEase(easeEnter) )
+            .AppendInterval(durationToStay)
             .OnComplete(() => {
-                labelTransform.DOAnchorPosY(-800f, 0.5f).SetEase(Ease.OutExpo)
+                labelTransform.DOAnchorPosY(-800f, durationToExit).SetEase(easeExit)
                     .OnComplete(()=> ui.alpha = 0);
             });
     }
