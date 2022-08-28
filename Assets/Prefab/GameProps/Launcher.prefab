@@ -291,8 +291,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPosition: {fileID: 3146635536503780760}
   projectilePrefab: {fileID: 2619610402362050521, guid: 215d729a8b073f64ca89f67a9a95783e, type: 3}
-  currentOrbSprite: {fileID: 3146635535775749221}
-  nextOrbSprite: {fileID: 3146635537061458074}
+  currentOrbTransform: {fileID: 3146635535775749220}
+  nextOrbTransform: {fileID: 3146635537061458075}
   orbTypes:
   - {fileID: 11400000, guid: f4289a76449c7fd47a21ec1d6f998862, type: 2}
   - {fileID: 11400000, guid: 826d26eabe5f4f64b8969e5a527ff45d, type: 2}

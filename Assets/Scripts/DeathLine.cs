@@ -11,7 +11,17 @@ public class DeathLine : MonoBehaviour
     [SerializeField] private Vector2 startPosition;
     [SerializeField] private Vector2 endPosition;
     [SerializeField] private LayerMask orbLayer;
+
+    [Header("Animations")]
+    [SerializeField] private EntranceAnimation ropeAnimation;
+
     private bool isHitPrevious = false;
+
+
+    private void Start() 
+    {
+        LevelState.Instance.OnStateStart += LevelState_OnStateStart;
+    }
 
     private void Update()
     {
@@ -28,6 +38,11 @@ public class DeathLine : MonoBehaviour
             isHitPrevious = false;
             OnOrbExit?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    private void LevelState_OnStateStart(object sender, EventArgs e)
+    {
+        ropeAnimation.MoveTransform();
     }
 
     private void OnDrawGizmos()

@@ -14,6 +14,8 @@ public class LevelState : MonoBehaviour
     [SerializeField] private RushLine rushLine;
     [SerializeField] private int chaseKillCount;
 
+
+
     private enum State
     {
         PreStart,
@@ -69,10 +71,8 @@ public class LevelState : MonoBehaviour
                 NextState();
                 break;
             case State.Start:
-                //2) spawn orbs
-                //3 spawn launcher move in
                 OnStateStart?.Invoke(this, EventArgs.Empty);
-                LevelGrid.Instance.SpawnLevelOrbs(5); //TODO: spawn at x position then tween it to it's position
+                LevelGrid.Instance.SpawnLevelOrbs(5);
                 NextState();
                 break;
             case State.Running:
@@ -87,7 +87,7 @@ public class LevelState : MonoBehaviour
                 break;
             case State.Countdown:
                 NextState();
-                //start countdown
+                //TODO start countdown
                 //change audio
                 //if countdown reach then set state to lose
                 break;
@@ -102,10 +102,11 @@ public class LevelState : MonoBehaviour
         {
             case State.PreStart:
                 currentState = State.Start;
+                stateTimer = 2f;
                 break;
             case State.Start:
                 currentState = State.Running;
-                stateTimer = 2f;
+                stateTimer = 3f;
                 break;
             case State.Countdown:
                 currentState = State.Lose;

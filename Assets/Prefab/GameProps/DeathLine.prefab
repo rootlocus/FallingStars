@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6654652344365235329}
   - component: {fileID: 6654652344365235328}
+  - component: {fileID: 3534120739472319923}
   - component: {fileID: 6654652345599284625}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6654652344365235330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.83959997, y: 0, z: 0}
-  m_LocalScale: {x: 3.8749275, y: 0.11875, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 8, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6654652345318841554}
@@ -85,6 +86,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3534120739472319923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6654652344365235330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9dc2156b21bded4c95c597728f7e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromPosition: {x: 0, y: -3}
+  easeType: 0
+  duration: 1
+  timeToActivate: 0
 --- !u!114 &6654652345599284625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,8 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fed748e39c2c14889d8496f9e2ee3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 0.1, y: 5.5}
-  endPosition: {x: 20, y: 5.5}
+  startPosition: {x: -15, y: 5.5}
+  endPosition: {x: 34, y: 5.5}
   orbLayer:
     serializedVersion: 2
     m_Bits: 256
+  ropeAnimation: {fileID: 3534120739472319923}

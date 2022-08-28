@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 985129297
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: -43151629
+  m_SortingLayer: 4
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9aee32d9509834f489d78e88a7c679ba, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -172,9 +172,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 985129297
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: -43151629
+  m_SortingLayer: 4
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9aee32d9509834f489d78e88a7c679ba, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 1039045897219516688}
   - component: {fileID: 1039045897219516690}
   - component: {fileID: 1039045897219516689}
+  - component: {fileID: 1039045899100917444}
   m_Layer: 7
   m_Name: LeftBox
   m_TagString: Wall
@@ -274,8 +275,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 985129297
-  m_SortingLayer: 1
+  m_SortingLayerID: -43151629
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: -1852798133, guid: 886be30ac6311454191a54b943e77053, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -314,6 +315,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.6911759, y: 4.5999994}
   m_EdgeRadius: 0
+--- !u!114 &1039045899100917444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039045897219516687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9dc2156b21bded4c95c597728f7e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromPosition: {x: -20, y: 14}
+  easeType: 5
+  duration: 1
+  timeToActivate: 0
 --- !u!1 &1039045897415571052
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +453,7 @@ GameObject:
   - component: {fileID: 1039045897515834063}
   - component: {fileID: 1039045897515834065}
   - component: {fileID: 1039045897515834064}
+  - component: {fileID: 1039045899100917443}
   m_Layer: 7
   m_Name: RightBox
   m_TagString: Wall
@@ -499,7 +517,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -43151629
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1852798133, guid: 886be30ac6311454191a54b943e77053, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -537,6 +555,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5311917, y: 4.5999994}
   m_EdgeRadius: 0
+--- !u!114 &1039045899100917443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039045897515834062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9dc2156b21bded4c95c597728f7e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromPosition: {x: 39.9, y: 14}
+  easeType: 5
+  duration: 1
+  timeToActivate: 0
 --- !u!1 &1039045897776308512
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039045897776308513}
+  - component: {fileID: 1414182718208401575}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -572,6 +607,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1414182718208401575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039045897776308512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29f128b39a8d7514798f295918980b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallLeftAnimation: {fileID: 1039045899100917444}
+  wallRightAnimation: {fileID: 1039045899100917443}
 --- !u!1 &1039045898781397314
 GameObject:
   m_ObjectHideFlags: 0
