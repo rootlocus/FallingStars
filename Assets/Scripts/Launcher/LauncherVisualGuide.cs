@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,21 @@ public class LauncherVisualGuide : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private LayerMask hitLayer;
     private Vector2 endLine;
+    private bool isActivated;
 
+    private void Start() 
+    {
+        isActivated = false;
 
-    private void Update() {
+        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
+        PauseController.OnPauseMenu += PauseController_OnPauseMenu;
+        LevelState.Instance.OnStateStart += LevelState_OnStateStart;
+    }
+
+    private void Update() 
+    {
+        if (!isActivated) return;
+
         Vector3 mousePosition = (Vector2) MouseWorld.GetPosition();
         mousePosition.y = Mathf.Clamp(mousePosition.y, 4f, 27.25f);
 
@@ -42,5 +55,20 @@ public class LauncherVisualGuide : MonoBehaviour
             Vector2 collidePoint = hit.point - new Vector2(0, 1f);
             lineRenderer.SetPosition(1, collidePoint);
         }
+    }
+
+    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    {
+        isActivated = false;
+    }
+
+    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    {
+        isActivated = true;
+    }
+    
+    private void LevelState_OnStateStart(object sender, EventArgs e)
+    {
+        isActivated = true;
     }
 }

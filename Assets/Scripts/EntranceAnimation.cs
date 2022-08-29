@@ -9,17 +9,18 @@ public class EntranceAnimation : MonoBehaviour
     [SerializeField] private Vector2 fromPosition;
     [SerializeField] private Ease easeType;
     [SerializeField] private float duration;
-    [SerializeField] private float timeToActivate;
+    // [SerializeField] private float timeToActivate;
 
     private Vector3 defaultTransform;
     private float currentTime;
-    private bool isActive = true;
+    private bool isActive;
 
 
     private void Start() 
     {
         defaultTransform = transform.position;
-        transform.position = fromPosition;    
+        transform.position = fromPosition;
+        isActive = true;
     }
 
     // private void FixedUpdate()

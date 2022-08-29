@@ -28,6 +28,7 @@ public class LevelState : MonoBehaviour
     private float stateTimer;
     private bool isRunning;
     private int currentKillCount;
+    private State onPausedState;
     
 
     private void Awake() 
@@ -48,6 +49,8 @@ public class LevelState : MonoBehaviour
         rushLine.OnOrbEnter += RushLine_OnOrbEnter;
         LevelGrid.Instance.OnStartLevel += LevelGrid_OnStartLevel;
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
+        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
+        PauseController.OnPauseMenu += PauseController_OnPauseMenu;
         
         isRunning = true;
         currentKillCount = 0;
@@ -150,6 +153,18 @@ public class LevelState : MonoBehaviour
     {
         currentKillCount = 0;
         LevelGrid.Instance.SetGridSpeedNormal();
+    }
+
+    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    {
+        onPausedState = currentState;
+
+        currentState = State.Pause;
+    }
+
+    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    {
+        currentState = onPausedState;
     }
 
 }

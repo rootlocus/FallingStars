@@ -31,6 +31,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private AudioClip matchSoundClip;
     [SerializeField] private AudioClip pushbackSoundClip;
     [SerializeField] private float defaultGridSpeed = 0.25f;
+    [SerializeField] private Ease easeType;
 
     private GridSystem gridSystem;
     private int width = 10;
@@ -229,7 +230,7 @@ public class LevelGrid : MonoBehaviour
                 
                 Transform orbTransform = GameObject.Instantiate(orbPrefab, startOrbPosition, Quaternion.identity);
                 orbTransform.parent = orbContainer;
-                orbTransform.DOMove(endOrbPosition, timeToMove).SetEase(Ease.InOutQuad);
+                orbTransform.DOMove(endOrbPosition, timeToMove).SetEase(easeType);
 
                 //initialize orb
                 OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];

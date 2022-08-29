@@ -17,6 +17,18 @@ public class Projectile : MonoBehaviour
     private float projectileExitHeight = 28.5f;
     
 
+    private void Start() 
+    {
+        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
+        PauseController.OnPauseMenu += PauseController_OnPauseMenu;    
+    }
+
+    private void OnDestroy() 
+    {
+        PauseController.OnResumeMenu -= PauseController_OnResumeMenu;
+        PauseController.OnPauseMenu -= PauseController_OnPauseMenu;
+    }
+
     public void Setup(Vector3 direction, OrbTypeSO orbType)
     {
         this.direction = direction;
@@ -72,6 +84,16 @@ public class Projectile : MonoBehaviour
             direction = Vector3.Reflect(direction, Vector3.right);
         }
 
+    }
+
+    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    {
+        isMove = false;
+    }
+
+    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    {
+        isMove = true;
     }
 
     private void OnDrawGizmos() {
