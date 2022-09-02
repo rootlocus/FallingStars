@@ -64,8 +64,8 @@ public class Launcher : MonoBehaviour
         LevelState.Instance.OnStateLose += LevelState_OnStateLose;
         LevelState.Instance.OnStateStart += LevelState_OnStateStart;
         ComboSystem.OnMaxComboTriggered += ComboSystem_OnMaxComboTriggered;
-        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
-        PauseController.OnPauseMenu += PauseController_OnPauseMenu;
+        PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
+        PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
     }
 
     private void Update() 
@@ -209,14 +209,14 @@ public class Launcher : MonoBehaviour
         currentState = State.Initialize;
     }
     
-    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
         onPausedState = currentState;
 
         currentState = State.Pause;
     }
 
-    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
     {
         currentState = onPausedState;
     }

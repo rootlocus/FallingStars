@@ -9,13 +9,16 @@ public class LauncherVisualGuide : MonoBehaviour
     [SerializeField] private LayerMask hitLayer;
     private Vector2 endLine;
     private bool isActivated;
+    private List<Vector2> reflectPoints;
+
 
     private void Start() 
     {
         isActivated = false;
+        reflectPoints = new List<Vector2>();
 
-        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
-        PauseController.OnPauseMenu += PauseController_OnPauseMenu;
+        PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
+        PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
         LevelState.Instance.OnStateStart += LevelState_OnStateStart;
     }
 
@@ -29,40 +32,80 @@ public class LauncherVisualGuide : MonoBehaviour
         Vector2 dir = mousePosition - transform.position;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, float.MaxValue, hitLayer);
         
+        reflectPoints.Clear();
+        reflectPoints.Add(transform.position);
+
         if (!hit) return;
         
         if (hit.transform.tag == "Wall")
         {
-            // lineRenderer.positionCount = 3;
-
-            //collide wall
             Vector2 collidePoint = hit.point;
-            collidePoint.x = Mathf.Clamp(collidePoint.x, 1.5f, 19.5f);
-            lineRenderer.SetPosition(1, collidePoint);
+            CollideOnWall(collidePoint);
 
-            //bounce
+            ReflectArrow(dir, collidePoint);
+            // Bounce
             // Vector2 reflectDirection = Vector3.Reflect(dir, Vector3.right);
-            // RaycastHit2D hit2 = Physics2D.Raycast(collidePoint, reflectDirection, float.MaxValue, hitLayer);
-            // if (!hit2) return;
+            // RaycastHit2D reflectHit = Physics2D.Raycast(collidePoint, reflectDirection, float.MaxValue, hitLayer);
+            // if (!reflectHit) return;
 
-            // Vector2 newColliderPoint = hit2.point - new Vector2(0, 1f);
+            // Vector2 newColliderPoint = reflectHit.point - new Vector2(0, 1f);
+            // reflectPoints.Add(newColliderPoint);
 
-            lineRenderer.SetPosition(1, collidePoint);
-            // lineRenderer.SetPosition(2, newColliderPoint);
-        }
-        if (hit.transform.tag == "Orb")
+        } else if (hit.transform.tag == "Orb")
         {
             Vector2 collidePoint = hit.point - new Vector2(0, 1f);
-            lineRenderer.SetPosition(1, collidePoint);
+
+            Debug.Log("TOUC1");
+
+            reflectPoints.Add(collidePoint);
+        }
+
+        DrawLine();
+    }
+
+    private void DrawLine()
+    {
+        int i = 0;
+        lineRenderer.positionCount = reflectPoints.Count;
+        foreach (Vector2 point in reflectPoints)
+        {
+            lineRenderer.SetPosition(i, point);
+            i++;
         }
     }
 
-    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    private void ReflectArrow(Vector3 initialDir, Vector2 startPosition)
+    {
+        // Bounce
+        Vector2 reflectDirection = Vector3.Reflect(initialDir, Vector3.right);
+        RaycastHit2D reflectHit = Physics2D.Raycast(startPosition, reflectDirection, float.MaxValue, hitLayer);
+
+        if (!reflectHit) return;
+        Debug.DrawLine(startPosition, reflectHit.point, Color.green, 0.5f);
+
+        Vector2 reflectPoint = reflectHit.point;
+
+        if (reflectHit.transform.tag == "Wall")
+        {
+            Debug.Log("REFLECT");
+            reflectPoint.x = Mathf.Clamp(reflectPoint.x, 1.5f, 19.5f);
+
+            reflectPoints.Add(reflectPoint);
+            // ReflectArrow(reflectDirection, reflectHit.point);
+        } else if (reflectHit.transform.tag == "Orb")
+        {
+            Debug.Log("TOUCH2");
+            reflectPoints.Add(reflectPoint);
+        }
+        // Vector2 newColliderPoint = reflectHit.point - new Vector2(0, 1f);
+    }
+
+    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
         isActivated = false;
     }
 
-    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
     {
         isActivated = true;
     }
@@ -70,5 +113,12 @@ public class LauncherVisualGuide : MonoBehaviour
     private void LevelState_OnStateStart(object sender, EventArgs e)
     {
         isActivated = true;
+    }
+
+    private void CollideOnWall(Vector2 collidePoint)
+    {
+        //collide wall
+        collidePoint.x = Mathf.Clamp(collidePoint.x, 1.5f, 19.5f);
+        reflectPoints.Add(collidePoint);
     }
 }

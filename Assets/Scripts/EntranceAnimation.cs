@@ -13,14 +13,14 @@ public class EntranceAnimation : MonoBehaviour
 
     private Vector3 defaultTransform;
     private float currentTime;
-    private bool isActive;
+    // private bool isActive;
 
 
     private void Start() 
     {
         defaultTransform = transform.position;
         transform.position = fromPosition;
-        isActive = true;
+        // isActive = true;
     }
 
     // private void FixedUpdate()

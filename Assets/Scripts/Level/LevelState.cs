@@ -10,9 +10,15 @@ public class LevelState : MonoBehaviour
     public event EventHandler OnStateStart;
     public event EventHandler OnStateLose;
 
+    [Header("Props GO")]
     [SerializeField] private DeathLine deathline;
     [SerializeField] private RushLine rushLine;
+    [Header("Animation Config")]
+    [SerializeField] private float preStartDuration;
+    [SerializeField] private float startDuration;
+    [Header("Game Config")]
     [SerializeField] private int chaseKillCount;
+    [SerializeField] private float countdownDuration;
 
     private enum State
     {
@@ -25,10 +31,10 @@ public class LevelState : MonoBehaviour
         Countdown,
     }
     private State currentState;
+    private State onPausedState;
     private float stateTimer;
     private bool isRunning;
     private int currentKillCount;
-    private State onPausedState;
     
 
     private void Awake() 
@@ -49,11 +55,12 @@ public class LevelState : MonoBehaviour
         rushLine.OnOrbEnter += RushLine_OnOrbEnter;
         LevelGrid.Instance.OnStartLevel += LevelGrid_OnStartLevel;
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
-        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
-        PauseController.OnPauseMenu += PauseController_OnPauseMenu;
+        PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
+        PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
         
         isRunning = true;
         currentKillCount = 0;
+        AudioManager.Instance.PlayLevelBGM();
     }
 
     private void Update() 
@@ -103,15 +110,15 @@ public class LevelState : MonoBehaviour
         {
             case State.PreStart:
                 currentState = State.Start;
-                stateTimer = 2f;
+                stateTimer = preStartDuration;
                 break;
             case State.Start:
                 currentState = State.Running;
-                stateTimer = 3f;
+                stateTimer = startDuration;
                 break;
             case State.Countdown:
                 currentState = State.Lose;
-                stateTimer = 5f;
+                stateTimer = countdownDuration;
                 break;
             default:
                 break;
@@ -155,14 +162,14 @@ public class LevelState : MonoBehaviour
         LevelGrid.Instance.SetGridSpeedNormal();
     }
 
-    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
         onPausedState = currentState;
 
         currentState = State.Pause;
     }
 
-    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
     {
         currentState = onPausedState;
     }

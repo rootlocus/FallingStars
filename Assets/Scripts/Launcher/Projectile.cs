@@ -19,14 +19,14 @@ public class Projectile : MonoBehaviour
 
     private void Start() 
     {
-        PauseController.OnResumeMenu += PauseController_OnResumeMenu;
-        PauseController.OnPauseMenu += PauseController_OnPauseMenu;    
+        PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
+        PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;    
     }
 
     private void OnDestroy() 
     {
-        PauseController.OnResumeMenu -= PauseController_OnResumeMenu;
-        PauseController.OnPauseMenu -= PauseController_OnPauseMenu;
+        PauseUI.OnResumeMenu -= PauseUI_OnResumeMenu;
+        PauseUI.OnPauseMenu -= PauseUI_OnPauseMenu;
     }
 
     public void Setup(Vector3 direction, OrbTypeSO orbType)
@@ -86,12 +86,12 @@ public class Projectile : MonoBehaviour
 
     }
 
-    private void PauseController_OnPauseMenu(object sender, EventArgs e)
+    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
         isMove = false;
     }
 
-    private void PauseController_OnResumeMenu(object sender, EventArgs e)
+    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
     {
         isMove = true;
     }

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900ecc90abef2a242a63dfbc6fe28608, type: 3}
   m_Name: YellowOrb
   m_EditorClassIdentifier: 
+  type: 0
   color: {r: 0.98564005, g: 1, b: 0, a: 1}
   orbName: Yellow
-  sprite: {fileID: 1936109423, guid: 36e55bd3ba841b84994cf182bf96376e, type: 3}
+  sprite: {fileID: 21300000, guid: cab1c4623534cee4ca22b1c2e13a45b4, type: 3}
   orbAnimation: {fileID: 0}

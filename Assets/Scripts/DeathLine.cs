@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,6 +50,6 @@ public class DeathLine : MonoBehaviour
         if (Application.isPlaying) return;
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(startPosition, endPosition);
+	    Gizmos.DrawLine(startPosition, endPosition);
     }
 }

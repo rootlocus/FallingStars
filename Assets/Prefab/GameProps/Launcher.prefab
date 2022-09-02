@@ -214,7 +214,7 @@ SpriteRenderer:
   m_SortingLayerID: 1169063927
   m_SortingLayer: 3
   m_SortingOrder: 1
-  m_Sprite: {fileID: 541844279, guid: 02c2d3c2c2b1f7b4d93fb28bcc506102, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 241a872c03474a14dacc77ea66c43790, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 3146635536503780760}
   - component: {fileID: 3146635536503780775}
   - component: {fileID: 3146635536245478906}
+  - component: {fileID: 1779424063}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -297,9 +298,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f4289a76449c7fd47a21ec1d6f998862, type: 2}
   - {fileID: 11400000, guid: 826d26eabe5f4f64b8969e5a527ff45d, type: 2}
   - {fileID: 11400000, guid: 3e848dac5be4e394ea7cd05ea4863623, type: 2}
+  bombOrbType: {fileID: 11400000, guid: f5872494aa8fd3f42b944bb64c758697, type: 2}
   launchSoundClip: {fileID: 8300000, guid: ad85055d9f1acaa489c38efb6d94ef8b, type: 3}
   reloadSoundClip: {fileID: 8300000, guid: 2625186a3ce818d44b3ba99327150004, type: 3}
-  bombOrbType: {fileID: 11400000, guid: f5872494aa8fd3f42b944bb64c758697, type: 2}
+  ropeAnimation: {fileID: 1779424063}
 --- !u!114 &3146635536245478906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,6 +318,21 @@ MonoBehaviour:
   hitLayer:
     serializedVersion: 2
     m_Bits: 384
+--- !u!114 &1779424063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146635536503780774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9dc2156b21bded4c95c597728f7e83b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromPosition: {x: 10.25, y: -5}
+  easeType: 5
+  duration: 2
 --- !u!1 &3146635537061458073
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +406,7 @@ SpriteRenderer:
   m_SortingLayerID: 1169063927
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1936109423, guid: 36e55bd3ba841b84994cf182bf96376e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd2097898372ac3448879f5b9e4dd778, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -19,6 +19,11 @@ public class SceneHandler : MonoBehaviour
         Instance = this;
     }
     
+    public void StartEndlessMode()
+    {
+        SceneManager.LoadScene("EndlessLevel");
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

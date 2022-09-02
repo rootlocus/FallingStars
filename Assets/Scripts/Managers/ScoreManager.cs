@@ -47,4 +47,9 @@ public class ScoreManager : MonoBehaviour
         return popup;
     }
 
+    public int GetCurrentScore()
+    {
+        return currentScore;
+    }
+
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class ComboSystem : MonoBehaviour
 {
     public static event EventHandler OnMaxComboTriggered;
+    [SerializeField] private AudioClip[] comboClips;
     [SerializeField] private int maxComboTrigger;
     [SerializeField] private ComboMeterUI comboUI;
 
@@ -47,6 +48,10 @@ public class ComboSystem : MonoBehaviour
     {
         if (currentCombo < maxComboTrigger) {
             currentCombo++;
+            if (currentCombo > 1)
+            {
+                AudioManager.Instance.PlaySFX(comboClips[currentCombo - 2]);
+            }
         }
 
         comboUI.SetGauge(currentCombo);

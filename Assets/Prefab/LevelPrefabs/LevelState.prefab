@@ -46,4 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathline: {fileID: 0}
   rushLine: {fileID: 0}
+  preStartDuration: 2
+  startDuration: 3
   chaseKillCount: 40
+  countdownDuration: 5

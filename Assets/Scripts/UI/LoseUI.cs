@@ -36,7 +36,7 @@ public class LoseUI : MonoBehaviour
     [Button("Lose Window Test")]
     private void LevelState_OnStateLose(object sender, EventArgs e)
     {
-        SetPoints(999);
+        SetPoints(ScoreManager.Instance.GetCurrentScore());
         SetTime(5, 32);
 
         AudioManager.Instance.PauseBGM();
