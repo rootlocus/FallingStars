@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class PauseController : MonoBehaviour
 {
-    public static event EventHandler OnPauseMenu;
-    public static event EventHandler OnResumeMenu;
+    // public static event EventHandler OnPauseMenu;
+    // public static event EventHandler OnResumeMenu;
 
-    [SerializeField] private PauseUI pauseUI;
-    private bool isActivated;
-    private bool isPaused;
+    // [SerializeField] private PauseUI pauseUI;
+    // private bool isActivated;
+    // private bool isPaused;
 
 
     // private void Start() 

@@ -44,5 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b03a199c524af844aeb54a1b01578fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comboClips:
+  - {fileID: 8300000, guid: 16fff3439ecec614999bf7a2ec2d69dc, type: 3}
+  - {fileID: 8300000, guid: 0d656a23f73a269488646c8fbedd7aae, type: 3}
+  - {fileID: 8300000, guid: b5d2bf256ceac93498d3cfa1ffaaf926, type: 3}
+  - {fileID: 8300000, guid: 9f296192d3efc304abb6b833a9cd7317, type: 3}
   maxComboTrigger: 5
   comboUI: {fileID: 0}

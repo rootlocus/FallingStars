@@ -99,7 +99,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -280,10 +280,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3837173897627757134}
   - component: {fileID: 3837173897627757133}
+  - component: {fileID: 1430412847}
   m_Layer: 5
   m_Name: ScoreUI
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 161429058f8e4ac46add260a4ad5e7da, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -306,7 +307,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 200, y: -120}
+  m_AnchoredPosition: {x: 200, y: -119.99997}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3837173897627757133
@@ -323,3 +324,202 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 3837173896385638001}
   scoreTransform: {fileID: 3837173896385638002}
+--- !u!114 &1430412847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837173897627757135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1189003419, guid: a674ef508c94e7e4caf06776a40f1188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WrapMode: 0
+  hasOwner: 0
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  CustomVariables: []
+  MultiProperties: 0
+  BypassPosition: 0
+  DebugMode: 0
+  AutoKeyframe: 0
+  UseTimeScale: 1
+  IsDragFrame: 0
+  IsAutoplay: 0
+  isCustom: 0
+  AutoplayMode: 0
+  Keyframes:
+  - Position: {x: 200, y: 60.00003, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 100, y: 100}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 0
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0, y: 1}
+    AnchorMax: {x: 0, y: 1}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  - Position: {x: 200, y: -119.99997, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 100, y: 100}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 0
+    Delay: 0
+    Mode: 0
+    Easing: 0
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0, y: 1}
+    AnchorMax: {x: 0, y: 1}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  Frame: 2
+  LinkStatus: OFF
+  LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  isLinked: 0
+  IsKM: 1
+  OptionStatus: EXPAND
+  OptionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsOption: 0
+  MotionControlStatus: OFF
+  MotionControlColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsMotionControl: 0
+  EventStatus: OFF
+  EventColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsEvent: 0
+  IsCalledAllFrames: 0
+  CustomStatus: OFF
+  CustomColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsCustom: 0
+  CurrentDuration: 0
+  CurrentDelay: 0
+  CurrentMode: 0
+  CurrentEasing: 0
+  CurrentAnimation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CurrentSound: {fileID: 0}
+  CurrentPitch: 1
+  CurrentVolume: 1
+  CurrentMaxRange: 1
+  CurrentMinRange: 0
+  CurrentLinkTransform: {fileID: 0}
+  IsPreviousLinkTransfrom: 0
+  Motions: []

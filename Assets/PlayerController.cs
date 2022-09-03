@@ -19,11 +19,4 @@ public class PlayerController : MonoBehaviour
         Instance = this;
     }
 
-    private void Update()
-    {
-        // if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.O))
-        // {
-        //     OnEscapePressed?.Invoke(this, EventArgs.Empty);
-        // }
-    }
 }

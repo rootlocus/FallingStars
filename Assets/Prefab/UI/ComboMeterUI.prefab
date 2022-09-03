@@ -1,5 +1,81 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &403437936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 403437937}
+  - component: {fileID: 403437939}
+  - component: {fileID: 403437938}
+  m_Layer: 5
+  m_Name: Glass
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: 161429058f8e4ac46add260a4ad5e7da, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &403437937
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403437936}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2978972910687126957}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 65, y: 630}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &403437939
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403437936}
+  m_CullTransparentMesh: 1
+--- !u!114 &403437938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403437936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.3137255}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 182327f6a8413314c8578a0a283b4d6f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1263641112
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +88,7 @@ GameObject:
   - component: {fileID: 1263641115}
   - component: {fileID: 1263641114}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Divider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,7 +164,7 @@ GameObject:
   - component: {fileID: 1379489977}
   - component: {fileID: 1379489976}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Divider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +240,7 @@ GameObject:
   - component: {fileID: 1413815136}
   - component: {fileID: 1413815135}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Divider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,7 +316,7 @@ GameObject:
   - component: {fileID: 2071450747}
   - component: {fileID: 2071450746}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: Divider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -315,10 +391,11 @@ GameObject:
   - component: {fileID: 2978972910045045029}
   - component: {fileID: 2978972910045045019}
   - component: {fileID: 2978972910045045028}
+  - component: {fileID: 698127091}
   m_Layer: 5
   m_Name: MeterLabel
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 161429058f8e4ac46add260a4ad5e7da, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -329,7 +406,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2978972910045045030}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -339,7 +416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 340.7143, y: -302.14285}
+  m_AnchoredPosition: {x: 443.57144, y: -257.14285}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2978972910045045019
@@ -370,10 +447,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RAGE GAUGE
+  m_text: RAGE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: fd42d1f7dc2e78544b336963dfa326b4, type: 2}
-  m_sharedMaterial: {fileID: -2922081374134436627, guid: fd42d1f7dc2e78544b336963dfa326b4, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 593854f4cfa82104197b47be1a756c86, type: 2}
+  m_sharedMaterial: {fileID: 3557263326127233882, guid: 593854f4cfa82104197b47be1a756c86, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -397,15 +474,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -439,6 +516,232 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &698127091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978972910045045030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1189003419, guid: a674ef508c94e7e4caf06776a40f1188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WrapMode: 0
+  hasOwner: 1
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  CustomVariables: []
+  MultiProperties: 0
+  BypassPosition: 0
+  DebugMode: 0
+  AutoKeyframe: 0
+  UseTimeScale: 1
+  IsDragFrame: 0
+  IsAutoplay: 0
+  isCustom: 0
+  AutoplayMode: 0
+  Keyframes:
+  - Position: {x: 443.57144, y: -257.14285, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 0, y: 0}
+    Color: {r: 1, g: 1, b: 1, a: 1}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 10
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.0003805831
+        inSlope: 8.990726
+        outSlope: 8.990726
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.35
+        value: 1
+        inSlope: -4.303913
+        outSlope: -4.303913
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.55
+        value: 1
+        inSlope: 1.554695
+        outSlope: 1.554695
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.7730452
+        value: 1
+        inSlope: -2.007816
+        outSlope: -2.007816
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: -1.23451
+        outSlope: -1.23451
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0.5}
+    AnchorMax: {x: 0.5, y: 0.5}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 1, g: 1, b: 1, a: 1}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  - Position: {x: 443.57144, y: -257.14285, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 0, y: 0}
+    Color: {r: 1, g: 1, b: 1, a: 1}
+    Duration: 0
+    Delay: 0
+    Mode: 0
+    Easing: 1
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0.5}
+    AnchorMax: {x: 0.5, y: 0.5}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 64
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 1, g: 1, b: 1, a: 1}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  Frame: 2
+  LinkStatus: OFF
+  LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  isLinked: 0
+  IsKM: 1
+  OptionStatus: EXPAND
+  OptionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsOption: 0
+  MotionControlStatus: OFF
+  MotionControlColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsMotionControl: 0
+  EventStatus: OFF
+  EventColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsEvent: 0
+  IsCalledAllFrames: 0
+  CustomStatus: OFF
+  CustomColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsCustom: 0
+  CurrentDuration: 0
+  CurrentDelay: 0
+  CurrentMode: 0
+  CurrentEasing: 1
+  CurrentAnimation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CurrentSound: {fileID: 0}
+  CurrentPitch: 1
+  CurrentVolume: 1
+  CurrentMaxRange: 1
+  CurrentMinRange: 0
+  CurrentLinkTransform: {fileID: 0}
+  IsPreviousLinkTransfrom: 0
+  Motions: []
 --- !u!1 &2978972910357644880
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,10 +752,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2978972910357644887}
   - component: {fileID: 2978972910357644886}
+  - component: {fileID: 563708718}
   m_Layer: 5
   m_Name: ComboMeterUI
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 161429058f8e4ac46add260a4ad5e7da, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -492,6 +796,93 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meterGauge: {fileID: 2978972910687126956}
   meterLabel: {fileID: 2978972910045045029}
+--- !u!114 &563708718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978972910357644880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1189003419, guid: a674ef508c94e7e4caf06776a40f1188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WrapMode: 0
+  hasOwner: 0
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  CustomVariables: []
+  MultiProperties: 0
+  BypassPosition: 0
+  DebugMode: 0
+  AutoKeyframe: 0
+  UseTimeScale: 1
+  IsDragFrame: 0
+  IsAutoplay: 0
+  isCustom: 0
+  AutoplayMode: 0
+  Keyframes: []
+  Frame: 0
+  LinkStatus: OFF
+  LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  isLinked: 0
+  IsKM: 0
+  OptionStatus: EXPAND
+  OptionColor: {r: 0.721, g: 0.909, b: 0.937, a: 1}
+  IsOption: 1
+  MotionControlStatus: ON
+  MotionControlColor: {r: 0.721, g: 0.909, b: 0.937, a: 1}
+  IsMotionControl: 1
+  EventStatus: OFF
+  EventColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsEvent: 0
+  IsCalledAllFrames: 0
+  CustomStatus: OFF
+  CustomColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsCustom: 0
+  CurrentDuration: 1.5
+  CurrentDelay: 0
+  CurrentMode: 0
+  CurrentEasing: 1
+  CurrentAnimation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CurrentSound: {fileID: 0}
+  CurrentPitch: 1
+  CurrentVolume: 1
+  CurrentMaxRange: 1
+  CurrentMinRange: 0
+  CurrentLinkTransform: {fileID: 0}
+  IsPreviousLinkTransfrom: 0
+  Motions:
+  - {fileID: 698127091}
+  - {fileID: 388991847}
 --- !u!1 &2978972910408152343
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,10 +930,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2978972910687126957}
   - component: {fileID: 2978972910687126956}
+  - component: {fileID: 388991847}
   m_Layer: 5
   m_Name: MeterSlider
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 161429058f8e4ac46add260a4ad5e7da, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -565,12 +957,13 @@ RectTransform:
   - {fileID: 1379489975}
   - {fileID: 1263641113}
   - {fileID: 2071450745}
+  - {fileID: 403437937}
   m_Father: {fileID: 2978972910357644887}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 447.85712, y: 12.857142}
+  m_AnchoredPosition: {x: 447, y: 12}
   m_SizeDelta: {x: 120, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2978972910687126956
@@ -620,10 +1013,209 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 5
   m_WholeNumbers: 0
-  m_Value: 4
+  m_Value: 5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &388991847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2978972910687126958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1189003419, guid: a674ef508c94e7e4caf06776a40f1188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WrapMode: 0
+  hasOwner: 1
+  OnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  CustomVariables: []
+  MultiProperties: 0
+  BypassPosition: 0
+  DebugMode: 0
+  AutoKeyframe: 0
+  UseTimeScale: 1
+  IsDragFrame: 0
+  IsAutoplay: 0
+  isCustom: 0
+  AutoplayMode: 0
+  Keyframes:
+  - Position: {x: 716.99994, y: 12, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 120, y: 600}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 0
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0.5}
+    AnchorMax: {x: 0.5, y: 0.5}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  - Position: {x: 447, y: 12, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 120, y: 600}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 0
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0.5}
+    AnchorMax: {x: 0.5, y: 0.5}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  Frame: 2
+  LinkStatus: OFF
+  LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  isLinked: 0
+  IsKM: 0
+  OptionStatus: EXPAND
+  OptionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsOption: 0
+  MotionControlStatus: OFF
+  MotionControlColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsMotionControl: 0
+  EventStatus: OFF
+  EventColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsEvent: 0
+  IsCalledAllFrames: 0
+  CustomStatus: OFF
+  CustomColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  IsCustom: 0
+  CurrentDuration: 1.5
+  CurrentDelay: 0
+  CurrentMode: 0
+  CurrentEasing: 0
+  CurrentAnimation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CurrentSound: {fileID: 0}
+  CurrentPitch: 1
+  CurrentVolume: 1
+  CurrentMaxRange: 1
+  CurrentMinRange: 0
+  CurrentLinkTransform: {fileID: 0}
+  IsPreviousLinkTransfrom: 0
+  Motions: []
 --- !u!1 &2978972911020922000
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,7 +1305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectColor: {r: 0.3773585, g: 0.3773585, b: 0.3773585, a: 1}
   m_EffectDistance: {x: 8, y: -12}
   m_UseGraphicAlpha: 1
 --- !u!1 &2978972911050107309
@@ -828,7 +1420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.14999962, y: 0}
+  m_AnchoredPosition: {x: 0.15000153, y: 0}
   m_SizeDelta: {x: -3.500001, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2978972911343566126

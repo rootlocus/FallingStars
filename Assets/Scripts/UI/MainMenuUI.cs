@@ -60,11 +60,11 @@ public class MainMenuUI : MonoBehaviour
     private void FixedUpdate() {
         if (isInvoked)
         {
-            if (AudioManager.Instance.GetMiddlesFrequencyDisapason() == 0)
+            if (AudioManager.Instance.GetMiddlesFrequencyDiapason() == 0)
             {
                 titleFont.fontSize = defaultSize;
             } else {
-                titleFont.fontSize = defaultSize + (AudioManager.Instance.GetMiddlesFrequencyDisapason() *  bounceMultiplier);
+                titleFont.fontSize = defaultSize + (AudioManager.Instance.GetMiddlesFrequencyDiapason() *  bounceMultiplier);
                 
             }
         }
@@ -72,6 +72,8 @@ public class MainMenuUI : MonoBehaviour
 
     private void StartGame()
     {
+        canvasGroup.interactable = false;
+        
         blackoutUI.DOFade(1f, timeToStart).OnComplete(() => {
             SceneHandler.Instance.StartEndlessMode();
         });

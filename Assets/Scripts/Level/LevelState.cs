@@ -57,10 +57,10 @@ public class LevelState : MonoBehaviour
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
         PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
         PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
+        Projectile.OnSpecialProjectileStop += Projectile_OnSpecialProjectileStop;
         
         isRunning = true;
         currentKillCount = 0;
-        AudioManager.Instance.PlayLevelBGM();
     }
 
     private void Update() 
@@ -81,6 +81,8 @@ public class LevelState : MonoBehaviour
             case State.Start:
                 OnStateStart?.Invoke(this, EventArgs.Empty);
                 LevelGrid.Instance.SpawnLevelOrbs(5);
+                AudioManager.Instance.PlayLevelBGM();
+
                 NextState();
                 break;
             case State.Running:
@@ -125,53 +127,65 @@ public class LevelState : MonoBehaviour
         }
     }
 
-    private void LevelGrid_OnStartLevel(object sender, EventArgs e)
-    {
-        currentState = State.PreStart;
-    }
-
-    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
-    {
-        int previousCount = currentKillCount;
-        currentKillCount += e.orbDestroyed;
-        currentKillCount += e.orbFallen;
-
-        if (previousCount < chaseKillCount && currentKillCount >= chaseKillCount)
-        {
-            LevelGrid.Instance.GridChaseMode();
-        }
-    }
-    
-    private void DeathLine_OnOrbEnter(object sender, EventArgs e)
-    {
-        if (currentState != State.Lose && currentState != State.Countdown)
-        {
-            currentState = State.Countdown;
-        }
-    }
-
-    private void DeathLine_OnOrbExit(object sender, EventArgs e)
-    {
-        currentState = State.Running;
-        stateTimer = 0f;
-    }
-
-    private void RushLine_OnOrbEnter(object sender, EventArgs e)
+    private void ResetKillCountDifficulty()
     {
         currentKillCount = 0;
         LevelGrid.Instance.SetGridSpeedNormal();
     }
 
-    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
-    {
-        onPausedState = currentState;
-
-        currentState = State.Pause;
-    }
-
-    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
-    {
-        currentState = onPausedState;
-    }
+#region Events
+	    private void LevelGrid_OnStartLevel(object sender, EventArgs e)
+	    {
+	        currentState = State.PreStart;
+	    }
+	
+	    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
+	    {
+	        int previousCount = currentKillCount;
+	        currentKillCount += e.orbDestroyed;
+	        currentKillCount += e.orbFallen;
+	
+	        if (previousCount < chaseKillCount && currentKillCount >= chaseKillCount)
+	        {
+	            LevelGrid.Instance.GridChaseMode();
+	        }
+	    }
+	    
+	    private void DeathLine_OnOrbEnter(object sender, EventArgs e)
+	    {
+	        if (currentState != State.Lose && currentState != State.Countdown)
+	        {
+	            currentState = State.Countdown;
+	        }
+	    }
+	
+	    private void DeathLine_OnOrbExit(object sender, EventArgs e)
+	    {
+	        currentState = State.Running;
+	        stateTimer = 0f;
+	    }
+	
+	    private void RushLine_OnOrbEnter(object sender, EventArgs e)
+	    {
+	        ResetKillCountDifficulty();
+	    }
+	
+	    private void Projectile_OnSpecialProjectileStop(object sender, EventArgs e)
+	    {
+	        ResetKillCountDifficulty();
+	    }
+	
+	    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
+	    {
+	        onPausedState = currentState;
+	
+	        currentState = State.Pause;
+	    }
+	
+	    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
+	    {
+	        currentState = onPausedState;
+	    }
+#endregion
 
 }

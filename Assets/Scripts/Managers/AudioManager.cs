@@ -38,8 +38,6 @@ public class AudioManager : MonoBehaviour
     private void FixedUpdate() 
     {
         bgm.GetSpectrumData(spectrumWidth, 0, FFTWindow.Blackman);
-
-        // Debug.Log(GetFrequenciesDiapason(0, 7, 10));
     }
 
 #region Player
@@ -92,24 +90,25 @@ public class AudioManager : MonoBehaviour
 	    }
 #endregion
 
+    //Tutorial: https://www.youtube.com/watch?v=w0OVIUZXHzY
     private float GetFrequenciesDiapason(int start, int end, int mult)
     {
         return spectrumWidth.ToList().GetRange(start, end).Average() * mult;
     }
 
-    public float GetBaseFrequencyDisapason()
+    public float GetBaseFrequencyDiapason()
     {
         return GetFrequenciesDiapason(0, 7, 10);
     }
-    public float GetNBFrequencyDisapason()
+    public float GetNBFrequencyDiapason()
     {
         return GetFrequenciesDiapason(7, 15, 100);
     }
-    public float GetMiddlesFrequencyDisapason()
+    public float GetMiddlesFrequencyDiapason()
     {
         return GetFrequenciesDiapason(15, 30, 200);
     }
-    public float GetHighsFrequencyDisapason()
+    public float GetHighsFrequencyDiapason()
     {
         return GetFrequenciesDiapason(30, 32, 1000);
     }

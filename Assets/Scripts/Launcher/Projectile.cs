@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public static event EventHandler OnProjectileStop;
+    public static event EventHandler OnSpecialProjectileStop;
     [SerializeField] private Transform orbPrefab;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private AudioClip reflectSoundClip;
@@ -45,7 +46,8 @@ public class Projectile : MonoBehaviour
 
             RaycastHit2D predictionHit = Physics2D.CircleCast(transform.position, 0.5f, direction, Vector3.Distance(transform.position + distanceTravel, transform.position), LevelGrid.Instance.GetOrbMask());
             
-            if (predictionHit.collider != null) {
+            if (predictionHit.collider != null) 
+            {
                 isMove = false;
                 GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
                 if (orbType.type == OrbTypeSO.OrbType.Normal) // in future can put this in execute and scriptable object
@@ -53,6 +55,7 @@ public class Projectile : MonoBehaviour
                     LevelGrid.Instance.AttachOrbToGrid(gridPosition, orbType);
                 } else 
                 {
+                    OnSpecialProjectileStop?.Invoke(this, EventArgs.Empty);
                     LevelGrid.Instance.PushGridBack(gridPosition, orbType);
                 }
 

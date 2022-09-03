@@ -55,7 +55,7 @@ public class LauncherVisualGuide : MonoBehaviour
         {
             Vector2 collidePoint = hit.point - new Vector2(0, 1f);
 
-            Debug.Log("TOUC1");
+            // Debug.Log("TOUC1");
 
             reflectPoints.Add(collidePoint);
         }
@@ -87,14 +87,14 @@ public class LauncherVisualGuide : MonoBehaviour
 
         if (reflectHit.transform.tag == "Wall")
         {
-            Debug.Log("REFLECT");
+            // Debug.Log("REFLECT");
             reflectPoint.x = Mathf.Clamp(reflectPoint.x, 1.5f, 19.5f);
 
             reflectPoints.Add(reflectPoint);
             // ReflectArrow(reflectDirection, reflectHit.point);
         } else if (reflectHit.transform.tag == "Orb")
         {
-            Debug.Log("TOUCH2");
+            // Debug.Log("TOUCH2");
             reflectPoints.Add(reflectPoint);
         }
         // Vector2 newColliderPoint = reflectHit.point - new Vector2(0, 1f);

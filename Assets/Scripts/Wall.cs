@@ -11,12 +11,12 @@ public class Wall : MonoBehaviour
 
     private void Start() 
     {
-        LevelState.Instance.OnStatePreStart += LevelState_OnStatePreStart;
+        // LevelState.Instance.OnStatePreStart += LevelState_OnStatePreStart;
     }
 
-    private void LevelState_OnStatePreStart(object sender, EventArgs e)
-    {
-        wallLeftAnimation.MoveTransform();
-        wallRightAnimation.MoveTransform();
-    }
+    // private void LevelState_OnStatePreStart(object sender, EventArgs e)
+    // {
+    //     wallLeftAnimation.MoveTransform();
+    //     wallRightAnimation.MoveTransform();
+    // }
 }
