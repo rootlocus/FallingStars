@@ -69,14 +69,14 @@ public class PauseUI : MonoBehaviour
         isActivated = true;
     }
 
-    public void ShowPauseWindow()
+    public void HidePauseWindow()
     {
         canvasGroup.alpha = 0;
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
     }
 
-    public void HidePauseWindow()
+    public void ShowPauseWindow()
     {
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
@@ -89,11 +89,15 @@ public class PauseUI : MonoBehaviour
         {
             OnResumeMenu?.Invoke(this, EventArgs.Empty);
             isPaused = false;
-            ShowPauseWindow();
+            HidePauseWindow();
+
+            AudioManager.Instance.UnmuffleBGM();
         } else {
             OnPauseMenu?.Invoke(this, EventArgs.Empty);
             isPaused = true;
-            HidePauseWindow();
+            ShowPauseWindow();
+            
+            AudioManager.Instance.MuffleBGM();
         }
     }
 }

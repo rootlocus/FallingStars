@@ -15,5 +15,5 @@ MonoBehaviour:
   type: 0
   color: {r: 1, g: 0, b: 0, a: 1}
   orbName: Red
-  sprite: {fileID: 21300000, guid: 241a872c03474a14dacc77ea66c43790, type: 3}
+  sprite: {fileID: 21300000, guid: f0c73e1508a620a4cb135e89ce1cfc8b, type: 3}
   orbAnimation: {fileID: 0}

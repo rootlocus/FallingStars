@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 
 public class LoseUI : MonoBehaviour
 {
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private GameObject loseUI;
     [SerializeField] private Button quitButton;
     [SerializeField] private Button restartButton;
@@ -30,19 +31,20 @@ public class LoseUI : MonoBehaviour
     {
         LevelState.Instance.OnStateLose += LevelState_OnStateLose;
 
-        loseUI.SetActive(false);
+        HideLoseWindow();
     }
 
     [Button("Lose Window Test")]
     private void LevelState_OnStateLose(object sender, EventArgs e)
     {
+        Debug.Log("LevelState_OnStateLose");
         SetPoints(ScoreManager.Instance.GetCurrentScore());
         SetTime(5, 32);
 
         AudioManager.Instance.PauseBGM();
         AudioManager.Instance.PlayMenuSFX(loseSound);
 
-        loseUI.SetActive(true);
+        ShowLoseWindow();
     }
 
     private void SetPoints(int points)
@@ -53,5 +55,19 @@ public class LoseUI : MonoBehaviour
     private void SetTime(int minutes, int seconds)
     {
         timeText.SetText("Time: " + minutes + " minutes " + seconds + " seconds");
+    }
+
+    public void HideLoseWindow()
+    {
+        canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
+    }
+
+    public void ShowLoseWindow()
+    {
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
     }
 }

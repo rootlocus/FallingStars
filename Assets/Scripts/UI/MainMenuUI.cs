@@ -29,6 +29,7 @@ public class MainMenuUI : MonoBehaviour
     private bool isInvoked;
     private float defaultSize;
     [SerializeField] private float bounceMultiplier = 0.1f;
+    [SerializeField] private AudioClip startButtonSFX;
     
 
     private void Start()
@@ -40,6 +41,7 @@ public class MainMenuUI : MonoBehaviour
             SceneHandler.Instance.QuitGame();
         });
         startButton.onClick.AddListener(() => {
+            AudioManager.Instance.PlaySFX(startButtonSFX);
             StartGame();
         });
         optionButton.onClick.AddListener(() => {

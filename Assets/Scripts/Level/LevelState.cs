@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.Rendering.Universal;
 
 public class LevelState : MonoBehaviour
 {
@@ -19,6 +21,8 @@ public class LevelState : MonoBehaviour
     [Header("Game Config")]
     [SerializeField] private int chaseKillCount;
     [SerializeField] private float countdownDuration;
+    [SerializeField] private AudioClip beepSound;
+
 
     private enum State
     {
@@ -58,7 +62,8 @@ public class LevelState : MonoBehaviour
         PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
         PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
         Projectile.OnSpecialProjectileStop += Projectile_OnSpecialProjectileStop;
-        
+        Launcher.OnSpecialSwap += Launcher_OnSpecialSwap;
+
         isRunning = true;
         currentKillCount = 0;
     }
@@ -90,20 +95,24 @@ public class LevelState : MonoBehaviour
                 LevelGrid.Instance.CheckSpawnOrbRow();
                 break;
             case State.Lose:
+                CancelInvoke("CountDownBeep");
                 OnStateLose?.Invoke(this, EventArgs.Empty); // maybe pass score and time here ?
                 isRunning = false;
                 break;
             case State.Pause:
                 break;
             case State.Countdown:
+                InvokeRepeating("CountDownBeep", 0f, 1f);
                 NextState();
-                //TODO start countdown
-                //change audio
-                //if countdown reach then set state to lose
                 break;
             default:
                 break;
         }
+    }
+
+    private void CountDownBeep()
+    {
+        AudioManager.Instance.PlaySFX(beepSound);
     }
 
     private void NextState()
@@ -133,6 +142,10 @@ public class LevelState : MonoBehaviour
         LevelGrid.Instance.SetGridSpeedNormal();
     }
 
+    private void PauseGrid(float pauseDuration)
+    {
+        stateTimer = pauseDuration;
+    }
 #region Events
 	    private void LevelGrid_OnStartLevel(object sender, EventArgs e)
 	    {
@@ -156,6 +169,7 @@ public class LevelState : MonoBehaviour
 	        if (currentState != State.Lose && currentState != State.Countdown)
 	        {
 	            currentState = State.Countdown;
+                AudioManager.Instance.MuffleBGM();
 	        }
 	    }
 	
@@ -163,6 +177,9 @@ public class LevelState : MonoBehaviour
 	    {
 	        currentState = State.Running;
 	        stateTimer = 0f;
+
+            CancelInvoke("CountDownBeep");
+            AudioManager.Instance.UnmuffleBGM();
 	    }
 	
 	    private void RushLine_OnOrbEnter(object sender, EventArgs e)
@@ -180,12 +197,19 @@ public class LevelState : MonoBehaviour
 	        onPausedState = currentState;
 	
 	        currentState = State.Pause;
+            Time.timeScale = 0;
 	    }
 	
 	    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
 	    {
 	        currentState = onPausedState;
+            Time.timeScale = 1;
 	    }
+        
+        private void Launcher_OnSpecialSwap(object sender, float pauseDuration)
+        {
+            PauseGrid(pauseDuration);
+        }
 #endregion
 
 }

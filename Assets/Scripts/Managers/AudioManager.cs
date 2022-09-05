@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class AudioManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioClip menuBGMClip;
     [SerializeField] private AudioClip levelBGMClip;
+    [SerializeField] private AudioLowPassFilter bgmAudioLowPassFilter;
 
 
     private void Awake() {
@@ -74,10 +76,14 @@ public class AudioManager : MonoBehaviour
 	    public float GetMasterVolume() => AudioListener.volume;
 	
 	    public void AdjustMasterVolume(float vol) => AudioListener.volume = vol;
+
+        public void MuffleBGM() => bgmAudioLowPassFilter.cutoffFrequency = 500;
+
+        public void UnmuffleBGM() => bgmAudioLowPassFilter.cutoffFrequency = 22000;
 #endregion
 
 #region Other
-	    public void PlayMenuBGM()
+    public void PlayMenuBGM()
 	    {
 	        bgm.clip = menuBGMClip;
 	        bgm.Play();

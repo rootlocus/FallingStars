@@ -449,8 +449,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: RAGE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 593854f4cfa82104197b47be1a756c86, type: 2}
-  m_sharedMaterial: {fileID: 3557263326127233882, guid: 593854f4cfa82104197b47be1a756c86, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 138cf36aaeb4fb9418b3d3a20aa61034, type: 2}
+  m_sharedMaterial: {fileID: -272670827690608773, guid: 138cf36aaeb4fb9418b3d3a20aa61034, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -480,11 +480,11 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 3
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -10
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -529,7 +529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WrapMode: 0
-  hasOwner: 1
+  hasOwner: 0
   OnBegin:
     m_PersistentCalls:
       m_Calls: []
@@ -543,9 +543,9 @@ MonoBehaviour:
   AutoKeyframe: 0
   UseTimeScale: 1
   IsDragFrame: 0
-  IsAutoplay: 0
+  IsAutoplay: 1
   isCustom: 0
-  AutoplayMode: 0
+  AutoplayMode: 1
   Keyframes:
   - Position: {x: 443.57144, y: -257.14285, z: 0}
     Rotation: {x: -0, y: 0, z: 0}
@@ -555,42 +555,51 @@ MonoBehaviour:
     Duration: 1.5
     Delay: 0
     Mode: 0
-    Easing: 10
+    Easing: 2
     Animation:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: -0.0003805831
-        inSlope: 8.990726
-        outSlope: 8.990726
+        value: 0
+        inSlope: 0.03
+        outSlope: 0.03
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.35
-        value: 1
-        inSlope: -4.303913
-        outSlope: -4.303913
+        time: 0.45
+        value: 0.03
+        inSlope: 0.2333333
+        outSlope: 0.2333333
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.55
-        value: 1
-        inSlope: 1.554695
-        outSlope: 1.554695
+        time: 0.7
+        value: 0.13
+        inSlope: 0.7666667
+        outSlope: 0.7666667
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 0.7730452
-        value: 1
-        inSlope: -2.007816
-        outSlope: -2.007816
+        time: 0.85
+        value: 0.3
+        inSlope: 2.233334
+        outSlope: 2.233334
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.925
+        value: 0.55
+        inSlope: 4.666665
+        outSlope: 4.666665
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -598,8 +607,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: -1.23451
-        outSlope: -1.23451
+        inSlope: 5.999996
+        outSlope: 5.999996
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -617,7 +626,7 @@ MonoBehaviour:
     Pivot: {x: 0.5, y: 0.5}
     FontSize: 0
     TMPFontSize: 0
-    TMPCharacter: 0
+    TMPCharacter: 100
     TMPWord: 0
     TMPLine: 0
     TMPParagraph: 0
@@ -636,7 +645,100 @@ MonoBehaviour:
     Scale: {x: 1, y: 1, z: 1}
     SizeDelta: {x: 0, y: 0}
     Color: {r: 1, g: 1, b: 1, a: 1}
-    Duration: 0
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 1
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0.03
+        outSlope: 0.03
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.45
+        value: 0.03
+        inSlope: 0.2333333
+        outSlope: 0.2333333
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.7
+        value: 0.13
+        inSlope: 0.7666667
+        outSlope: 0.7666667
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.85
+        value: 0.3
+        inSlope: 2.233334
+        outSlope: 2.233334
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.925
+        value: 0.55
+        inSlope: 4.666665
+        outSlope: 4.666665
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 5.999996
+        outSlope: 5.999996
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0.5}
+    AnchorMax: {x: 0.5, y: 0.5}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 64
+    TMPCharacter: 100
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 1, g: 1, b: 1, a: 1}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  - Position: {x: 443.57144, y: -257.14285, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 0, y: 0}
+    Color: {r: 1, g: 1, b: 1, a: 1}
+    Duration: 1.5
     Delay: 0
     Mode: 0
     Easing: 1
@@ -674,7 +776,7 @@ MonoBehaviour:
     Pivot: {x: 0.5, y: 0.5}
     FontSize: 0
     TMPFontSize: 64
-    TMPCharacter: 0
+    TMPCharacter: -10
     TMPWord: 0
     TMPLine: 0
     TMPParagraph: 0
@@ -688,7 +790,7 @@ MonoBehaviour:
     UniformValue: 0
     LinkTransform: {fileID: 0}
     Sticky: 0
-  Frame: 2
+  Frame: 3
   LinkStatus: OFF
   LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   isLinked: 0
@@ -706,7 +808,7 @@ MonoBehaviour:
   CustomStatus: OFF
   CustomColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   IsCustom: 0
-  CurrentDuration: 0
+  CurrentDuration: 1.5
   CurrentDelay: 0
   CurrentMode: 0
   CurrentEasing: 1
@@ -826,12 +928,183 @@ MonoBehaviour:
   IsAutoplay: 0
   isCustom: 0
   AutoplayMode: 0
-  Keyframes: []
-  Frame: 0
+  Keyframes:
+  - Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 100, y: -620}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 1
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0}
+    AnchorMax: {x: 0.5, y: 1}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  - Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 100, y: -620}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 1
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0}
+    AnchorMax: {x: 0.5, y: 1}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  - Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 100, y: -620}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 1
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0}
+    AnchorMax: {x: 0.5, y: 1}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  Frame: 3
   LinkStatus: OFF
   LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   isLinked: 0
-  IsKM: 0
+  IsKM: 1
   OptionStatus: EXPAND
   OptionColor: {r: 0.721, g: 0.909, b: 0.937, a: 1}
   IsOption: 1
@@ -881,7 +1154,7 @@ MonoBehaviour:
   CurrentLinkTransform: {fileID: 0}
   IsPreviousLinkTransfrom: 0
   Motions:
-  - {fileID: 698127091}
+  - {fileID: 563708718}
   - {fileID: 388991847}
 --- !u!1 &2978972910408152343
 GameObject:
@@ -1162,11 +1435,68 @@ MonoBehaviour:
     UniformValue: 0
     LinkTransform: {fileID: 0}
     Sticky: 0
-  Frame: 2
+  - Position: {x: 447, y: 12, z: 0}
+    Rotation: {x: -0, y: 0, z: 0}
+    Scale: {x: 1, y: 1, z: 1}
+    SizeDelta: {x: 120, y: 600}
+    Color: {r: 0, g: 0, b: 0, a: 0}
+    Duration: 1.5
+    Delay: 0
+    Mode: 0
+    Easing: 0
+    Animation:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 3
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    Sound: {fileID: 0}
+    Pitch: 1
+    Volume: 1
+    MaxRange: 1
+    MinRange: 0
+    AnchorMin: {x: 0.5, y: 0.5}
+    AnchorMax: {x: 0.5, y: 0.5}
+    Pivot: {x: 0.5, y: 0.5}
+    FontSize: 0
+    TMPFontSize: 0
+    TMPCharacter: 0
+    TMPWord: 0
+    TMPLine: 0
+    TMPParagraph: 0
+    TMPColor: {r: 0, g: 0, b: 0, a: 0}
+    FillAmount: 0
+    FillMethod: 0
+    FillOrigin: 0
+    FillClockwise: 0
+    BorderWidth: 0
+    FalloffDistance: 1
+    UniformValue: 0
+    LinkTransform: {fileID: 0}
+    Sticky: 0
+  Frame: 3
   LinkStatus: OFF
   LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   isLinked: 0
-  IsKM: 0
+  IsKM: 1
   OptionStatus: EXPAND
   OptionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   IsOption: 0

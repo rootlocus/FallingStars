@@ -9,12 +9,14 @@ using DG.Tweening;
 public class Launcher : MonoBehaviour
 {
     public static event EventHandler OnFireSpecial;
+    public static event EventHandler<float> OnSpecialSwap;
 
     [Header("Setup")]
     [SerializeField] private Transform launchPosition;
     [SerializeField] private Transform projectilePrefab;
     [SerializeField] private Transform currentOrbTransform;
     [SerializeField] private Transform nextOrbTransform;
+    [SerializeField] private GameObject highlightVignette;
 
     [Header("Mandatory Configurations")]
     [SerializeField] private List<OrbTypeSO> orbTypes;
@@ -23,9 +25,11 @@ public class Launcher : MonoBehaviour
     [Header("Audio Configuration")]
     [SerializeField] private AudioClip launchSoundClip;
     [SerializeField] private AudioClip reloadSoundClip;
+    [SerializeField] private AudioClip specialAmmoShowClip;
 
     [Header("Animation Configuration")]
     [SerializeField] private EntranceAnimation ropeAnimation;
+    [SerializeField] private float swapDuration = 1.5f;
 
     private SpriteRenderer currentOrbSprite;
     private SpriteRenderer nextOrbSprite;
@@ -46,7 +50,7 @@ public class Launcher : MonoBehaviour
     private float stateTimer;
     private bool onSpecialMode;
     private bool isReloaded;
-    
+
 
     private void Awake()
     {
@@ -56,6 +60,7 @@ public class Launcher : MonoBehaviour
 
     private void Start() 
     {
+        stateTimer = 0f;
         onSpecialMode = false;
         isReloaded = false;
         currentState = State.Pause;
@@ -70,6 +75,12 @@ public class Launcher : MonoBehaviour
 
     private void Update() 
     {
+        stateTimer -= Time.deltaTime;
+
+        if (stateTimer > 0f) {
+            return;
+        }
+
         switch (currentState)
         {
             case State.Initialize:
@@ -186,6 +197,25 @@ public class Launcher : MonoBehaviour
         currentOrbType = bombOrbType;
         currentOrbSprite.sprite = currentOrbType.sprite;
         currentOrbSprite.enabled = true;
+
+        stateTimer = swapDuration;
+        OnSpecialSwap?.Invoke(this, swapDuration);
+        StartCoroutine(HighlightSpecialAmmo(swapDuration));
+
+        AudioManager.Instance.PlaySFX(specialAmmoShowClip);
+    }
+
+    IEnumerator HighlightSpecialAmmo(float showDuration)
+    {
+        highlightVignette.SetActive(true);
+        currentOrbSprite.material.EnableKeyword("FLICKER_ON");
+        currentOrbSprite.material.EnableKeyword("HITEFFECT_ON");
+        
+        yield return new WaitForSeconds(showDuration);
+
+        highlightVignette.SetActive(false);
+        currentOrbSprite.material.DisableKeyword("FLICKER_ON");
+        currentOrbSprite.material.DisableKeyword("HITEFFECT_ON");
     }
 
     private void Projectile_OnProjectileStop(object sender, EventArgs e)
