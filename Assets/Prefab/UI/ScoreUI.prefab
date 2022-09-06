@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -280,7 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3837173897627757134}
   - component: {fileID: 3837173897627757133}
-  - component: {fileID: 1430412847}
+  - component: {fileID: 2013054333}
   m_Layer: 5
   m_Name: ScoreUI
   m_TagString: Untagged
@@ -324,7 +324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 3837173896385638001}
   scoreTransform: {fileID: 3837173896385638002}
---- !u!114 &1430412847
+--- !u!114 &2013054333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,7 +355,7 @@ MonoBehaviour:
   isCustom: 0
   AutoplayMode: 0
   Keyframes:
-  - Position: {x: 200, y: 60.00003, z: 0}
+  - Position: {x: -233.92853, y: -537.8571, z: 0}
     Rotation: {x: -0, y: 0, z: 0}
     Scale: {x: 1, y: 1, z: 1}
     SizeDelta: {x: 100, y: 100}
@@ -363,7 +363,7 @@ MonoBehaviour:
     Duration: 1.5
     Delay: 0
     Mode: 0
-    Easing: 0
+    Easing: 1
     Animation:
       serializedVersion: 2
       m_Curve:
@@ -373,16 +373,16 @@ MonoBehaviour:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-        weightedMode: 3
+        weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
+        inSlope: 1
         outSlope: 0
         tangentMode: 0
-        weightedMode: 3
+        weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
@@ -412,15 +412,15 @@ MonoBehaviour:
     UniformValue: 0
     LinkTransform: {fileID: 0}
     Sticky: 0
-  - Position: {x: 200, y: -119.99997, z: 0}
+  - Position: {x: 267.5, y: -537.8571, z: 0}
     Rotation: {x: -0, y: 0, z: 0}
     Scale: {x: 1, y: 1, z: 1}
     SizeDelta: {x: 100, y: 100}
     Color: {r: 0, g: 0, b: 0, a: 0}
-    Duration: 0
+    Duration: 1.5
     Delay: 0
     Mode: 0
-    Easing: 0
+    Easing: 1
     Animation:
       serializedVersion: 2
       m_Curve:
@@ -430,16 +430,16 @@ MonoBehaviour:
         inSlope: 0
         outSlope: 0
         tangentMode: 0
-        weightedMode: 3
+        weightedMode: 0
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
+        inSlope: 1
         outSlope: 0
         tangentMode: 0
-        weightedMode: 3
+        weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
@@ -469,11 +469,11 @@ MonoBehaviour:
     UniformValue: 0
     LinkTransform: {fileID: 0}
     Sticky: 0
-  Frame: 2
+  Frame: 1
   LinkStatus: OFF
   LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   isLinked: 0
-  IsKM: 1
+  IsKM: 0
   OptionStatus: EXPAND
   OptionColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   IsOption: 0
@@ -487,10 +487,10 @@ MonoBehaviour:
   CustomStatus: OFF
   CustomColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   IsCustom: 0
-  CurrentDuration: 0
+  CurrentDuration: 1.5
   CurrentDelay: 0
   CurrentMode: 0
-  CurrentEasing: 0
+  CurrentEasing: 1
   CurrentAnimation:
     serializedVersion: 2
     m_Curve:
@@ -500,16 +500,16 @@ MonoBehaviour:
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-      weightedMode: 3
+      weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
+      inSlope: 1
       outSlope: 0
       tangentMode: 0
-      weightedMode: 3
+      weightedMode: 0
       inWeight: 0
       outWeight: 0
     m_PreInfinity: 2

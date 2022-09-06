@@ -34,7 +34,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private Ease easeType;
 
     private GridSystem gridSystem;
-    private int width = 10;
+    private int width = 12;
     private int height = 15;
     private float cellSize = 2f;
 
