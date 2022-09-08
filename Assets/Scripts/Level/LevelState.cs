@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.Rendering.Universal;
 
 public class LevelState : MonoBehaviour
 {
@@ -85,14 +83,14 @@ public class LevelState : MonoBehaviour
                 break;
             case State.Start:
                 OnStateStart?.Invoke(this, EventArgs.Empty);
-                LevelGrid.Instance.SpawnLevelOrbs(5);
+                LevelOrbSpawner.Instance.InitializeLevelOrbs(5);
                 AudioManager.Instance.PlayLevelBGM();
 
                 NextState();
                 break;
             case State.Running:
                 LevelGrid.Instance.MoveOrbRows();
-                LevelGrid.Instance.CheckSpawnOrbRow();
+                LevelOrbSpawner.Instance.CheckSpawnOrbRow();
                 break;
             case State.Lose:
                 CancelInvoke("CountDownBeep");
@@ -144,72 +142,78 @@ public class LevelState : MonoBehaviour
 
     private void PauseGrid(float pauseDuration)
     {
-        stateTimer = pauseDuration;
-    }
-#region Events
-	    private void LevelGrid_OnStartLevel(object sender, EventArgs e)
-	    {
-	        currentState = State.PreStart;
-	    }
-	
-	    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
-	    {
-	        int previousCount = currentKillCount;
-	        currentKillCount += e.orbDestroyed;
-	        currentKillCount += e.orbFallen;
-	
-	        if (previousCount < chaseKillCount && currentKillCount >= chaseKillCount)
-	        {
-	            LevelGrid.Instance.GridChaseMode();
-	        }
-	    }
-	    
-	    private void DeathLine_OnOrbEnter(object sender, EventArgs e)
-	    {
-	        if (currentState != State.Lose && currentState != State.Countdown)
-	        {
-	            currentState = State.Countdown;
-                AudioManager.Instance.MuffleBGM();
-	        }
-	    }
-	
-	    private void DeathLine_OnOrbExit(object sender, EventArgs e)
-	    {
-	        currentState = State.Running;
-	        stateTimer = 0f;
-
-            CancelInvoke("CountDownBeep");
-            AudioManager.Instance.UnmuffleBGM();
-	    }
-	
-	    private void RushLine_OnOrbEnter(object sender, EventArgs e)
-	    {
-	        ResetKillCountDifficulty();
-	    }
-	
-	    private void Projectile_OnSpecialProjectileStop(object sender, EventArgs e)
-	    {
-	        ResetKillCountDifficulty();
-	    }
-	
-	    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
-	    {
-	        onPausedState = currentState;
-	
-	        currentState = State.Pause;
-            Time.timeScale = 0;
-	    }
-	
-	    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
-	    {
-	        currentState = onPausedState;
-            Time.timeScale = 1;
-	    }
-        
-        private void Launcher_OnSpecialSwap(object sender, float pauseDuration)
+        if (currentState == State.Lose)
         {
-            PauseGrid(pauseDuration);
+            stateTimer = pauseDuration + stateTimer;
+        } else {
+            stateTimer = pauseDuration;
         }
+    }
+
+#region Events
+    private void LevelGrid_OnStartLevel(object sender, EventArgs e)
+    {
+        currentState = State.PreStart;
+    }
+
+    private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
+    {
+        int previousCount = currentKillCount;
+        currentKillCount += e.orbDestroyed;
+        currentKillCount += e.orbFallen;
+
+        if (previousCount < chaseKillCount && currentKillCount >= chaseKillCount)
+        {
+            LevelGrid.Instance.GridChaseMode();
+        }
+    }
+    
+    private void DeathLine_OnOrbEnter(object sender, EventArgs e)
+    {
+        if (currentState != State.Lose && currentState != State.Countdown)
+        {
+            currentState = State.Countdown;
+            AudioManager.Instance.MuffleBGM();
+        }
+    }
+
+    private void DeathLine_OnOrbExit(object sender, EventArgs e)
+    {
+        currentState = State.Running;
+        stateTimer = 0f;
+
+        CancelInvoke("CountDownBeep");
+        AudioManager.Instance.UnmuffleBGM();
+    }
+
+    private void RushLine_OnOrbEnter(object sender, EventArgs e)
+    {
+        ResetKillCountDifficulty();
+    }
+
+    private void Projectile_OnSpecialProjectileStop(object sender, EventArgs e)
+    {
+        ResetKillCountDifficulty();
+    }
+
+    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
+    {
+        onPausedState = currentState;
+
+        currentState = State.Pause;
+        Time.timeScale = 0;
+    }
+
+    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
+    {
+        currentState = onPausedState;
+        Time.timeScale = 1;
+    }
+    
+    private void Launcher_OnSpecialSwap(object sender, float pauseDuration)
+    {
+        PauseGrid(pauseDuration);
+    }
 #endregion
 
 }

@@ -88,7 +88,7 @@ public class LauncherVisualGuide : MonoBehaviour
         if (reflectHit.transform.tag == "Wall")
         {
             // Debug.Log("REFLECT");
-            reflectPoint.x = Mathf.Clamp(reflectPoint.x, -0.25f, 24.1f);
+            reflectPoint.x = Mathf.Clamp(reflectPoint.x, 1.25f, 23.0f);
 
             reflectPoints.Add(reflectPoint);
             // ReflectArrow(reflectDirection, reflectHit.point);
@@ -118,7 +118,7 @@ public class LauncherVisualGuide : MonoBehaviour
     private void CollideOnWall(Vector2 collidePoint)
     {
         //collide wall
-        collidePoint.x = Mathf.Clamp(collidePoint.x, -0.25f, 24.1f);
+        collidePoint.x = Mathf.Clamp(collidePoint.x, 1.25f, 23.0f);
         reflectPoints.Add(collidePoint);
     }
 }

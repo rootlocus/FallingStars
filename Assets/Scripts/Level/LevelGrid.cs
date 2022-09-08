@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using Random=UnityEngine.Random;
 
 
 public class LevelGrid : MonoBehaviour
@@ -19,27 +18,24 @@ public class LevelGrid : MonoBehaviour
     public event EventHandler<OnSuccessfulMatchArgs> OnSuccessfulMatch;
     public event EventHandler OnUnsuccessfulMatch;
     
-
     [Header("Prefabs Transform")]
     [SerializeField] private Transform debugPrefab;
-    [SerializeField] private Transform orbPrefab;
     [SerializeField] private Transform orbContainer;
 
     [Header("Configurations")]
-    [SerializeField] private List<OrbTypeSO> orbTypes;
+    [SerializeField] private LevelOrbSpawner spawner;
     [SerializeField] private LayerMask orbLayer;
     [SerializeField] private AudioClip matchSoundClip;
     [SerializeField] private AudioClip pushbackSoundClip;
     [SerializeField] private float defaultGridSpeed = 0.25f;
     [SerializeField] private Ease easeType;
-
+    
     private GridSystem gridSystem;
     private int width = 12;
     private int height = 15;
     private float cellSize = 2f;
 
     private bool isMoving = false;
-    private float nextLineSpawn; // spawn row of orb on this y position
     private float currentGridSpeed;
 
 
@@ -61,7 +57,6 @@ public class LevelGrid : MonoBehaviour
         // gridSystem.CreateDebugObject(debugPrefab, orbContainer);
         //TODO: spawn the rope sprite
 
-        nextLineSpawn = -1f;
         currentGridSpeed = defaultGridSpeed;
 
         OnStartLevel?.Invoke(this, EventArgs.Empty);
@@ -90,15 +85,6 @@ public class LevelGrid : MonoBehaviour
         orbContainer.position += Vector3.down * Time.deltaTime * currentGridSpeed;
     }
 
-    public void CheckSpawnOrbRow()
-    {
-        if (orbContainer.position.y <= nextLineSpawn)
-        {
-            SpawnOrbRow();
-            nextLineSpawn = nextLineSpawn - 2f;
-        }
-    }
-
     public void StartMoving()
     {
         isMoving = true;
@@ -109,27 +95,36 @@ public class LevelGrid : MonoBehaviour
         isMoving = false;
     }
 
-    public GridSystem GetGridSystem() => gridSystem;
+#region Getters
+	    public GridSystem GetGridSystem() => gridSystem;
+	
+	    public int GetHeight() => gridSystem.GetHeight();
+	
+	    public int GetWidth() => gridSystem.GetWidth();
+	
+	    public void AddHeight(int i) => gridSystem.AddHeight(i);
+	
+	    public GridObject GetGridObject(GridPosition gridPosition) => gridSystem.GetGridObject(gridPosition);
 
-    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition - orbContainer.position);
-    
-    public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition);
+        public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition - orbContainer.position);
+        
+        public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition);
 
-    public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition) => gridSystem.GetAdjacentGridObjects(gridPosition);
+        public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition) => gridSystem.GetAdjacentGridObjects(gridPosition);
+
+        public LayerMask GetOrbMask() => orbLayer;
+#endregion
+
+    public void AddGridObjectRows(List<GridObject> row) => gridSystem.AddGridObjectRows(row);
 
     public bool HasMatch3Link(GridPosition gridPosition, ref List<GridObject> matchedGridObjects) => gridSystem.HasMatch3Link(gridPosition, ref matchedGridObjects);
-
-    public List<OrbTypeSO> GetOrbTypes() => orbTypes;
-    
-    public LayerMask GetOrbMask() => orbLayer;
 
     public void AttachOrbToGrid(GridPosition gridPosition, OrbTypeSO orbType)
     {
         StopMoving();
-        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        GridObject gridObject = GetGridObject(gridPosition);
 
-        Transform orb = Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition) + orbContainer.position, Quaternion.identity);
-        orb.parent = orbContainer;
+        Transform orb = LevelOrbSpawner.Instance.SpawnOrb(GetWorldPositionCenter(gridPosition) + orbContainer.position);
 
         Orb attachedOrb = orb.GetComponent<Orb>();
         attachedOrb.Setup(orbType);
@@ -202,43 +197,6 @@ public class LevelGrid : MonoBehaviour
         }
 
         return fallenCount;
-    }
-
-    private void SpawnOrbRow()
-    {
-        gridSystem.SpawnOrbRow(orbPrefab, orbContainer);
-    }
-
-    public void SpawnLevelOrbs(int size)
-    {
-        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
-        float timeToMove = 2.5f;
-
-        for (int y = gridSystem.GetHeight() - 1; y >= height - size; y--)
-        {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
-            timeToMove -= 0.5f;
-
-            for (int x = 0; x < gridSystem.GetWidth() - offSetX; x++)
-            {
-                int doubleWidth = x * 2 + offSetX;
-                GridPosition gridPosition = new GridPosition(doubleWidth, y);
-
-                Vector2 endOrbPosition = GetWorldPositionCenter(gridPosition);
-                Vector2 startOrbPosition = endOrbPosition;
-                startOrbPosition.y = 30f;
-                
-                Transform orbTransform = GameObject.Instantiate(orbPrefab, startOrbPosition, Quaternion.identity);
-                orbTransform.parent = orbContainer;
-                orbTransform.DOMove(endOrbPosition, timeToMove).SetEase(easeType);
-
-                //initialize orb
-                OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-                Orb orb = orbTransform.GetComponent<Orb>();
-
-                gridSystem.GetGridObject(gridPosition).AddOrb(orb, typeSO);
-            }
-        }
     }
 
     public void GridChaseMode()

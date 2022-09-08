@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WrapMode: 0
-  hasOwner: 0
+  hasOwner: 1
   OnBegin:
     m_PersistentCalls:
       m_Calls: []
@@ -521,7 +521,7 @@ MonoBehaviour:
     UniformValue: 0
     LinkTransform: {fileID: 0}
     Sticky: 0
-  - Position: {x: -699.10706, y: 135, z: 0}
+  - Position: {x: -737.67847, y: 135, z: 0}
     Rotation: {x: -0, y: 0, z: 0}
     Scale: {x: 1, y: 1, z: 1}
     SizeDelta: {x: -491.78564, y: 0}
@@ -578,7 +578,7 @@ MonoBehaviour:
     UniformValue: 0
     LinkTransform: {fileID: 0}
     Sticky: 0
-  Frame: 1
+  Frame: 2
   LinkStatus: OFF
   LinkColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   isLinked: 0

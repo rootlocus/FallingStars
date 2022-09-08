@@ -19,7 +19,7 @@ public class Launcher : MonoBehaviour
     [SerializeField] private GameObject highlightVignette;
 
     [Header("Mandatory Configurations")]
-    [SerializeField] private List<OrbTypeSO> orbTypes;
+    // [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private OrbTypeSO bombOrbType;
 
     [Header("Audio Configuration")]
@@ -188,6 +188,8 @@ public class Launcher : MonoBehaviour
 
     private OrbTypeSO GetRandomOrb()
     {
+        List<OrbTypeSO> orbTypes = LevelOrbSpawner.Instance.GetCurrentOrbPool();
+
         return orbTypes[Random.Range(0, orbTypes.Count)];
     }
 

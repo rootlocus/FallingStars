@@ -44,29 +44,37 @@ public class GridSystem
         }
     }
 
-    public int GetWidth() => width;
-    
-    public int GetHeight() => height;
+#region Accessors
+	    public int GetWidth() => width;
+	    
+	    public int GetHeight() => height;
+#endregion
 
-    public void CreateDebugObject(Transform debugPrefab, Transform parent)
-    {
-        for (int y = 0; y < height; y++)
-        {
-            int offSetX = (y % 2 == 0) ? 1 : 0;
-
-            for (int x = 0; x < width - offSetX; x++)
-            {
-                int doubleWidthX = x * 2 + offSetX;
-                GridPosition gridPosition = new GridPosition(doubleWidthX, y);
-
-                Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-                debugTransform.parent = parent;
-
-                GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
-                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
-            }
-        }
-    }
+#region Mutator
+	    public void AddGridObjectRows(List<GridObject> row) => gridObjectRows.Add(row);
+	
+	    public void AddHeight(int i) => height = height + i;
+	
+	    public void CreateDebugObject(Transform debugPrefab, Transform parent)
+	    {
+	        for (int y = 0; y < height; y++)
+	        {
+	            int offSetX = (y % 2 == 0) ? 1 : 0;
+	
+	            for (int x = 0; x < width - offSetX; x++)
+	            {
+	                int doubleWidthX = x * 2 + offSetX;
+	                GridPosition gridPosition = new GridPosition(doubleWidthX, y);
+	
+	                Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
+	                debugTransform.parent = parent;
+	
+	                GridDebugObject gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
+	                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
+	            }
+	        }
+	    }
+#endregion
 
     //TEMP
     // public void PopulateOrbObjects(Transform orbPrefab, Transform parent, int size)
@@ -293,34 +301,6 @@ public class GridSystem
         }
 
         return gridObjectsWithOrbs;
-    }
-
-    public void SpawnOrbRow(Transform orbPrefab, Transform orbContainer)
-    {
-        height += 1;
-        int y = height - 1;
-        int offSetX = (y % 2 == 0) ? 1 : 0;
-        List<GridObject> row = new List<GridObject>();
-        List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
-
-        for (int x = 0; x < this.width - offSetX; x++)
-        {
-            //create new grid object
-            int doubleWidth = x * 2 + offSetX;
-            GridPosition gridPosition = new GridPosition(doubleWidth, y);
-            GridObject gridObject = new GridObject(gridPosition);
-            row.Add(gridObject);
-
-            //Add orbs
-            Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition) + orbContainer.position, Quaternion.identity);
-            orbTransform.parent = orbContainer;
-
-            Orb orb = orbTransform.GetComponent<Orb>();
-            OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-            gridObject.AddOrb(orb, typeSO);
-        }
-
-        gridObjectRows.Add(row);
     }
 
     // public void SpawnGridRow(Transform orbPrefab)
