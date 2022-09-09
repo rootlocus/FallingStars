@@ -21,7 +21,7 @@ public class ComboSystem : MonoBehaviour
 
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
         LevelGrid.Instance.OnUnsuccessfulMatch += LevelGrid_OnUnsuccessfulMatch;
-        Launcher.OnFireSpecial += Launcher_OnFireSpecial;
+        // Launcher.OnFireSpecial += Launcher_OnFireSpecial;
     }
 
     private void LevelGrid_OnUnsuccessfulMatch(object sender, EventArgs e)
@@ -29,10 +29,10 @@ public class ComboSystem : MonoBehaviour
         ResetComboCount();
     }
 
-    private void Launcher_OnFireSpecial(object sender, EventArgs e)
-    {
-        ResetComboCount();
-    }
+    // private void Launcher_OnFireSpecial(object sender, EventArgs e)
+    // {
+    //     ResetComboCount();
+    // }
 
     private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
     {

@@ -3066,26 +3066,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1034884244 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5436835447915688787, guid: e649c2d79e991b84c927358e2cdf8927, type: 3}
-  m_PrefabInstance: {fileID: 5436835447010191234}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1034884247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034884244}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b47d080c5d418fe4bb0aa0d5c0185341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orbPrefab: {fileID: 6928589795586721004, guid: 92bf21222695dbc43b565b39e9b99d3a, type: 3}
-  defaultCapacity: 300
-  maxCapacity: 400
 --- !u!1 &1081563306
 GameObject:
   m_ObjectHideFlags: 0
@@ -5911,10 +5891,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelOrbSpawner
       objectReference: {fileID: 0}
-    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: orbPrefab
-      value: 
-      objectReference: {fileID: 6928589795586721004, guid: 92bf21222695dbc43b565b39e9b99d3a, type: 3}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbContainer
       value: 

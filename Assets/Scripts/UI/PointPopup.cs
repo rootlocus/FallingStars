@@ -9,7 +9,7 @@ public class PointPopup : MonoBehaviour
     [SerializeField] private float animationSpeed = 3f;
     [SerializeField] private float TIME_BEFORE_FADE = 0.5f;
     [SerializeField] private float expandAmountPerFrame = 0.5f;
-    [SerializeField] private float shrinkAmountPerFrame = 0.5f;
+    // [SerializeField] private float shrinkAmountPerFrame = 0.5f;
     [SerializeField] private float initialScaleSize = 0.1f;
     [SerializeField] private TextMeshPro damageText;
     private Color textColor;

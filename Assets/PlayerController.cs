@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
-    public event EventHandler OnEscapePressed;
+    // public event EventHandler OnEscapePressed;
 
     private void Start()
     {

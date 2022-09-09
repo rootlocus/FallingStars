@@ -8,7 +8,7 @@ using DG.Tweening;
 
 public class Launcher : MonoBehaviour
 {
-    public static event EventHandler OnFireSpecial;
+    // public static event EventHandler OnFireSpecial;
     public static event EventHandler<float> OnSpecialSwap;
 
     [Header("Setup")]

@@ -22,7 +22,6 @@ public class LevelOrbSpawner : MonoBehaviour
     private int currentLinesSpawned;
     private float nextLineSpawn; // spawn row of orb on this y position
     private ObjectPool<Orb> pool;
-    private bool isActive = true;
     
 
     private void Awake() 
