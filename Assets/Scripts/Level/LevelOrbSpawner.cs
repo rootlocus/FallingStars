@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+
 
 public class LevelOrbSpawner : MonoBehaviour
 {
     public static LevelOrbSpawner Instance;
 
+    [Header("Pool Configuration")]
+    [SerializeField] private Orb orbPrefab;
+    [SerializeField] private int defaultCapacity = 300;
+    [SerializeField] private int maxCapacity = 400;
+
     [SerializeField] private Transform orbContainer;
-    [SerializeField] private Transform orbPrefab;
     [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private List<OrbTypeSO> currentOrbPool;
     [SerializeField] private int linesToLevel;
     private int currentLinesSpawned;
     private float nextLineSpawn; // spawn row of orb on this y position
+    private ObjectPool<Orb> pool;
+    private bool isActive = true;
     
-    
+
     private void Awake() 
     {
         if (Instance != null)
@@ -30,6 +38,8 @@ public class LevelOrbSpawner : MonoBehaviour
 
     private void Start() 
     {
+        InitializeNewPool();
+
         nextLineSpawn = -1f;
         currentLinesSpawned = 0;
 
@@ -47,17 +57,44 @@ public class LevelOrbSpawner : MonoBehaviour
         }
     }
 
-    public List<OrbTypeSO> GetCurrentOrbPool() => currentOrbPool;
-
-    public Transform SpawnOrb(Vector3 spawnPosition)
+#region Pool
+    private void InitializeNewPool()
     {
-        Transform orbTransform = Instantiate(orbPrefab, spawnPosition, Quaternion.identity);
-        orbTransform.parent = orbContainer;
-
-        return orbTransform;
+        pool = new ObjectPool<Orb>(() => {
+            return Instantiate(orbPrefab);
+        }, orb => {
+            orb.gameObject.SetActive(true);
+        }, orb => {
+            orb.gameObject.SetActive(false);
+        }, orb => {
+            Destroy(orb.gameObject);
+        }, false, defaultCapacity, maxCapacity);
     }
 
-    private void SpawnOrbRow(Transform orbPrefab, Transform orbContainer)
+    public Transform SpawnOrb(Vector3 spawnPosition, OrbTypeSO orbType, GridObject gridObject)
+    {
+        Orb orb = pool.Get();
+        Transform orbTransform = orb.transform;
+        orbTransform.position = spawnPosition;
+        orbTransform.parent = orbContainer;
+
+        orb.Setup(orbType, DestroyPrefab);
+
+        gridObject.AddOrb(orb);
+
+        return orb.transform;
+    }
+
+    private void DestroyPrefab(Orb orb)
+    {
+        pool.Release(orb);
+    }
+#endregion
+    
+    public List<OrbTypeSO> GetCurrentOrbPool() => currentOrbPool;
+
+[Button("SPAWN ROW")]
+    private void SpawnOrbRow()
     {
         LevelGrid.Instance.AddHeight(1);
 
@@ -73,11 +110,9 @@ public class LevelOrbSpawner : MonoBehaviour
             GridObject gridObject = new GridObject(gridPosition);
             row.Add(gridObject);
 
-            //Add orbs
-            Transform orbTransform = SpawnOrb(LevelGrid.Instance.GetWorldPositionCenter(gridPosition) + orbContainer.position);
-
-            Orb orb = orbTransform.GetComponent<Orb>();
-            gridObject.AddOrb(orb, GetRandomOrbFromPool());
+            //Spawn Orb
+            Vector3 orbPosition = LevelGrid.Instance.GetWorldPositionCenter(gridPosition) + orbContainer.position;
+            SpawnOrb(orbPosition, GetRandomOrbFromPool(), gridObject);
         }
 
         LevelGrid.Instance.AddGridObjectRows(row);
@@ -105,14 +140,11 @@ public class LevelOrbSpawner : MonoBehaviour
                 Vector2 startOrbPosition = endOrbPosition;
                 startOrbPosition.y = 30f;
                 
-                Transform orbTransform = SpawnOrb(startOrbPosition);
+                GridObject gridObject = LevelGrid.Instance.GetGridObject(gridPosition);
+
+                Transform orbTransform = SpawnOrb(startOrbPosition, GetRandomOrbFromPool(), gridObject);
+
                 orbTransform.DOMove(endOrbPosition, timeToMove).SetEase(Ease.Linear);
-
-                //initialize orb
-                Orb orb = orbTransform.GetComponent<Orb>();
-
-                // LevelGrid.Instance.
-                LevelGrid.Instance.GetGridObject(gridPosition).AddOrb(orb, GetRandomOrbFromPool());
             }
         }
     }
@@ -122,7 +154,7 @@ public class LevelOrbSpawner : MonoBehaviour
     {
         if (orbContainer.position.y <= nextLineSpawn)
         {
-            SpawnOrbRow(orbPrefab, orbContainer);
+            SpawnOrbRow();
             nextLineSpawn = nextLineSpawn - 2f;
         }
     }

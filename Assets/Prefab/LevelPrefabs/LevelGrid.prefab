@@ -45,12 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugPrefab: {fileID: 7388515302342330564, guid: 386f4abd58828ac4fad04bb4b4c8bcd9, type: 3}
-  orbPrefab: {fileID: 4843731035010008672, guid: 92bf21222695dbc43b565b39e9b99d3a, type: 3}
   orbContainer: {fileID: 0}
-  orbTypes:
-  - {fileID: 11400000, guid: 3e848dac5be4e394ea7cd05ea4863623, type: 2}
-  - {fileID: 11400000, guid: 826d26eabe5f4f64b8969e5a527ff45d, type: 2}
-  - {fileID: 11400000, guid: f4289a76449c7fd47a21ec1d6f998862, type: 2}
+  spawner: {fileID: 0}
   orbLayer:
     serializedVersion: 2
     m_Bits: 256

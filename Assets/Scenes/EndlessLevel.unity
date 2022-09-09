@@ -2638,7 +2638,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 443.5714, y: -9.642822}
+  m_AnchoredPosition: {x: 443.5714, y: -9.642761}
   m_SizeDelta: {x: 33, y: 1080}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &793683337
@@ -3066,6 +3066,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 29
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1034884244 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5436835447915688787, guid: e649c2d79e991b84c927358e2cdf8927, type: 3}
+  m_PrefabInstance: {fileID: 5436835447010191234}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1034884247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034884244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47d080c5d418fe4bb0aa0d5c0185341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbPrefab: {fileID: 6928589795586721004, guid: 92bf21222695dbc43b565b39e9b99d3a, type: 3}
+  defaultCapacity: 300
+  maxCapacity: 400
 --- !u!1 &1081563306
 GameObject:
   m_ObjectHideFlags: 0
@@ -5314,7 +5334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3837173897627757134, guid: 9fcfe4a06916e204aa4514a5ab0899d9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -233.92853
+      value: -233.92862
       objectReference: {fileID: 0}
     - target: {fileID: 3837173897627757134, guid: 9fcfe4a06916e204aa4514a5ab0899d9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5892,33 +5912,13 @@ PrefabInstance:
       value: LevelOrbSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: linesToLevel
-      value: 50
-      objectReference: {fileID: 0}
+      propertyPath: orbPrefab
+      value: 
+      objectReference: {fileID: 6928589795586721004, guid: 92bf21222695dbc43b565b39e9b99d3a, type: 3}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbContainer
       value: 
       objectReference: {fileID: 945749825}
-    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: orbSpawnNextLevel
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: orbTypes.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: orbTypes.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 80cac39c212082c4392fa00611ae41e3, type: 2}
-    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: orbTypes.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 025f09b006dae044a959290ad30eb99f, type: 2}
-    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
-      propertyPath: orbTypes.Array.data[5]
-      value: 
-      objectReference: {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
     - target: {fileID: 7035641972273456743, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: m_RootOrder
       value: 5

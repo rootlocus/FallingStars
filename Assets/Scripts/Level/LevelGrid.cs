@@ -68,6 +68,7 @@ public class LevelGrid : MonoBehaviour
         float timeToHitMaxSpeed = 0.5f;
         DOVirtual.Float(currentGridSpeed, reverseSpeed, timeToHitMaxSpeed, v => {
             currentGridSpeed = v;
+            MoveOrbRows();
         }).OnComplete(() => {
             currentGridSpeed = defaultGridSpeed;
         });
@@ -124,11 +125,7 @@ public class LevelGrid : MonoBehaviour
         StopMoving();
         GridObject gridObject = GetGridObject(gridPosition);
 
-        Transform orb = LevelOrbSpawner.Instance.SpawnOrb(GetWorldPositionCenter(gridPosition) + orbContainer.position);
-
-        Orb attachedOrb = orb.GetComponent<Orb>();
-        attachedOrb.Setup(orbType);
-        gridObject.AddOrb(attachedOrb, orbType);
+        LevelOrbSpawner.Instance.SpawnOrb(GetWorldPositionCenter(gridPosition) + orbContainer.position, orbType, gridObject);
 
         List<GridObject> matchingLists = new List<GridObject>();
         TryMatchGridPosition(gridPosition, ref matchingLists);

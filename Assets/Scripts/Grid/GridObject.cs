@@ -13,10 +13,9 @@ public class GridObject
         this.gridPosition = gridPosition;
     }
 
-    public void AddOrb(Orb orb, OrbTypeSO typeSO)
+    public void AddOrb(Orb orb)
     {
         this.orb = orb;
-        orb.Setup(typeSO);
     }
 
     public void RemoveOrb()

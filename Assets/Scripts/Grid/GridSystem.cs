@@ -76,31 +76,6 @@ public class GridSystem
 	    }
 #endregion
 
-    //TEMP
-    // public void PopulateOrbObjects(Transform orbPrefab, Transform parent, int size)
-    // {
-    //     List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
-
-    //     for (int y = height - 1; y >= height - size; y--)
-    //     {
-    //         int offSetX = (y % 2 == 0) ? 1 : 0;
-
-    //         for (int x = 0; x < width; x++)
-    //         {
-    //             int doubleWidthX = x * 2 + offSetX;
-
-    //             GridPosition gridPosition = new GridPosition(doubleWidthX, y);
-    //             Transform debugTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-    //             debugTransform.parent = parent;
-
-    //             //initialize orb
-    //             Orb orb = debugTransform.GetComponent<Orb>();
-    //             OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-    //             GetGridObject(gridPosition).AddOrb(orb, typeSO);
-    //         }
-    //     }
-    // }
-
     public GridObject GetGridObject(GridPosition gridPosition)
     {
         int offSetX = (gridPosition.y % 2 == 0) ? 1 : 0;
@@ -303,27 +278,6 @@ public class GridSystem
         return gridObjectsWithOrbs;
     }
 
-    // public void SpawnGridRow(Transform orbPrefab)
-    // {
-    //     PushBubblesDown();
-
-    //     List<OrbTypeSO> orbTypes = LevelGrid.Instance.GetOrbTypes();
-
-    //     int heightOnGrid = height - 1;
-
-    //     for (int x = 0; x < this.width; x+=2)
-    //     {
-    //         int offSetX = (heightOnGrid % 2 == 0) ? 1 : 0;
-
-    //         GridPosition gridPosition = new GridPosition(x + offSetX, heightOnGrid);
-    //         Transform orbTransform = GameObject.Instantiate(orbPrefab, GetWorldPositionCenter(gridPosition), Quaternion.identity);
-
-    //         Orb orb = orbTransform.GetComponent<Orb>();
-    //         OrbTypeSO typeSO = orbTypes[Random.Range(0, orbTypes.Count)];
-    //         GetGridObject(gridPosition).AddOrb(orb, typeSO);
-    //     }
-        
-    // }
 
     // private void PushBubblesDown()
     // {
