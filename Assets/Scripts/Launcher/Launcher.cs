@@ -102,6 +102,10 @@ public class Launcher : MonoBehaviour
                     
                     NextState();
                     LevelGrid.Instance.StartMoving();
+                } else if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    currentState = State.Wait;
+                    RotateOrb();
                 }
                 break;
             case State.Wait:
@@ -164,6 +168,18 @@ public class Launcher : MonoBehaviour
         }
     }
 
+    private void RotateOrb()
+    {
+        OrbTypeSO rotateOrbType = currentOrbType;
+        currentOrbType = nextOrbType;
+        nextOrbType = rotateOrbType;
+
+        currentOrbSprite.sprite = currentOrbType.sprite;
+        nextOrbSprite.sprite = nextOrbType.sprite;
+
+        currentState = State.Ready;
+    }
+
     private void IterateNextOrb()
     {
         Vector3 previousPosition = nextOrbTransform.position;
@@ -220,36 +236,38 @@ public class Launcher : MonoBehaviour
         currentOrbSprite.material.DisableKeyword("HITEFFECT_ON");
     }
 
-    private void Projectile_OnProjectileStop(object sender, EventArgs e)
-    {
-        currentState = State.Reload;
-    }
-
-    private void LevelState_OnStateLose(object sender, EventArgs e)
-    {
-        currentState = State.Pause;
-    }
-    
-    private void ComboSystem_OnMaxComboTriggered(object sender, EventArgs e)
-    {
-        onSpecialMode = true;
-        // OnFireSpecial?.Invoke(this, EventArgs.Empty);
-    }
-
-    private void LevelState_OnStateStart(object sender, EventArgs e)
-    {
-        currentState = State.Initialize;
-    }
-    
-    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
-    {
-        onPausedState = currentState;
-
-        currentState = State.Pause;
-    }
-
-    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
-    {
-        currentState = onPausedState;
-    }
+#region Events
+	    private void Projectile_OnProjectileStop(object sender, EventArgs e)
+	    {
+	        currentState = State.Reload;
+	    }
+	
+	    private void LevelState_OnStateLose(object sender, EventArgs e)
+	    {
+	        currentState = State.Pause;
+	    }
+	    
+	    private void ComboSystem_OnMaxComboTriggered(object sender, EventArgs e)
+	    {
+	        onSpecialMode = true;
+	        // OnFireSpecial?.Invoke(this, EventArgs.Empty);
+	    }
+	
+	    private void LevelState_OnStateStart(object sender, EventArgs e)
+	    {
+	        currentState = State.Initialize;
+	    }
+	    
+	    private void PauseUI_OnPauseMenu(object sender, EventArgs e)
+	    {
+	        onPausedState = currentState;
+	
+	        currentState = State.Pause;
+	    }
+	
+	    private void PauseUI_OnResumeMenu(object sender, EventArgs e)
+	    {
+	        currentState = onPausedState;
+	    }
+#endregion
 }
