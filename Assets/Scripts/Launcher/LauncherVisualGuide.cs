@@ -12,6 +12,8 @@ public class LauncherVisualGuide : MonoBehaviour
     [SerializeField] private Transform orbShadowTransform;
     [SerializeField] private SpriteRenderer orbShadowSprite;
     [SerializeField] private LineRenderer lineRendererPrefab;
+    private List<LineRenderer> lineRenderers;
+
     private Vector2 endLine;
     private bool isActivated;
     private List<Vector2> reflectPoints;
@@ -19,6 +21,7 @@ public class LauncherVisualGuide : MonoBehaviour
 
     private void Start() 
     {
+        lineRenderers = new List<LineRenderer>();
         isActivated = false;
         reflectPoints = new List<Vector2>();
 
@@ -31,34 +34,62 @@ public class LauncherVisualGuide : MonoBehaviour
     {
         if (!isActivated) return;
 
-        Vector3 mousePosition = (Vector2) MouseWorld.GetPosition();
-        mousePosition.y = Mathf.Clamp(mousePosition.y, 5.5f, 27.25f);
+        // if (Input.GetMouseButtonDown(1))
+        // {
 
-        Vector2 dir = mousePosition - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, float.MaxValue, hitLayer);
-        
-        reflectPoints.Clear();
-        reflectPoints.Add(transform.position);
+            Vector3 mousePosition = (Vector2) MouseWorld.GetPosition();
+            mousePosition.y = Mathf.Clamp(mousePosition.y, 5.5f, 27.25f);
 
-        if (!hit) return;
-        
-        if (hit.transform.tag == "Wall")
-        {
-            Vector2 collidePoint = hit.point;
-            collidePoint.x = Mathf.Clamp(collidePoint.x, leftWallBoundary, rightWallBoundary);
-            CollideOnWall(collidePoint);
+            Vector2 dir = mousePosition - transform.position;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, float.MaxValue, hitLayer);
+            
+            reflectPoints.Clear();
+            reflectPoints.Add(transform.position);
 
-            ReflectArrowOnWall(dir, collidePoint);
-        } else if (hit.transform.tag == "Orb")
-        {
-            Vector2 collidePoint = hit.point - new Vector2(0, 1f);
+            if (!hit) return;
+            
+            if (hit.transform.tag == "Wall")
+            {
+                Vector2 collidePoint = hit.point;
+                collidePoint.x = Mathf.Clamp(collidePoint.x, leftWallBoundary, rightWallBoundary);
+                CollideOnWall(collidePoint);
 
-            reflectPoints.Add(collidePoint);
-        }
+                ReflectArrowOnWall(dir, collidePoint);
+            } else if (hit.transform.tag == "Orb")
+            {
+                Vector2 collidePoint = hit.point - new Vector2(0, 1f);
 
-        DrawShadow();
-        DrawLine();
+                reflectPoints.Add(collidePoint);
+            }
+
+            // if too many line renderer set inactive
+            if (lineRenderers.Count > reflectPoints.Count - 1)
+            {
+                for (int i = reflectPoints.Count - 1; i < lineRenderers.Count; i++)
+                {
+                    lineRenderers[i].gameObject.SetActive(false);
+                }
+            }
+
+            
+            for (int i = 0; i < reflectPoints.Count - 1; i++)
+            {
+                if (i > lineRenderers.Count - 1) // if not enough
+                {
+                    AddLineRenderer(reflectPoints[i], reflectPoints[i + 1]); // if not enough line renderer. spawn another one
+                } else {
+                    lineRenderers[i].gameObject.SetActive(true);
+                    lineRenderers[i].SetPosition(0, reflectPoints[i]);
+                    lineRenderers[i].SetPosition(1, reflectPoints[i + 1]);
+                }
+            }
+
+
+            // DrawShadow();
+            // DrawLine();
+        // }
     }
+
 
     private void DrawLine()
     {
@@ -83,8 +114,22 @@ public class LauncherVisualGuide : MonoBehaviour
     private void AddLineRenderer(Vector3 startPoint, Vector3 endPoint)
     {
         LineRenderer renderer = Instantiate(lineRendererPrefab);
+        renderer.transform.parent = this.transform;
+
         renderer.SetPosition(0, startPoint);
         renderer.SetPosition(1, endPoint);
+
+        lineRenderers.Add(renderer);
+    }
+
+    private void UnsetRenderer()
+    {
+        foreach(LineRenderer lr in lineRenderers)
+        {
+            Destroy(lr.gameObject);
+        }
+
+        lineRenderers.Clear();
     }
 
     private void DrawShadow()
