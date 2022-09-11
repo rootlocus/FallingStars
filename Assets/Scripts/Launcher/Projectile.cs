@@ -52,6 +52,7 @@ public class Projectile : MonoBehaviour
                 GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
                 if (orbType.type == OrbTypeSO.OrbType.Normal) // in future can put this in execute and scriptable object
                 {
+                    Debug.Log(gridPosition);
                     LevelGrid.Instance.AttachOrbToGrid(gridPosition, orbType);
                 } else 
                 {
