@@ -12,7 +12,7 @@ public class LauncherVisualGuide : MonoBehaviour
     [SerializeField] private Transform orbShadowTransform;
     [SerializeField] private SpriteRenderer orbShadowSprite;
     [SerializeField] private LineRenderer lineRendererPrefab;
-    private List<LineRenderer> lineRenderers;
+    private List<LineRenderer> renderLists;
 
     private Vector2 endLine;
     private bool isActivated;
@@ -21,7 +21,7 @@ public class LauncherVisualGuide : MonoBehaviour
 
     private void Start() 
     {
-        lineRenderers = new List<LineRenderer>();
+        renderLists = new List<LineRenderer>();
         isActivated = false;
         reflectPoints = new List<Vector2>();
 
@@ -30,84 +30,73 @@ public class LauncherVisualGuide : MonoBehaviour
         LevelState.Instance.OnStateStart += LevelState_OnStateStart;
     }
 
-    private void Update() 
+    private void Update()
     {
         if (!isActivated) return;
 
-        // if (Input.GetMouseButtonDown(1))
-        // {
+        Vector3 mousePosition = (Vector2)MouseWorld.GetPosition();
+        mousePosition.y = Mathf.Clamp(mousePosition.y, 5.5f, 27.25f);
 
-            Vector3 mousePosition = (Vector2) MouseWorld.GetPosition();
-            mousePosition.y = Mathf.Clamp(mousePosition.y, 5.5f, 27.25f);
+        Vector2 initialDirection = mousePosition - transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, initialDirection, float.MaxValue, hitLayer);
 
-            Vector2 dir = mousePosition - transform.position;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, float.MaxValue, hitLayer);
-            
-            reflectPoints.Clear();
-            reflectPoints.Add(transform.position);
+        reflectPoints.Clear();
+        reflectPoints.Add(transform.position);
 
-            if (!hit) return;
-            
-            if (hit.transform.tag == "Wall")
-            {
-                Vector2 collidePoint = hit.point;
-                collidePoint.x = Mathf.Clamp(collidePoint.x, leftWallBoundary, rightWallBoundary);
-                CollideOnWall(collidePoint);
+        if (!hit) return;
 
-                ReflectArrowOnWall(dir, collidePoint);
-            } else if (hit.transform.tag == "Orb")
-            {
-                Vector2 collidePoint = hit.point - new Vector2(0, 1f);
+        HandleCollisions(initialDirection, hit);
+        DeactivateExtraLineRenderer();
+        CreateUpdateLineRenderer();
 
-                reflectPoints.Add(collidePoint);
-            }
-
-            // if too many line renderer set inactive
-            if (lineRenderers.Count > reflectPoints.Count - 1)
-            {
-                for (int i = reflectPoints.Count - 1; i < lineRenderers.Count; i++)
-                {
-                    lineRenderers[i].gameObject.SetActive(false);
-                }
-            }
-
-            
-            for (int i = 0; i < reflectPoints.Count - 1; i++)
-            {
-                if (i > lineRenderers.Count - 1) // if not enough
-                {
-                    AddLineRenderer(reflectPoints[i], reflectPoints[i + 1]); // if not enough line renderer. spawn another one
-                } else {
-                    lineRenderers[i].gameObject.SetActive(true);
-                    lineRenderers[i].SetPosition(0, reflectPoints[i]);
-                    lineRenderers[i].SetPosition(1, reflectPoints[i + 1]);
-                }
-            }
-
-
-            // DrawShadow();
-            // DrawLine();
-        // }
+        DrawShadow();
+        // DrawLine();
     }
 
-
-    private void DrawLine()
+    private void CreateUpdateLineRenderer()
     {
-        // number of lines renderer = count - 1
-
-        int i = 0;
-        float centerXPosition = 10.5f;
-
-        lineRenderer.positionCount = reflectPoints.Count;
-        foreach (Vector2 point in reflectPoints)
+        for (int i = 0; i < reflectPoints.Count - 1; i++)
         {
-            Vector2 newPoint = point;
-            if (i != 0 && i != reflectPoints.Count - 1) {
-                newPoint.x = (point.x < centerXPosition) ? -3f : 27f;
+            if (i > renderLists.Count - 1)  // if not enough line renderer. spawn another one
+            {
+                AddLineRenderer(reflectPoints[i], reflectPoints[i + 1]); // TODO: change to pool
             }
+            else
+            {
+                renderLists[i].gameObject.SetActive(true);
+                renderLists[i].SetPosition(0, reflectPoints[i]);
+                renderLists[i].SetPosition(1, reflectPoints[i + 1]);
+            }
+        }
+    }
 
-            lineRenderer.SetPosition(i, newPoint);
-            i++;
+    private void DeactivateExtraLineRenderer()
+    {
+        bool shouldDisableExtraRenderer = renderLists.Count > reflectPoints.Count - 1;
+        
+        if (shouldDisableExtraRenderer)
+        {
+            for (int i = reflectPoints.Count - 1; i < renderLists.Count; i++)
+            {
+                renderLists[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void HandleCollisions(Vector2 direction, RaycastHit2D hit)
+    {
+        Vector2 collidePoint = hit.point;
+
+        if (hit.transform.tag == "Wall")
+        {
+            collidePoint.x = Mathf.Clamp(collidePoint.x, leftWallBoundary, rightWallBoundary);
+            reflectPoints.Add(collidePoint);
+
+            ReflectArrowOnWall(direction, collidePoint);
+        }
+        else if (hit.transform.tag == "Orb")
+        {
+            reflectPoints.Add(collidePoint - new Vector2(0, 1f));
         }
     }
 
@@ -119,17 +108,7 @@ public class LauncherVisualGuide : MonoBehaviour
         renderer.SetPosition(0, startPoint);
         renderer.SetPosition(1, endPoint);
 
-        lineRenderers.Add(renderer);
-    }
-
-    private void UnsetRenderer()
-    {
-        foreach(LineRenderer lr in lineRenderers)
-        {
-            Destroy(lr.gameObject);
-        }
-
-        lineRenderers.Clear();
+        renderLists.Add(renderer);
     }
 
     private void DrawShadow()
@@ -143,32 +122,17 @@ public class LauncherVisualGuide : MonoBehaviour
 
     private void ReflectArrowOnWall(Vector3 initialDir, Vector3 startPosition)
     {
-        // Bounce
         Vector3 reflectDirection = Vector3.Reflect(initialDir, Vector3.right);
-        float centerXPosition = 10.5f;
-        if (startPosition.x < centerXPosition) {
-            startPosition.x = startPosition.x + 0.01f;
-        } else {
-            startPosition.x = startPosition.x - 0.01f;
-        }
-        RaycastHit2D reflectHit = Physics2D.Raycast(startPosition, reflectDirection, float.MaxValue, hitLayer);
 
+        //Because colliding with the collided wall
+        float centerXPosition = 10.5f;
+        Vector3 readjustedPosition = startPosition;
+        readjustedPosition.x += startPosition.x < centerXPosition ? 0.01f : -0.01f;
+
+        RaycastHit2D reflectHit = Physics2D.Raycast(readjustedPosition, reflectDirection, float.MaxValue, hitLayer);
         if (!reflectHit) return;
 
-        Vector3 reflectPoint = reflectHit.point;
-
-        if (reflectHit.transform.tag == "Wall")
-        {
-            reflectPoint.x = Mathf.Clamp(reflectPoint.x, leftWallBoundary, rightWallBoundary);
-
-            reflectPoints.Add(reflectPoint);
-            ReflectArrowOnWall(reflectDirection, reflectHit.point);
-        } else if (reflectHit.transform.tag == "Orb")
-        {
-            reflectPoint = reflectPoint - new Vector3(0, 1f);
-
-            reflectPoints.Add(reflectPoint);
-        }
+        HandleCollisions(reflectDirection, reflectHit);
     }
 
     private void PauseUI_OnPauseMenu(object sender, EventArgs e)
@@ -184,12 +148,6 @@ public class LauncherVisualGuide : MonoBehaviour
     private void LevelState_OnStateStart(object sender, EventArgs e)
     {
         isActivated = true;
-    }
-
-    private void CollideOnWall(Vector2 collidePoint)
-    {
-        //collide wall
-        reflectPoints.Add(collidePoint);
     }
 
 }
