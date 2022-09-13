@@ -40,11 +40,7 @@ public class GridObject
     
 
     public override string ToString()
-    {   string isActivated = "null";
-
-        if (orb) {
-            isActivated = orb.isActivated.ToString();
-        }
-        return gridPosition.ToString() + "\n" + isActivated;
+    {   
+        return gridPosition.ToString();
     }
 }

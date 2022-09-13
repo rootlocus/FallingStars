@@ -206,10 +206,9 @@ public class LevelGrid : MonoBehaviour
         });
     }
 
-    public void SetGridSpeedNormal()
-    {
-        currentGridSpeed = defaultGridSpeed;
-    }
+    public void SetGridSpeedNormal() => currentGridSpeed = defaultGridSpeed;
+
+    public List<GridObject> GetAllGridObjectWithOrbs() => gridSystem.GetAllGridObjectWithOrbs();
 
     // public void SpawnAndShiftOrbRow(Transform orbPrefab) => gridSystem.SpawnGridRow(orbPrefab);
 
