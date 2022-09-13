@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 4394111056604976148}
+  orbCollider: {fileID: 5814610408192781794}
   isActivated: 0
   myOrbType: {fileID: 0}
 --- !u!61 &5814610408192781794

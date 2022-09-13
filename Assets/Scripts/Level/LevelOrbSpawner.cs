@@ -92,7 +92,7 @@ public class LevelOrbSpawner : MonoBehaviour
     
     public List<OrbTypeSO> GetCurrentOrbPool() => currentOrbPool;
 
-[Button("SPAWN ROW")]
+    [Button("SPAWN ROW")]
     private void SpawnOrbRow()
     {
         LevelGrid.Instance.AddHeight(1);

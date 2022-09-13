@@ -12,10 +12,10 @@ public class Projectile : MonoBehaviour
     [SerializeField] private AudioClip reflectSoundClip;
 
     private float moveSpeed = 50f;
+    private float projectileExitHeight = 28.5f;
     private bool isMove;
     private Vector3 direction;
     private OrbTypeSO orbType;
-    private float projectileExitHeight = 28.5f;
     
 
     private void Start() 

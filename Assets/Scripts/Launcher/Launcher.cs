@@ -245,7 +245,7 @@ public class Launcher : MonoBehaviour
     public Sprite GetCurrentSprite() => currentOrbSprite.sprite;
 
 
-    #region Events
+#region Events
     private void Projectile_OnProjectileStop(object sender, EventArgs e)
 	    {
 	        currentState = State.Reload;

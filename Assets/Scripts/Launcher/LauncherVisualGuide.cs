@@ -125,7 +125,6 @@ public class LauncherVisualGuide : MonoBehaviour
 
     private void DrawShadow()
     {
-        // last direction
         orbShadowSprite.sprite = launcher.GetCurrentSprite();
 
         Vector2 lastPosition = reflectPoints[reflectPoints.Count - 1];
@@ -135,7 +134,7 @@ public class LauncherVisualGuide : MonoBehaviour
         orbShadowTransform.position = predictivePosition;
     }
 
-    // Add a fail safe probably
+    //TODO Add a fail safe probably
     private void ReflectArrowOnWall(Vector3 initialDir, Vector3 startPosition)
     {
         Vector3 reflectDirection = Vector3.Reflect(initialDir, Vector3.right);
@@ -151,6 +150,7 @@ public class LauncherVisualGuide : MonoBehaviour
         HandleCollisions(reflectDirection, reflectHit);
     }
 
+#region Events
     private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
         isActivated = false;
@@ -165,5 +165,6 @@ public class LauncherVisualGuide : MonoBehaviour
     {
         isActivated = true;
     }
+#endregion
 
 }

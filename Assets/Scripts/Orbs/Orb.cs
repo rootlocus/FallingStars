@@ -6,6 +6,7 @@ using System;
 public class Orb : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private BoxCollider2D orbCollider;
     public bool isActivated = false;
     public OrbTypeSO myOrbType;
     private Action<Orb> killAction;
@@ -13,6 +14,7 @@ public class Orb : MonoBehaviour
 
     public void Setup(OrbTypeSO orbSO, Action<Orb> _killAction)
     {
+        orbCollider.enabled = true;
         myOrbType = orbSO;
         sprite.sprite = orbSO.sprite;
 
@@ -23,8 +25,8 @@ public class Orb : MonoBehaviour
 
     public void Destroy()
     {
-        // Destroy(gameObject);
-
+        orbCollider.enabled = false;
         killAction(this);
     }
+
 }
