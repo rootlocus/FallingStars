@@ -109,7 +109,7 @@ public class LevelGrid : MonoBehaviour
 
         public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition - orbContainer.position);
         
-        public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition);
+        public Vector3 GetWorldPositionCenter(GridPosition gridPosition) => gridSystem.GetWorldPositionCenter(gridPosition) + orbContainer.position;
 
         public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition) => gridSystem.GetAdjacentGridObjects(gridPosition);
 
@@ -125,7 +125,7 @@ public class LevelGrid : MonoBehaviour
         StopMoving();
         GridObject gridObject = GetGridObject(gridPosition);
 
-        LevelOrbSpawner.Instance.SpawnOrb(GetWorldPositionCenter(gridPosition) + orbContainer.position, orbType, gridObject);
+        LevelOrbSpawner.Instance.SpawnOrb(GetWorldPositionCenter(gridPosition), orbType, gridObject);
 
         List<GridObject> matchingLists = new List<GridObject>();
         TryMatchGridPosition(gridPosition, ref matchingLists);
@@ -144,7 +144,7 @@ public class LevelGrid : MonoBehaviour
             foreach (GridObject gridObject in matchingLists)
             {
                 gridObject.RemoveOrb();
-                Vector2 gridObjectPosition = gridSystem.GetWorldPositionCenter(gridObject.GetGridPosition()) + orbContainer.position;
+                Vector2 gridObjectPosition = GetWorldPositionCenter(gridObject.GetGridPosition());
                 ScoreManager.Instance.Create(gridObjectPosition, 100);
 
                 totalScore += 100;

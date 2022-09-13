@@ -21,6 +21,8 @@ public class Launcher : MonoBehaviour
     [Header("Mandatory Configurations")]
     // [SerializeField] private List<OrbTypeSO> orbTypes;
     [SerializeField] private OrbTypeSO bombOrbType;
+    [SerializeField] private float lowerLauncherBoundary = 5.5f;
+    [SerializeField] private float upperLauncherBoundary = 27.25f;
 
     [Header("Audio Configuration")]
     [SerializeField] private AudioClip launchSoundClip;
@@ -136,7 +138,7 @@ public class Launcher : MonoBehaviour
     private void ThrowProjectile()
     {
         Vector3 pointPosition = (Vector2) MouseWorld.GetPosition();
-        pointPosition.y = Mathf.Clamp(pointPosition.y, 4f, 27.25f);
+        pointPosition.y = Mathf.Clamp(pointPosition.y, lowerLauncherBoundary, upperLauncherBoundary);
 
         Vector3 direction = (pointPosition - transform.position).normalized;
         
@@ -236,8 +238,15 @@ public class Launcher : MonoBehaviour
         currentOrbSprite.material.DisableKeyword("HITEFFECT_ON");
     }
 
-#region Events
-	    private void Projectile_OnProjectileStop(object sender, EventArgs e)
+    public float GetLowerLauncherBoundary() => lowerLauncherBoundary;
+
+    public float GetUpperLauncherBoundary() => upperLauncherBoundary;
+
+    public Sprite GetCurrentSprite() => currentOrbSprite.sprite;
+
+
+    #region Events
+    private void Projectile_OnProjectileStop(object sender, EventArgs e)
 	    {
 	        currentState = State.Reload;
 	    }

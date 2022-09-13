@@ -110,12 +110,11 @@ public class GridSystem
         if (posY % 2 == 0) {
             float originX = (worldPosition.x / cellSize) - offSetSecondRow;
             posX = Mathf.FloorToInt(originX) * doubleWidth + 1;
-            posX = Mathf.Clamp(posX, 1, width * doubleWidth + 1);
+            posX = Mathf.Clamp(posX, 1, (width - 2) * doubleWidth + 1);
         } else {
             posX = Mathf.FloorToInt(worldPosition.x / cellSize) * doubleWidth;
-            posX = Mathf.Clamp(posX, 0, (width-1) * doubleWidth);
+            posX = Mathf.Clamp(posX, 0, width * doubleWidth);
         }
-
 
         return new GridPosition(
             posX,

@@ -12,18 +12,28 @@ public class LauncherVisualGuide : MonoBehaviour
     [SerializeField] private Transform orbShadowTransform;
     [SerializeField] private SpriteRenderer orbShadowSprite;
     [SerializeField] private LineRenderer lineRendererPrefab;
-    private List<LineRenderer> renderLists;
 
-    private Vector2 endLine;
     private bool isActivated;
     private List<Vector2> reflectPoints;
+    private List<LineRenderer> renderLists;
+    private Launcher launcher;
+    private float lowerBoundary;
+    private float upperBoundary;
+    private float orbRadiusSize = 0.5f;
 
+
+    private void Awake() 
+    {
+        launcher = GetComponent<Launcher>();
+    }
 
     private void Start() 
     {
         renderLists = new List<LineRenderer>();
-        isActivated = false;
         reflectPoints = new List<Vector2>();
+        isActivated = false;
+        lowerBoundary = launcher.GetLowerLauncherBoundary();
+        upperBoundary = launcher.GetUpperLauncherBoundary();
 
         PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
         PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
@@ -35,10 +45,11 @@ public class LauncherVisualGuide : MonoBehaviour
         if (!isActivated) return;
 
         Vector3 mousePosition = (Vector2)MouseWorld.GetPosition();
-        mousePosition.y = Mathf.Clamp(mousePosition.y, 5.5f, 27.25f);
+        mousePosition.y = Mathf.Clamp(mousePosition.y, lowerBoundary, upperBoundary);
 
         Vector2 initialDirection = mousePosition - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, initialDirection, float.MaxValue, hitLayer);
+
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, orbRadiusSize, initialDirection, float.MaxValue, hitLayer);
 
         reflectPoints.Clear();
         reflectPoints.Add(transform.position);
@@ -50,14 +61,15 @@ public class LauncherVisualGuide : MonoBehaviour
         CreateUpdateLineRenderer();
 
         DrawShadow();
-        // DrawLine();
     }
 
     private void CreateUpdateLineRenderer()
     {
         for (int i = 0; i < reflectPoints.Count - 1; i++)
         {
-            if (i > renderLists.Count - 1)  // if not enough line renderer. spawn another one
+            bool shouldSpawnRenderer = i > renderLists.Count - 1;
+
+            if (shouldSpawnRenderer)
             {
                 AddLineRenderer(reflectPoints[i], reflectPoints[i + 1]); // TODO: change to pool
             }
@@ -96,7 +108,7 @@ public class LauncherVisualGuide : MonoBehaviour
         }
         else if (hit.transform.tag == "Orb")
         {
-            reflectPoints.Add(collidePoint - new Vector2(0, 1f));
+            reflectPoints.Add(hit.centroid);
         }
     }
 
@@ -113,6 +125,9 @@ public class LauncherVisualGuide : MonoBehaviour
 
     private void DrawShadow()
     {
+        // last direction
+        orbShadowSprite.sprite = launcher.GetCurrentSprite();
+
         Vector2 lastPosition = reflectPoints[reflectPoints.Count - 1];
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(lastPosition);
 
@@ -120,6 +135,7 @@ public class LauncherVisualGuide : MonoBehaviour
         orbShadowTransform.position = predictivePosition;
     }
 
+    // Add a fail safe probably
     private void ReflectArrowOnWall(Vector3 initialDir, Vector3 startPosition)
     {
         Vector3 reflectDirection = Vector3.Reflect(initialDir, Vector3.right);
@@ -127,9 +143,9 @@ public class LauncherVisualGuide : MonoBehaviour
         //Because colliding with the collided wall
         float centerXPosition = 10.5f;
         Vector3 readjustedPosition = startPosition;
-        readjustedPosition.x += startPosition.x < centerXPosition ? 0.01f : -0.01f;
+        readjustedPosition.x += startPosition.x < centerXPosition ? orbRadiusSize : -orbRadiusSize;
 
-        RaycastHit2D reflectHit = Physics2D.Raycast(readjustedPosition, reflectDirection, float.MaxValue, hitLayer);
+        RaycastHit2D reflectHit = Physics2D.CircleCast(readjustedPosition, orbRadiusSize, reflectDirection, float.MaxValue, hitLayer);
         if (!reflectHit) return;
 
         HandleCollisions(reflectDirection, reflectHit);

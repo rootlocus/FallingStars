@@ -110,7 +110,7 @@ public class LevelOrbSpawner : MonoBehaviour
             row.Add(gridObject);
 
             //Spawn Orb
-            Vector3 orbPosition = LevelGrid.Instance.GetWorldPositionCenter(gridPosition) + orbContainer.position;
+            Vector3 orbPosition = LevelGrid.Instance.GetWorldPositionCenter(gridPosition);
             SpawnOrb(orbPosition, GetRandomOrbFromPool(), gridObject);
         }
 

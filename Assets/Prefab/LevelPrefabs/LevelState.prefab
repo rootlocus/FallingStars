@@ -48,6 +48,6 @@ MonoBehaviour:
   rushLine: {fileID: 0}
   preStartDuration: 2
   startDuration: 3
-  chaseKillCount: 30
+  chaseKillCount: 50
   countdownDuration: 5
   beepSound: {fileID: 8300000, guid: b49f15fc5def6c1439b99ee2033a94a0, type: 3}

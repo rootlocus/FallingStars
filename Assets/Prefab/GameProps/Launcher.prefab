@@ -499,6 +499,8 @@ MonoBehaviour:
   nextOrbTransform: {fileID: 3146635537061458075}
   highlightVignette: {fileID: 211228102}
   bombOrbType: {fileID: 11400000, guid: f5872494aa8fd3f42b944bb64c758697, type: 2}
+  lowerLauncherBoundary: 5.5
+  upperLauncherBoundary: 27.25
   launchSoundClip: {fileID: 8300000, guid: ad85055d9f1acaa489c38efb6d94ef8b, type: 3}
   reloadSoundClip: {fileID: 8300000, guid: 2625186a3ce818d44b3ba99327150004, type: 3}
   specialAmmoShowClip: {fileID: 8300000, guid: 684b21dc1d24f654483364edb25d817d, type: 3}
@@ -524,6 +526,7 @@ MonoBehaviour:
   rightWallBoundary: 24
   orbShadowTransform: {fileID: 450959936838673362}
   orbShadowSprite: {fileID: 7664083478526976256}
+  lineRendererPrefab: {fileID: 4425094309126399291, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
 --- !u!114 &1779424063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,6 +697,10 @@ PrefabInstance:
     - target: {fileID: 4425094309126399289, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
       propertyPath: m_Name
       value: LineRenderer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4425094309126399289, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
