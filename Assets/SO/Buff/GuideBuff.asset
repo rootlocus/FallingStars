@@ -15,3 +15,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   buffName: Guide Buff
   duration: 180
+  launcherVisual: {fileID: 0}

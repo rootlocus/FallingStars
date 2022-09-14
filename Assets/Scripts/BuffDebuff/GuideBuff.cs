@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [CreateAssetMenu(menuName = "Buff/GuideBuff")]
 public class GuideBuff : BuffSO
 {
+    public static EventHandler<float> OnGuideBuffActivate;
+
     public override void Execute()
     {
-        Debug.Log("ACTIVE Guide BUFF");
+        OnGuideBuffActivate?.Invoke(this, duration);
     }
 }

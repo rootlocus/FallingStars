@@ -9,6 +9,7 @@ public class BuffDebuffManager : MonoBehaviour
     [SerializeField] private float abilitySpawnDuration = 5f;
     [SerializeField] private float abilityMinSpawnRate = 60f;
     [SerializeField] private float abilityMaxSpawnRate = 75f;
+    [SerializeField] private AudioClip abilityActivateSound;
     private float randomTime;
 
     private void Start() 
@@ -47,8 +48,10 @@ public class BuffDebuffManager : MonoBehaviour
     private void ActivateRandomBuff()
     {
         int randomIndex = Random.Range(0, buffsList.Count - 1);
-
         buffsList[randomIndex].Execute();
+
+        AudioManager.Instance.PlaySFX(abilityActivateSound);
+        //instantiate UI logo
     }
 
 }

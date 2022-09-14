@@ -5,21 +5,28 @@ using UnityEngine;
 
 public class LauncherVisualGuide : MonoBehaviour
 {
-    [SerializeField] private LineRenderer lineRenderer;
+    // [SerializeField] private LineRenderer lineRenderer;
+    [Header("Components/GameObject Dependencies")]
     [SerializeField] private LayerMask hitLayer;
-    [SerializeField] private float leftWallBoundary;
-    [SerializeField] private float rightWallBoundary;
     [SerializeField] private Transform orbShadowTransform;
     [SerializeField] private SpriteRenderer orbShadowSprite;
     [SerializeField] private LineRenderer lineRendererPrefab;
 
+    [Header("Config")]
+    [SerializeField] private float leftWallBoundary;
+    [SerializeField] private float rightWallBoundary;
+    [SerializeField] private float tutorialAbilityDuration = 30f;
+
     private bool isActivated;
+    private bool isFullGuideActivated;
+    private bool onPause;
     private List<Vector2> reflectPoints;
     private List<LineRenderer> renderLists;
     private Launcher launcher;
     private float lowerBoundary;
     private float upperBoundary;
     private float orbRadiusSize = 0.5f;
+    private float activateDuration = 0f;
 
 
     private void Awake() 
@@ -32,19 +39,66 @@ public class LauncherVisualGuide : MonoBehaviour
         renderLists = new List<LineRenderer>();
         reflectPoints = new List<Vector2>();
         isActivated = false;
+        onPause = false;
         lowerBoundary = launcher.GetLowerLauncherBoundary();
         upperBoundary = launcher.GetUpperLauncherBoundary();
 
         PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
         PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
         LevelState.Instance.OnStateStart += LevelState_OnStateStart;
+        GuideBuff.OnGuideBuffActivate += GuideBuff_OnGuideBuffActivate;
     }
 
     private void Update()
     {
-        if (!isActivated) return;
+        if (!isActivated || onPause) return;
 
-        Vector3 mousePosition = (Vector2)MouseWorld.GetPosition();
+        if (isFullGuideActivated)
+        {
+            DrawFullGuideLine();
+
+            CheckDeactivateFullGuide();
+        }
+        else {
+            DrawNormalLine();
+        }
+    }
+
+    private void CheckDeactivateFullGuide()
+    {
+        activateDuration -= Time.deltaTime;
+        if (activateDuration <= 0)
+        {
+            isFullGuideActivated = false;
+            DeactivateOrbShadow();
+        }
+    }
+
+    private void DrawNormalLine()
+    {
+        Vector3 mousePosition = (Vector2) MouseWorld.GetPosition();
+        mousePosition.y = Mathf.Clamp(mousePosition.y, lowerBoundary, upperBoundary);
+
+        Vector2 initialDirection = mousePosition - transform.position;
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, orbRadiusSize, initialDirection, float.MaxValue, hitLayer);
+
+        reflectPoints.Clear();
+        reflectPoints.Add(transform.position);
+
+        if (hit) {
+            reflectPoints.Add(hit.point);
+        } else {
+            reflectPoints.Add(mousePosition);
+        }
+
+        DeactivateExtraLineRenderer();
+        CreateUpdateLineRenderer();
+
+    }
+
+    private void DrawFullGuideLine()
+    {
+        Vector3 mousePosition = (Vector2) MouseWorld.GetPosition();
         mousePosition.y = Mathf.Clamp(mousePosition.y, lowerBoundary, upperBoundary);
 
         Vector2 initialDirection = mousePosition - transform.position;
@@ -150,20 +204,35 @@ public class LauncherVisualGuide : MonoBehaviour
         HandleCollisions(reflectDirection, reflectHit);
     }
 
-#region Events
+    private void ActivateOrbShadow() => orbShadowSprite.enabled = true;
+
+    private void DeactivateOrbShadow() => orbShadowSprite.enabled = false;
+
+    #region Events
     private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
-        isActivated = false;
+        onPause = false;
     }
 
     private void PauseUI_OnResumeMenu(object sender, EventArgs e)
     {
-        isActivated = true;
+        onPause = true;
     }
     
     private void LevelState_OnStateStart(object sender, EventArgs e)
     {
         isActivated = true;
+
+        isFullGuideActivated = true;
+        activateDuration = tutorialAbilityDuration;
+        ActivateOrbShadow();
+    }
+    
+    private void GuideBuff_OnGuideBuffActivate(object sender, float duration)
+    {
+        isFullGuideActivated = true;
+        activateDuration = duration;
+        ActivateOrbShadow();
     }
 #endregion
 

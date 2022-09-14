@@ -2891,6 +2891,7 @@ MonoBehaviour:
   abilitySpawnDuration: 8
   abilityMinSpawnRate: 60
   abilityMaxSpawnRate: 75
+  abilityActivateSound: {fileID: 8300000, guid: aa9c826cc09fea848b59ebb7c9bd76f0, type: 3}
 --- !u!224 &921798849 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3919169766598326320, guid: e40e17c71e7f2a04db5a742c6670c239, type: 3}

@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class ScoreManager : MonoBehaviour
 {
+    
     public static ScoreManager Instance;
     [SerializeField] private Transform pointPrefab;
     [SerializeField] private ScoreUI scoreUI;
 
     private int currentScore;
-
+    private int multiplier = 1;
+    private float duration = 0f;
+    private bool isActivated = false;
 
     private void Awake() 
     {
@@ -29,11 +32,32 @@ public class ScoreManager : MonoBehaviour
         scoreUI.SetScore(currentScore);
         
         LevelGrid.Instance.OnSuccessfulMatch += LevelGrid_OnSuccessfulMatch;
+        DoublePointsBuff.OnDoublePointsBuffActivate += DoublePointsBuff_OnDoublePointsBuffActivate;
+    }
+
+    private void Update() 
+    {
+        if (!isActivated) return;
+
+        duration -= Time.deltaTime;
+
+        if (duration <= 0) {
+            multiplier = 1;
+            isActivated = false;
+        }
+    }
+
+    private void DoublePointsBuff_OnDoublePointsBuffActivate(object sender, float duration)
+    {
+        multiplier = 2;
+        this.duration = duration;
+        isActivated = true;
     }
 
     private void LevelGrid_OnSuccessfulMatch(object sender, LevelGrid.OnSuccessfulMatchArgs e)
     {
         currentScore += e.score;
+        currentScore = currentScore * multiplier;
         scoreUI.SetScore(currentScore);
     }
 
@@ -51,5 +75,6 @@ public class ScoreManager : MonoBehaviour
     {
         return currentScore;
     }
+
 
 }
