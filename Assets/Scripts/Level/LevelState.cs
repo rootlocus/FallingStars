@@ -96,6 +96,7 @@ public class LevelState : MonoBehaviour
                 CancelInvoke("CountDownBeep");
                 OnStateLose?.Invoke(this, EventArgs.Empty); // maybe pass score and time here ?
                 isRunning = false;
+                LevelGrid.Instance.DropAllOrbs();
                 break;
             case State.Pause:
                 break;

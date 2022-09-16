@@ -5,6 +5,8 @@ using Sirenix.OdinInspector;
 
 public class BuffDebuffManager : MonoBehaviour
 {
+    public static BuffDebuffManager Instance;
+
     [SerializeField] private List<BuffSO> buffsList;
     [SerializeField] private float abilitySpawnDuration = 5f;
     [SerializeField] private float abilityMinSpawnRate = 60f;
@@ -12,10 +14,20 @@ public class BuffDebuffManager : MonoBehaviour
     [SerializeField] private AudioClip abilityActivateSound;
     private float randomTime;
 
+
+    private void Awake() 
+    {
+        if (Instance != null)
+        {
+            Debug.LogError("Theres more than one BuffDebuffManager " + transform + " - " + Instance);
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     private void Start() 
     {
-        Orb.OnRandomAbilityActivate += Orb_OnRandomAbilityActivate;
-
         randomTime = Random.Range(abilityMinSpawnRate, abilityMaxSpawnRate);
     }
 
@@ -45,7 +57,7 @@ public class BuffDebuffManager : MonoBehaviour
         randomOrb.EnableIsAbilityActivated(abilitySpawnDuration);
     }
 
-    private void ActivateRandomBuff()
+    public void ActivateRandomBuff()
     {
         int randomIndex = Random.Range(0, buffsList.Count - 1);
         buffsList[randomIndex].Execute();

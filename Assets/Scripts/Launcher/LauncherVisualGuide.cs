@@ -208,7 +208,7 @@ public class LauncherVisualGuide : MonoBehaviour
 
     private void DeactivateOrbShadow() => orbShadowSprite.enabled = false;
 
-    #region Events
+#region Events
     private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
         onPause = false;

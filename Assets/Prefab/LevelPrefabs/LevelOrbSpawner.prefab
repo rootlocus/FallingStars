@@ -56,4 +56,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 025f09b006dae044a959290ad30eb99f, type: 2}
   - {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
   currentOrbPool: []
-  linesToLevel: 50
+  linesToLevel: 30

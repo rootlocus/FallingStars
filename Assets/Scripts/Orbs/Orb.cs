@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DG.Tweening;
 
 public class Orb : MonoBehaviour
 {
-    public static event EventHandler OnRandomAbilityActivate;
     public bool isAbilityActivated = false;
     public OrbTypeSO myOrbType;
 
@@ -42,11 +42,35 @@ public class Orb : MonoBehaviour
 
         if (isAbilityActivated)
         {
-            OnRandomAbilityActivate?.Invoke(this, EventArgs.Empty);
+            BuffDebuffManager.Instance.ActivateRandomBuff();
         }
         DisableIsAbilityActivated();
 
         killAction(this);
+    }
+
+    public void FallDown()
+    {
+        int fallPoints = 50;
+        orbCollider.enabled = false;
+
+        this.transform.DOMoveY(-2f, 0.5f)
+            .SetEase(Ease.OutFlash)
+            .OnComplete(() => {
+                Destroy();
+                ScoreManager.Instance.Create(this.transform.position + new Vector3(0f, 4f), fallPoints);
+            });
+    }
+
+    public void FallDownWithoutPoints()
+    {
+        orbCollider.enabled = false;
+
+        this.transform.DOMoveY(-2f, 0.5f)
+            .SetEase(Ease.OutFlash)
+            .OnComplete(() => {
+                Destroy();
+            });
     }
 
     public void DisableIsAbilityActivated()

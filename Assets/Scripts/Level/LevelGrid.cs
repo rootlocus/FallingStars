@@ -150,7 +150,9 @@ public class LevelGrid : MonoBehaviour
                 totalScore += 100;
             }
             AudioManager.Instance.PlaySFX(matchSoundClip);
+
             int fallenCount = HandleIslandGrids();
+            totalScore = (fallenCount * 50) + totalScore;
 
             //match orb here
             OnSuccessfulMatch?.Invoke(this, new OnSuccessfulMatchArgs {
@@ -188,7 +190,7 @@ public class LevelGrid : MonoBehaviour
                 }
                 
                 fallenCount++;
-                gridObject.RemoveOrb();
+                gridObject.DropOrb();
                 removedGridObjects.Add(gridObject);
             }
         }
@@ -209,6 +211,16 @@ public class LevelGrid : MonoBehaviour
     public void SetGridSpeedNormal() => currentGridSpeed = defaultGridSpeed;
 
     public List<GridObject> GetAllGridObjectWithOrbs() => gridSystem.GetAllGridObjectWithOrbs();
+
+    public void DropAllOrbs()
+    {
+        List<GridObject> gridObjects = GetAllGridObjectWithOrbs();
+
+        foreach(GridObject gridObject in gridObjects)
+        {
+            gridObject.DropOrbWithoutPoints();
+        }
+    }
 
     // public void SpawnAndShiftOrbRow(Transform orbPrefab) => gridSystem.SpawnGridRow(orbPrefab);
 

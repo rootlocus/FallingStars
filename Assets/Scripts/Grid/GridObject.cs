@@ -24,6 +24,17 @@ public class GridObject
         this.orb = null;
     }
 
+    public void DropOrb()
+    {
+        this.orb.FallDown();
+        this.orb = null;
+    }
+    public void DropOrbWithoutPoints()
+    {
+        this.orb.FallDownWithoutPoints();
+        this.orb = null;
+    }
+
     public void UnsetOrb() => this.orb = null;
     
     public void SetOrb(Orb orb) => this.orb = orb;
