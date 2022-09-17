@@ -5313,7 +5313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3837173897627757134, guid: 9fcfe4a06916e204aa4514a5ab0899d9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -233.92856
+      value: -233.92862
       objectReference: {fileID: 0}
     - target: {fileID: 3837173897627757134, guid: 9fcfe4a06916e204aa4514a5ab0899d9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5948,9 +5948,57 @@ PrefabInstance:
       value: LevelOrbSpawner
       objectReference: {fileID: 0}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbPrefab
+      value: 
+      objectReference: {fileID: 3911405127631972638, guid: c59f84730ad609f4bb6ccb3c6dd9ecc4, type: 3}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbContainer
       value: 
       objectReference: {fileID: 945749825}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbTypes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbTypes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a1eeedcf759f2e40ae8b1c3cc923bbb, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbTypes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbTypes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbTypes.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: orbTypes.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: currentOrbPool.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: currentOrbPool.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2a1eeedcf759f2e40ae8b1c3cc923bbb, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: currentOrbPool.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2486534de0f09974994aef8b3ff31f67, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: currentOrbPool.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: b0908e722032d854081fbf89b6ddde00, type: 2}
+    - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
+      propertyPath: currentOrbPool.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 210a0f6aaa08c5746936d429bc540ed5, type: 2}
     - target: {fileID: 7035641972273456743, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: m_RootOrder
       value: 6

@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour
 
                 OnProjectileStop?.Invoke(this, EventArgs.Empty);
 
-                Destroy(gameObject);
+                Destroy(gameObject); // change this probably
             } else {
                 transform.position += distanceTravel;
 

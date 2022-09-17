@@ -55,6 +55,8 @@ public class LauncherVisualGuide : MonoBehaviour
 
         if (isFullGuideActivated)
         {
+            ActivateOrbShadow();
+
             DrawFullGuideLine();
 
             CheckDeactivateFullGuide();
@@ -232,7 +234,6 @@ public class LauncherVisualGuide : MonoBehaviour
     {
         isFullGuideActivated = true;
         activateDuration = duration;
-        ActivateOrbShadow();
     }
 #endregion
 

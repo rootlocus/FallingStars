@@ -282,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 2831687343209460623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.3999996, y: -3.6899996, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3146635536503780760}
@@ -367,7 +367,7 @@ Transform:
   m_GameObject: {fileID: 3146635535775749219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.03}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3146635536503780760}
@@ -518,15 +518,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb2418dbf252514a88fe7f7fecbfb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineRenderer: {fileID: 2106265082}
   hitLayer:
     serializedVersion: 2
     m_Bits: 384
-  leftWallBoundary: 0
-  rightWallBoundary: 24
   orbShadowTransform: {fileID: 450959936838673362}
   orbShadowSprite: {fileID: 7664083478526976256}
   lineRendererPrefab: {fileID: 4425094309126399291, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
+  leftWallBoundary: 0
+  rightWallBoundary: 24
+  tutorialAbilityDuration: 30
 --- !u!114 &1779424063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,7 +569,7 @@ Transform:
   m_GameObject: {fileID: 3146635537061458073}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.25, z: 0.03}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3146635536503780760}
@@ -707,10 +707,5 @@ PrefabInstance:
 --- !u!4 &2106265081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4425094309126399288, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
-  m_PrefabInstance: {fileID: 4425094309320059073}
-  m_PrefabAsset: {fileID: 0}
---- !u!120 &2106265082 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 4425094309126399291, guid: 7b3b65ee4ba38054489d1b70ba866ce0, type: 3}
   m_PrefabInstance: {fileID: 4425094309320059073}
   m_PrefabAsset: {fileID: 0}

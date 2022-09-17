@@ -54,7 +54,7 @@ public class LevelGrid : MonoBehaviour
     {
         gridSystem = new GridSystem(width, height, cellSize);
         
-        // gridSystem.CreateDebugObject(debugPrefab, orbContainer);
+        gridSystem.CreateDebugObject(debugPrefab, orbContainer);
         //TODO: spawn the rope sprite
 
         currentGridSpeed = defaultGridSpeed;

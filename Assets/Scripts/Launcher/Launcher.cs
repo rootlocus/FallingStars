@@ -33,6 +33,7 @@ public class Launcher : MonoBehaviour
     [SerializeField] private EntranceAnimation ropeAnimation;
     [SerializeField] private float swapDuration = 1.5f;
 
+    private LauncherVisualGuide visualGuide;
     private SpriteRenderer currentOrbSprite;
     private SpriteRenderer nextOrbSprite;
     private OrbTypeSO currentOrbType;
@@ -58,6 +59,7 @@ public class Launcher : MonoBehaviour
     {
         currentOrbSprite = currentOrbTransform.GetComponent<SpriteRenderer>();
         nextOrbSprite = nextOrbTransform.GetComponent<SpriteRenderer>();
+        visualGuide = GetComponent<LauncherVisualGuide>();
     }
 
     private void Start() 

@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e8b41250b69e64d97eae41ae13f021, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAbilityActivated: 0
+  myOrbType: {fileID: 0}
   sprite: {fileID: 4394111056604976148}
   orbCollider: {fileID: 5814610408192781794}
-  isActivated: 0
-  myOrbType: {fileID: 0}
+  duration: 0
 --- !u!61 &5814610408192781794
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -103,7 +104,7 @@ Transform:
   m_GameObject: {fileID: 9012896221867812532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.03}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4843731035010008672}
