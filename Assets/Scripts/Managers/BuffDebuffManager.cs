@@ -13,6 +13,7 @@ public class BuffDebuffManager : MonoBehaviour
     [SerializeField] private float abilityMaxSpawnRate = 75f;
     [SerializeField] private AudioClip abilityActivateSound;
     private float randomTime;
+    private bool isActivated = false;
 
 
     private void Awake() 
@@ -29,10 +30,15 @@ public class BuffDebuffManager : MonoBehaviour
     private void Start() 
     {
         randomTime = Random.Range(abilityMinSpawnRate, abilityMaxSpawnRate);
+        
+        LevelState.Instance.OnStateStart += LevelState_OnStateStart;
+        LevelState.Instance.OnStateLose += LevelState_OnStateLose;
     }
 
     private void Update() 
     {
+        if (!isActivated) return;
+
         randomTime -= Time.deltaTime;
 
         if (randomTime <= 0f)
@@ -66,4 +72,14 @@ public class BuffDebuffManager : MonoBehaviour
         //instantiate UI logo
     }
 
+
+    private void LevelState_OnStateLose(object sender, System.EventArgs e)
+    {
+        isActivated = false;
+    }
+
+    private void LevelState_OnStateStart(object sender, System.EventArgs e)
+    {
+        isActivated = true;
+    }
 }

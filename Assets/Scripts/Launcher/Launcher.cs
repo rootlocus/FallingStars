@@ -23,6 +23,7 @@ public class Launcher : MonoBehaviour
     [SerializeField] private OrbTypeSO bombOrbType;
     [SerializeField] private float lowerLauncherBoundary = 5.5f;
     [SerializeField] private float upperLauncherBoundary = 27.25f;
+    [SerializeField] private float launcherDelay = 3f;
 
     [Header("Audio Configuration")]
     [SerializeField] private AudioClip launchSoundClip;
@@ -70,8 +71,8 @@ public class Launcher : MonoBehaviour
         currentState = State.Pause;
 
         Projectile.OnProjectileStop += Projectile_OnProjectileStop;
-        LevelState.Instance.OnStateLose += LevelState_OnStateLose;
         LevelState.Instance.OnStateStart += LevelState_OnStateStart;
+        LevelState.Instance.OnStateLose += LevelState_OnStateLose;
         ComboSystem.OnMaxComboTriggered += ComboSystem_OnMaxComboTriggered;
         PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
         PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
@@ -160,6 +161,7 @@ public class Launcher : MonoBehaviour
         {
             case State.Initialize:
                 currentState = State.Ready;
+                stateTimer = launcherDelay;
                 break;
             case State.Ready:
                 currentState = State.Wait;

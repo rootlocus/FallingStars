@@ -46,6 +46,7 @@ public class LauncherVisualGuide : MonoBehaviour
         PauseUI.OnResumeMenu += PauseUI_OnResumeMenu;
         PauseUI.OnPauseMenu += PauseUI_OnPauseMenu;
         LevelState.Instance.OnStateStart += LevelState_OnStateStart;
+        LevelState.Instance.OnStateLose += LevelState_OnStateLose;
         GuideBuff.OnGuideBuffActivate += GuideBuff_OnGuideBuffActivate;
     }
 
@@ -230,6 +231,12 @@ public class LauncherVisualGuide : MonoBehaviour
         ActivateOrbShadow();
     }
     
+    private void LevelState_OnStateLose(object sender, EventArgs e)
+    {
+        isActivated = false;
+        //todo deactivate  visual
+    }
+
     private void GuideBuff_OnGuideBuffActivate(object sender, float duration)
     {
         isFullGuideActivated = true;
