@@ -44,16 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8fce2da442bdc14db58b9b8fa51befd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbPrefab: {fileID: 6928589795586721004, guid: 92bf21222695dbc43b565b39e9b99d3a, type: 3}
+  orbPrefab: {fileID: 3911405127631972638, guid: c59f84730ad609f4bb6ccb3c6dd9ecc4, type: 3}
   defaultCapacity: 300
   maxCapacity: 400
   orbContainer: {fileID: 0}
-  orbTypes:
+  orbTypes: []
+  currentOrbPool:
   - {fileID: 11400000, guid: 3e848dac5be4e394ea7cd05ea4863623, type: 2}
-  - {fileID: 11400000, guid: f4289a76449c7fd47a21ec1d6f998862, type: 2}
   - {fileID: 11400000, guid: 826d26eabe5f4f64b8969e5a527ff45d, type: 2}
-  - {fileID: 11400000, guid: 80cac39c212082c4392fa00611ae41e3, type: 2}
-  - {fileID: 11400000, guid: 025f09b006dae044a959290ad30eb99f, type: 2}
   - {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
-  currentOrbPool: []
+  - {fileID: 11400000, guid: 025f09b006dae044a959290ad30eb99f, type: 2}
   linesToLevel: 30

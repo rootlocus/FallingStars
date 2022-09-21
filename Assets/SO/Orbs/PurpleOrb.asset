@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PurpleOrb
   m_EditorClassIdentifier: 
   type: 0
-  color: {r: 0.98564005, g: 1, b: 0, a: 1}
+  color: {r: 0, g: 0, b: 0, a: 0}
   orbName: Purple
-  sprite: {fileID: 21300000, guid: 75e008727ef703a4dab45c91bd771207, type: 3}
-  orbAnimation: {fileID: 0}
+  sprite: {fileID: 548800106, guid: 0e4df21f9cc0084449101761ebed8079, type: 3}
+  orbAnimation: {fileID: 22100000, guid: 914dcc85236639f4280f6e6edad63fe1, type: 2}

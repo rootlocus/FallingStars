@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60915082a1d91e84783757ab4b1e7188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -14, y: 8}
-  endPosition: {x: 34, y: 8}
+  startPosition: {x: -14, y: 10}
+  endPosition: {x: 34, y: 10}
   orbLayer:
     serializedVersion: 2
     m_Bits: 256

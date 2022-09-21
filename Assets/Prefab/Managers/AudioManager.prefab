@@ -51,8 +51,8 @@ MonoBehaviour:
   sfx: {fileID: 661037391805255355}
   menuSfx: {fileID: 3595990035388487757}
   spectrumWidth: []
-  menuBGMClip: {fileID: 8300000, guid: c02f201bff6d4a54488372ce4d606e1d, type: 3}
-  levelBGMClip: {fileID: 8300000, guid: af5530086210e9c428253008573a3e83, type: 3}
+  menuBGMClip: {fileID: 8300000, guid: d4afd999e2ff4584397782b5e164eca1, type: 3}
+  levelBGMClip: {fileID: 8300000, guid: 75892676db6ca034f8d4d3f39e21db65, type: 3}
   bgmAudioLowPassFilter: {fileID: 1018329314}
 --- !u!1 &661037391493354648
 GameObject:

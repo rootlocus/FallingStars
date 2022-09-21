@@ -31,7 +31,7 @@ public class LevelGrid : MonoBehaviour
     [SerializeField] private Ease easeType;
     
     private GridSystem gridSystem;
-    private int width = 12;
+    private int width = 8;
     private int height = 15;
     private float cellSize = 2f;
 
@@ -54,7 +54,7 @@ public class LevelGrid : MonoBehaviour
     {
         gridSystem = new GridSystem(width, height, cellSize);
         
-        gridSystem.CreateDebugObject(debugPrefab, orbContainer);
+        // gridSystem.CreateDebugObject(debugPrefab, orbContainer);
         //TODO: spawn the rope sprite
 
         currentGridSpeed = defaultGridSpeed;

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   color: {r: 0, g: 0, b: 0, a: 0}
-  orbName: Teal
-  sprite: {fileID: 21300000, guid: 313debb1e1be8aa46b65997ded7ab81c, type: 3}
-  orbAnimation: {fileID: 0}
+  orbName: 
+  sprite: {fileID: 1078215807, guid: 0e4df21f9cc0084449101761ebed8079, type: 3}
+  orbAnimation: {fileID: 22100000, guid: 7486be8828937334a9c48a467dce92c8, type: 2}

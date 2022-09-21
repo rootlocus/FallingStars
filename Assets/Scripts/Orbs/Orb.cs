@@ -12,8 +12,13 @@ public class Orb : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private BoxCollider2D orbCollider;
     [SerializeField] private float duration;
+    [SerializeField] private Animator animator;
+    private float delayBeforeKill = 1f;
     private Action<Orb> killAction;
+    private const string IDLE = "Idle";
+    private const string BURST = "Burst";
     
+
     private void Update() 
     {
         if (!isAbilityActivated) return;
@@ -28,8 +33,11 @@ public class Orb : MonoBehaviour
     public void Setup(OrbTypeSO orbSO, Action<Orb> _killAction)
     {
         orbCollider.enabled = true;
-        myOrbType = orbSO;
         sprite.sprite = orbSO.sprite;
+        animator.runtimeAnimatorController = orbSO.orbAnimation;
+        
+        myOrbType = orbSO;
+        ChangeAnimationState(IDLE);
 
         killAction = _killAction;
     }
@@ -38,6 +46,8 @@ public class Orb : MonoBehaviour
 
     public void Destroy()
     {
+        ChangeAnimationState(BURST);
+
         orbCollider.enabled = false;
 
         if (isAbilityActivated)
@@ -45,6 +55,13 @@ public class Orb : MonoBehaviour
             BuffDebuffManager.Instance.ActivateRandomBuff();
         }
         DisableIsAbilityActivated();
+
+        StartCoroutine(CoDestroySelf(delayBeforeKill));
+    }
+
+    IEnumerator CoDestroySelf(float duration)
+    {
+        yield return new WaitForSeconds(duration);
 
         killAction(this);
     }
@@ -84,5 +101,10 @@ public class Orb : MonoBehaviour
         this.duration = duration; 
         isAbilityActivated = true;
         sprite.material.EnableKeyword("SHAKEUV_ON");
+    }
+
+    private void ChangeAnimationState(string animationState)
+    {
+        animator.Play(animationState);
     }
 }

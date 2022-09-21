@@ -53,7 +53,7 @@ public class BuffDebuffManager : MonoBehaviour
         List<GridObject> goWithOrbs = LevelGrid.Instance.GetAllGridObjectWithOrbs();
 
         int randomIndex = Random.Range(0, goWithOrbs.Count - 1);
-        Orb randomOrb = goWithOrbs[randomIndex].GetOrb();
+        Orb randomOrb = goWithOrbs[randomIndex].GetOrb(); // TODO: possible bug when orb destroyed or game end
         randomOrb.EnableIsAbilityActivated(abilitySpawnDuration);
     }
 

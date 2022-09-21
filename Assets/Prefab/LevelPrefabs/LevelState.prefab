@@ -50,4 +50,4 @@ MonoBehaviour:
   startDuration: 3
   chaseKillCount: 50
   countdownDuration: 5
-  beepSound: {fileID: 8300000, guid: b49f15fc5def6c1439b99ee2033a94a0, type: 3}
+  beepSound: {fileID: 8300000, guid: 3ee51960330461e4db2484b2b2c7122c, type: 3}
