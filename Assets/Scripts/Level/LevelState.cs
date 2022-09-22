@@ -37,7 +37,7 @@ public class LevelState : MonoBehaviour
     private float stateTimer;
     private bool isRunning;
     private int currentKillCount;
-    
+    private float currentTime;
 
     private void Awake() 
     {
@@ -64,6 +64,7 @@ public class LevelState : MonoBehaviour
 
         isRunning = true;
         currentKillCount = 0;
+        currentTime = 0f;
     }
 
     private void Update() 
@@ -74,6 +75,8 @@ public class LevelState : MonoBehaviour
         if (stateTimer > 0f) {
             return;
         }
+
+        currentTime += Time.deltaTime;
 
         switch (currentState)
         {
@@ -150,6 +153,8 @@ public class LevelState : MonoBehaviour
             stateTimer = pauseDuration;
         }
     }
+
+    public float GetTotalPlayTime() => currentTime;
 
 #region Events
     private void LevelGrid_OnStartLevel(object sender, EventArgs e)

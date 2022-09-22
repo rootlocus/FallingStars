@@ -37,9 +37,12 @@ public class LoseUI : MonoBehaviour
     [Button("Lose Window Test")]
     private void LevelState_OnStateLose(object sender, EventArgs e)
     {
-        Debug.Log("LevelState_OnStateLose");
         SetPoints(ScoreManager.Instance.GetCurrentScore());
-        SetTime(5, 32);
+
+        double time = LevelState.Instance.GetTotalPlayTime();
+        string timeText = TimeSpan.FromSeconds(time).ToString(@"m\:ss");
+        SetTime(timeText);
+
 
         AudioManager.Instance.PauseBGM();
         AudioManager.Instance.PlayMenuSFX(loseSound);
@@ -52,9 +55,9 @@ public class LoseUI : MonoBehaviour
         pointsText.SetText("Points: " + points);
     }
 
-    private void SetTime(int minutes, int seconds)
+    private void SetTime(string time)
     {
-        timeText.SetText("Time: " + minutes + " minutes " + seconds + " seconds");
+        timeText.SetText("Time: " + time);
     }
 
     public void HideLoseWindow()

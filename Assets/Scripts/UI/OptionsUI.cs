@@ -16,6 +16,7 @@ public class OptionsUI : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     private float maxValue;
     private bool isActivated;
+    public Action onClose;
 
 
     private void Start()
@@ -48,6 +49,8 @@ public class OptionsUI : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
 
         OnCloseOptionUI?.Invoke(this, EventArgs.Empty);
+
+        onClose();
     }
 
     public void OpenWindow()

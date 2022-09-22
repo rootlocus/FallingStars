@@ -32,11 +32,12 @@ public class PauseUI : MonoBehaviour
             SceneHandler.Instance.RestartLevel();
         }); 
         resumeButton.onClick.AddListener(() => {
-            isActivated = false;
             TogglePauseMode();
         });
         optionButton.onClick.AddListener(() => {
+            isActivated = false;
             optionsUI.OpenWindow();
+            optionsUI.onClose = (() => isActivated = true);
         });
     }
 

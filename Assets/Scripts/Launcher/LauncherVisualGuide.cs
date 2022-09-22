@@ -214,12 +214,12 @@ public class LauncherVisualGuide : MonoBehaviour
 #region Events
     private void PauseUI_OnPauseMenu(object sender, EventArgs e)
     {
-        onPause = false;
+        onPause = true;
     }
 
     private void PauseUI_OnResumeMenu(object sender, EventArgs e)
     {
-        onPause = true;
+        onPause = false;
     }
     
     private void LevelState_OnStateStart(object sender, EventArgs e)
