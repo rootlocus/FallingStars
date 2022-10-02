@@ -25,7 +25,7 @@ public class LauncherVisualGuide : MonoBehaviour
     private Launcher launcher;
     private float lowerBoundary;
     private float upperBoundary;
-    private float orbRadiusSize = 0.5f;
+    private float orbRadiusSize = 0.8f;
     private float activateDuration = 0f;
 
 

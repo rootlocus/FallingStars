@@ -62,7 +62,7 @@ public class LevelGrid : MonoBehaviour
         OnStartLevel?.Invoke(this, EventArgs.Empty);
     }
 
-    public void PushGridBack(GridPosition gridPosition, OrbTypeSO orbType)
+    public void PushGridBack(GridPosition gridPosition, OrbSO orbType)
     {
         float reverseSpeed = -10f;
         float timeToHitMaxSpeed = 0.5f;
@@ -72,8 +72,6 @@ public class LevelGrid : MonoBehaviour
         }).OnComplete(() => {
             currentGridSpeed = defaultGridSpeed;
         });
-
-        AudioManager.Instance.PlaySFX(pushbackSoundClip);
     }
 
     public void MoveOrbRows()
@@ -113,6 +111,9 @@ public class LevelGrid : MonoBehaviour
 
         public List<GridObject> GetAdjacentGridObjects(GridPosition gridPosition) => gridSystem.GetAdjacentGridObjects(gridPosition);
 
+        public List<GridObject> GetGridObjectsWithOrbOnSelectedPosition(GridPosition gridPosition, List<GridPosition> selectedPosition) 
+            => gridSystem.GetGridObjectsWithOrbOnSelectedPosition(gridPosition, selectedPosition);
+
         public LayerMask GetOrbMask() => orbLayer;
 #endregion
 
@@ -120,7 +121,7 @@ public class LevelGrid : MonoBehaviour
 
     public bool HasMatch3Link(GridPosition gridPosition, ref List<GridObject> matchedGridObjects) => gridSystem.HasMatch3Link(gridPosition, ref matchedGridObjects);
 
-    public void AttachOrbToGrid(GridPosition gridPosition, OrbTypeSO orbType)
+    public void AttachOrbToGrid(GridPosition gridPosition, OrbSO orbType)
     {
         StopMoving();
         GridObject gridObject = GetGridObject(gridPosition);
@@ -166,6 +167,25 @@ public class LevelGrid : MonoBehaviour
         }
     }
 
+    public void DestroyAllOrbsInList(List<GridObject> gridObjects)
+    {
+        int totalScore = 0;
+        int normalPoint = 100;
+
+        foreach (GridObject gridObject in gridObjects)
+        {
+            gridObject.RemoveOrb();
+            Vector2 gridObjectPosition = GetWorldPositionCenter(gridObject.GetGridPosition());
+            ScoreManager.Instance.Create(gridObjectPosition, normalPoint);
+
+            totalScore += normalPoint;
+        }
+
+        AudioManager.Instance.PlaySFX(matchSoundClip);
+
+        // ScoreManager.Instance.UpdateScore(totalScore);
+    }
+
     //TODO: able to be more efficient
     public int HandleIslandGrids()
     {
@@ -209,6 +229,10 @@ public class LevelGrid : MonoBehaviour
     }
 
     public void SetGridSpeedNormal() => currentGridSpeed = defaultGridSpeed;
+
+    public float GetCurrentGridSpeed() => currentGridSpeed;
+
+    public float SetCurrentGridSpeed(float newSpeed) => currentGridSpeed = newSpeed;
 
     public List<GridObject> GetAllGridObjectWithOrbs() => gridSystem.GetAllGridObjectWithOrbs();
 

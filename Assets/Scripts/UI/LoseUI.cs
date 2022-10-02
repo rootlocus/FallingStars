@@ -43,7 +43,6 @@ public class LoseUI : MonoBehaviour
         string timeText = TimeSpan.FromSeconds(time).ToString(@"m\:ss");
         SetTime(timeText);
 
-
         AudioManager.Instance.PauseBGM();
         AudioManager.Instance.PlayMenuSFX(loseSound);
 

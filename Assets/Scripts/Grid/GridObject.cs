@@ -43,7 +43,7 @@ public class GridObject
 
     public Orb GetOrb() => orb;
 
-    public OrbTypeSO GetOrbSO() => orb.GetOrbTypeSO();
+    public OrbSO GetOrbSO() => orb.GetOrbSO();
 
     public void SetPosition(GridPosition gridPosition) => this.gridPosition = gridPosition;
 

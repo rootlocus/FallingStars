@@ -498,9 +498,10 @@ MonoBehaviour:
   currentOrbTransform: {fileID: 3146635535775749220}
   nextOrbTransform: {fileID: 3146635537061458075}
   highlightVignette: {fileID: 211228102}
-  bombOrbType: {fileID: 11400000, guid: f5872494aa8fd3f42b944bb64c758697, type: 2}
+  bombOrbType: {fileID: 11400000, guid: 9b8021c98ccbfc145a8bbd699f9a3d99, type: 2}
   lowerLauncherBoundary: 5.5
   upperLauncherBoundary: 27.25
+  launcherDelay: 3
   launchSoundClip: {fileID: 8300000, guid: 60878c50261c2dc4c896bf50394fc2d3, type: 3}
   reloadSoundClip: {fileID: 8300000, guid: 958e22ab8b851a5449f5f1517917fc0e, type: 3}
   specialAmmoShowClip: {fileID: 8300000, guid: 48720666575391b4ca304672eb766067, type: 3}

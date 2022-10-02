@@ -99,7 +99,7 @@ public class GridSystem
         return GetWorldPosition(gridPosition) + new Vector3(cellSize, cellSize) * 0.5f;
     }
 
-    public OrbTypeSO GetOrbSO(GridPosition gridPosition) => GetGridObject(gridPosition).GetOrbSO();
+    public OrbSO GetOrbSO(GridPosition gridPosition) => GetGridObject(gridPosition).GetOrbSO();
 
     public GridPosition GetGridPosition(Vector2 worldPosition)
     {
@@ -168,6 +168,28 @@ public class GridSystem
         return adjacentGridObjects;
     }
 
+    public List<GridObject> GetGridObjectsWithOrbOnSelectedPosition(GridPosition gridPosition, List<GridPosition> selectedPosition)
+    {
+        List<GridObject> adjacentGridObjects = new List<GridObject>();
+
+        foreach (GridPosition direction in selectedPosition)
+        {
+            GridPosition adjacentPosition = gridPosition + direction;
+
+            if (!IsValidGridPosition(adjacentPosition)) {
+                continue;
+            }
+
+            GridObject adjacentGridObject = GetGridObject(adjacentPosition);
+            if (!adjacentGridObject.HasOrb()) {
+                continue;
+            }
+            
+            adjacentGridObjects.Add(adjacentGridObject);
+        }
+
+        return adjacentGridObjects;
+    }
     
     public bool IsGridPositionAttached(GridPosition gridPosition, out List<GridObject> attachedGridObjects)
     {
@@ -216,7 +238,7 @@ public class GridSystem
     */
     public bool HasMatch3Link(GridPosition gridPosition, ref List<GridObject> matchedGridObjects)
     {
-        OrbTypeSO selectedOrbType = GetOrbSO(gridPosition);
+        OrbSO selectedOrbType = GetOrbSO(gridPosition);
         List<GridObject> adjacentGridObjects = GetAdjacentGridObjects(gridPosition);
 
         matchedGridObjects.Add(GetGridObject(gridPosition));//first one
@@ -233,7 +255,7 @@ public class GridSystem
 
     public void GetMatchingGridObjectsByType(GridPosition gridPosition, ref List<GridObject> matchedGridObjects)
     {
-        OrbTypeSO selectedOrbType = GetOrbSO(gridPosition);
+        OrbSO selectedOrbType = GetOrbSO(gridPosition);
         List<GridObject> adjacentGridObjects = new List<GridObject>();
         adjacentGridObjects = GetAdjacentGridObjects(gridPosition);
 

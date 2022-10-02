@@ -1,6 +1,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
+//Deprecated
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/OrbType")]
 public class OrbTypeSO : ScriptableObject
 {

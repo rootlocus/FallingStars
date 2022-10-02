@@ -7,12 +7,14 @@ using DG.Tweening;
 public class Orb : MonoBehaviour
 {
     public bool isAbilityActivated = false;
-    public OrbTypeSO myOrbType;
+    public OrbSO myOrbSO;
 
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private BoxCollider2D orbCollider;
     [SerializeField] private float duration;
     [SerializeField] private Animator animator;
+    [SerializeField] private ParticleSystem explodeParticles;
+
     private float delayBeforeKill = 1f;
     private Action<Orb> killAction;
     private const string IDLE = "Idle";
@@ -30,25 +32,24 @@ public class Orb : MonoBehaviour
         }
     }
 
-    public void Setup(OrbTypeSO orbSO, Action<Orb> _killAction)
+    public void Setup(OrbSO orbSO, Action<Orb> _killAction)
     {
         orbCollider.enabled = true;
         sprite.sprite = orbSO.sprite;
         animator.runtimeAnimatorController = orbSO.orbAnimation;
         
-        myOrbType = orbSO;
+        myOrbSO = orbSO;
         ChangeAnimationState(IDLE);
 
         killAction = _killAction;
     }
 
-    public OrbTypeSO GetOrbTypeSO() => myOrbType;
+    public OrbSO GetOrbSO() => myOrbSO;
 
     public void Destroy()
     {
-        ChangeAnimationState(BURST);
-
         orbCollider.enabled = false;
+        ChangeAnimationState(BURST);
 
         if (isAbilityActivated)
         {
@@ -56,6 +57,7 @@ public class Orb : MonoBehaviour
         }
         DisableIsAbilityActivated();
 
+        explodeParticles.Play();
         StartCoroutine(CoDestroySelf(delayBeforeKill));
     }
 

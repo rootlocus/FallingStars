@@ -16,8 +16,8 @@ public class LevelOrbSpawner : MonoBehaviour
     [SerializeField] private int maxCapacity = 400;
 
     [SerializeField] private Transform orbContainer;
-    [SerializeField] private List<OrbTypeSO> orbTypes;
-    [SerializeField] private List<OrbTypeSO> currentOrbPool;
+    [SerializeField] private List<OrbSO> orbTypes;
+    [SerializeField] private List<OrbSO> currentOrbPool;
     [SerializeField] private int linesToLevel;
     private int currentLinesSpawned;
     private float nextLineSpawn; // spawn row of orb on this y position
@@ -70,7 +70,7 @@ public class LevelOrbSpawner : MonoBehaviour
         }, false, defaultCapacity, maxCapacity);
     }
 
-    public Transform SpawnOrb(Vector3 spawnPosition, OrbTypeSO orbType, GridObject gridObject)
+    public Transform SpawnOrb(Vector3 spawnPosition, OrbSO orbType, GridObject gridObject)
     {
         Orb orb = pool.Get();
         Transform orbTransform = orb.transform;
@@ -90,7 +90,7 @@ public class LevelOrbSpawner : MonoBehaviour
     }
 #endregion
     
-    public List<OrbTypeSO> GetCurrentOrbPool() => currentOrbPool;
+    public List<OrbSO> GetCurrentOrbPool() => currentOrbPool;
 
     [Button("SPAWN ROW")]
     private void SpawnOrbRow()
@@ -158,7 +158,7 @@ public class LevelOrbSpawner : MonoBehaviour
         }
     }
 
-    private OrbTypeSO GetRandomOrbFromPool()
+    private OrbSO GetRandomOrbFromPool()
     {
         return currentOrbPool[Random.Range(0, currentOrbPool.Count)];
     }

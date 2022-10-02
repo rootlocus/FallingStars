@@ -19,8 +19,8 @@ public class Launcher : MonoBehaviour
     [SerializeField] private GameObject highlightVignette;
 
     [Header("Mandatory Configurations")]
-    // [SerializeField] private List<OrbTypeSO> orbTypes;
-    [SerializeField] private OrbTypeSO bombOrbType;
+    // [SerializeField] private List<OrbSO> orbTypes;
+    [SerializeField] private OrbSO bombOrbType;
     [SerializeField] private float lowerLauncherBoundary = 5.5f;
     [SerializeField] private float upperLauncherBoundary = 27.25f;
     [SerializeField] private float launcherDelay = 3f;
@@ -37,8 +37,8 @@ public class Launcher : MonoBehaviour
     private LauncherVisualGuide visualGuide;
     private SpriteRenderer currentOrbSprite;
     private SpriteRenderer nextOrbSprite;
-    private OrbTypeSO currentOrbType;
-    private OrbTypeSO nextOrbType;
+    private OrbSO currentOrbType;
+    private OrbSO nextOrbType;
     private Projectile currentProjectile;
     private enum State
     {
@@ -176,7 +176,7 @@ public class Launcher : MonoBehaviour
 
     private void RotateOrb()
     {
-        OrbTypeSO rotateOrbType = currentOrbType;
+        OrbSO rotateOrbType = currentOrbType;
         currentOrbType = nextOrbType;
         nextOrbType = rotateOrbType;
 
@@ -208,9 +208,9 @@ public class Launcher : MonoBehaviour
         .SetEase(Ease.Flash);
     }
 
-    private OrbTypeSO GetRandomOrb()
+    private OrbSO GetRandomOrb()
     {
-        List<OrbTypeSO> orbTypes = LevelOrbSpawner.Instance.GetCurrentOrbPool();
+        List<OrbSO> orbTypes = LevelOrbSpawner.Instance.GetCurrentOrbPool();
 
         return orbTypes[Random.Range(0, orbTypes.Count)];
     }

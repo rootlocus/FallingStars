@@ -2257,7 +2257,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593085359}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -4058,6 +4058,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2272930, guid: 93833186792a9b6498b9f3d67c4c5916, type: 3}
+      propertyPath: m_Size.x
+      value: 1.6920658
+      objectReference: {fileID: 0}
+    - target: {fileID: 2272930, guid: 93833186792a9b6498b9f3d67c4c5916, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.2566536
+      objectReference: {fileID: 0}
+    - target: {fileID: 275150718, guid: 93833186792a9b6498b9f3d67c4c5916, type: 3}
+      propertyPath: m_Size.x
+      value: 1.6978371
+      objectReference: {fileID: 0}
+    - target: {fileID: 275150718, guid: 93833186792a9b6498b9f3d67c4c5916, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.13560793
+      objectReference: {fileID: 0}
     - target: {fileID: 1039045897776308512, guid: 93833186792a9b6498b9f3d67c4c5916, type: 3}
       propertyPath: m_Name
       value: Walls
@@ -4556,10 +4572,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 705016854, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3146635535775749221, guid: 1e9bdc298f0be2e4aad0fb315425157a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -5368,27 +5380,27 @@ PrefabInstance:
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbTypes.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 025f09b006dae044a959290ad30eb99f, type: 2}
+      objectReference: {fileID: 11400000, guid: 75c8f7a1d6c82844bac22f753f480923, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbTypes.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: e92df215c2c38fb4da8c5bf2a46cf477, type: 2}
+      objectReference: {fileID: 11400000, guid: 4adb56fd834a2d145891509a40bd3397, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbTypes.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 2d7832e7b3fad3f4ea8cd8d83604db60, type: 2}
+      objectReference: {fileID: 11400000, guid: d929c1e8d9d24f24788d89ca2d8fb181, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbTypes.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: 4fe7e9bb366461444ad63710d434032b, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f5875cd25429c24e8c0541fcadd20f7, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbTypes.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 2cd1f7f6253c54c40805405107d0ea77, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d36f8be85fb2f34da110bd6bc59b146, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: orbTypes.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 6da643522c019ae48b351f9491ac045e, type: 2}
+      objectReference: {fileID: 11400000, guid: e24871650acc26545964967aca635aff, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: currentOrbPool.Array.size
       value: 0
@@ -5396,7 +5408,7 @@ PrefabInstance:
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: currentOrbPool.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 025f09b006dae044a959290ad30eb99f, type: 2}
+      objectReference: {fileID: 11400000, guid: e24871650acc26545964967aca635aff, type: 2}
     - target: {fileID: 7035641972273456742, guid: 7f8c2d26c8db9454ca1cf5fa5244ac46, type: 3}
       propertyPath: currentOrbPool.Array.data[1]
       value: 
